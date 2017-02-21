@@ -10,5 +10,5 @@
         <property name="URL" value="jdbc:mysql://localhost:3306/awbgi?zeroDateTimeBehavior=convertToNull"/>
         <property name="driverClass" value="com.mysql.jdbc.Driver"/>
     </jdbc-connection-pool>
-    <jdbc-resource enabled="true" jndi-name="java:module/AWBGI" object-type="user" pool-name="mysql_awbgi_rootPool"/>
+    <jdbc-resource enabled="true" jndi-name="java:app/AWBGI" object-type="user" pool-name="mysql_awbgi_rootPool"/>
 </resources>
