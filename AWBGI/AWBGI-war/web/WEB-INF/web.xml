@@ -2,7 +2,7 @@
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
         <servlet-name>indexServlet</servlet-name>
-        <servlet-class>indexServlet</servlet-class>
+        <servlet-class>controladores.indexServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>indexServlet</servlet-name>

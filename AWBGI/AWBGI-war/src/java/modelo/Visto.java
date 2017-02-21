@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package entities;
+package modelo;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -13,12 +13,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -26,13 +24,12 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author mario
  */
 @Entity
-@Table(name = "comentario")
+@Table(name = "visto")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Comentario.findAll", query = "SELECT c FROM Comentario c"),
-    @NamedQuery(name = "Comentario.findById", query = "SELECT c FROM Comentario c WHERE c.id = :id"),
-    @NamedQuery(name = "Comentario.findByTitulo", query = "SELECT c FROM Comentario c WHERE c.titulo = :titulo")})
-public class Comentario implements Serializable {
+    @NamedQuery(name = "Visto.findAll", query = "SELECT v FROM Visto v"),
+    @NamedQuery(name = "Visto.findById", query = "SELECT v FROM Visto v WHERE v.id = :id")})
+public class Visto implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -40,13 +37,6 @@ public class Comentario implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 45)
-    @Column(name = "titulo")
-    private String titulo;
-    @Lob
-    @Size(max = 65535)
-    @Column(name = "texto")
-    private String texto;
     @JoinColumn(name = "idpelicula", referencedColumnName = "id")
     @ManyToOne
     private Pelicula idpelicula;
@@ -54,10 +44,10 @@ public class Comentario implements Serializable {
     @ManyToOne
     private Usuario idusuario;
 
-    public Comentario() {
+    public Visto() {
     }
 
-    public Comentario(Integer id) {
+    public Visto(Integer id) {
         this.id = id;
     }
 
@@ -67,22 +57,6 @@ public class Comentario implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
-
-    public String getTexto() {
-        return texto;
-    }
-
-    public void setTexto(String texto) {
-        this.texto = texto;
     }
 
     public Pelicula getIdpelicula() {
@@ -111,10 +85,10 @@ public class Comentario implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Comentario)) {
+        if (!(object instanceof Visto)) {
             return false;
         }
-        Comentario other = (Comentario) object;
+        Visto other = (Visto) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -123,7 +97,7 @@ public class Comentario implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Comentario[ id=" + id + " ]";
+        return "entities.Visto[ id=" + id + " ]";
     }
     
 }
