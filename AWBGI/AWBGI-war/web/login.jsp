@@ -58,13 +58,13 @@
                                    placeholder="Introduce un apodo">
                         </div>
                          <div class="form-group">
-                            <label for="ejemplo_password_1">Contraseña</label>
-                            <input type="password" class="form-control" id="password" name="password"
+                            <label for="ejemplo_password_1">Contraseña <span id="l_password1"> <span class="glyphicon glyphicon-remove" style="color: red" aria-hidden="true"></span><em style="color:red">La contraseña no es igual</em></span></label>
+                            <input type="password" class="form-control" id="r_password1" name="password"
                                    placeholder="Introduce una contraseña">
                         </div>  
                         <div class="form-group">
-                            <label for="ejemplo_password_1">Repetir Contraseña</label>
-                            <input type="password" class="form-control" id="password" name="password"
+                            <label for="ejemplo_password_1">Repetir Contraseña <span id="l_password2"> <span class="glyphicon glyphicon-remove" style="color: red" aria-hidden="true"></span><em style="color:red">La contraseña no es igual</em></span></label>
+                            <input type="password" class="form-control" id="r_password2" name="password"
                                    placeholder="Repite la contraseña">
                         </div>
                         <div class="form-group">
@@ -117,20 +117,48 @@
                                 $('#boton_registro').prop('disabled',false); 
                             }
                         }
-                    });           
-        
-            //        $get('login',{
-            //            apodo : $('#r_apodo').val()
-            //        }, function (responseText) {
-            //            if(responseText == "yes"){
-            //                $('#apodo_enuso').show();
-            //            }else{
-            //                $('#apodo_enuso').hide();
-            //            }   
-            //      });
+                    });
               }); 
            });
            $('#apodo_enuso').hide();
+           
+           $('#l_password1').hide();
+           $('#l_password2').hide();
         </script>
+        
+        <script type="text/javascript">
+            $(function(){
+                $('#r_password1').keyup(function(){
+                    val pass1 = $('#r_password1').val();
+                    val pass2 = $('#r_password2').val();
+                    if (pass1!=pass2){
+                        $('#l_password1').show();
+                        $('#l_password2').show();
+                    }
+              }); 
+               $('#r_password2').keyup(function(){
+                    val pass1 = $('#r_password1').val();
+                    val pass2 = $('#r_password2').val();
+                    if (pass1!=pass2){
+                        $('#l_password1').show();
+                        $('#l_password2').show();
+                    }
+              });
+           }); 
+           $(function(){
+               
+               $('#r_password2').keyup(function(){
+                    val pass1 = $('#r_password1').val();
+                    val pass2 = $('#r_password2').val();
+                    if (pass1!=pass2){
+                        $('#l_password1').show();
+                        $('#l_password2').show();
+                    }
+              });
+           });
+           $('#l_password1').hide();
+           $('#l_password2').hide();
+        </script>
+        
     </body>
 </html>
