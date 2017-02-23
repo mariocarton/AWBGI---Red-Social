@@ -1,23 +1,26 @@
-package controladores;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package controladores;
 
+import datos.GestorUsuarios;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modelo.Usuario;
 
 /**
  *
  * @author mario
  */
-public class indexServlet extends HttpServlet {
+@WebServlet(name = "login", urlPatterns = {"/login"})
+public class login extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,7 +35,7 @@ public class indexServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-           response.sendRedirect("./index.jsp");
+            response.sendRedirect("./login.jsp");
         }
     }
 
@@ -62,7 +65,31 @@ public class indexServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        //processRequest(request, response);
+        // Set response content type
+        response.setContentType("text/html");
+
+        PrintWriter out = response.getWriter();
+        String title = "Using GET Method to Read Form Data";
+
+        String docType = "<!doctype html public \"-//w3c//dtd html 4.0 "
+                + "transitional//en\">\n";
+        Usuario u = new Usuario(-1,"mate","Mario","Matesanz","marmate",0);
+        GestorUsuarios gu = new GestorUsuarios();
+        gu.guardaUsuario(u);
+        out.println(docType + "<html>\n"
+                + "<head><title>" + title + "</title></head>\n"
+                + "<body bgcolor=\"#f0f0f0\">\n"
+                + "<h1 align=\"center\">" + title + "</h1>\n"
+                + "<ul>\n"
+                + "  <li><b>Email</b>: "
+                + request.getParameter("email") + "\n"
+                + "  <li><b>Password</b>: "
+                + request.getParameter("password") + "\n"
+                + "  <li><b>Objeto</b>: "
+                + u.getApodo() + "\n"
+                + "</ul>\n"
+                + "</body></html>");
     }
 
     /**

@@ -3,20 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package modelo;
+package entities;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -24,30 +23,30 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author mario
  */
 @Entity
-@Table(name = "porver")
+@Table(name = "amigo")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Porver.findAll", query = "SELECT p FROM Porver p"),
-    @NamedQuery(name = "Porver.findById", query = "SELECT p FROM Porver p WHERE p.id = :id")})
-public class Porver implements Serializable {
+    @NamedQuery(name = "Amigo.findAll", query = "SELECT a FROM Amigo a"),
+    @NamedQuery(name = "Amigo.findById", query = "SELECT a FROM Amigo a WHERE a.id = :id")})
+public class Amigo implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @NotNull
     @Column(name = "id")
     private Integer id;
-    @JoinColumn(name = "idpelicula", referencedColumnName = "id")
+    @JoinColumn(name = "idamigo", referencedColumnName = "id")
     @ManyToOne
-    private Pelicula idpelicula;
+    private Usuario idamigo;
     @JoinColumn(name = "idusuario", referencedColumnName = "id")
     @ManyToOne
     private Usuario idusuario;
 
-    public Porver() {
+    public Amigo() {
     }
 
-    public Porver(Integer id) {
+    public Amigo(Integer id) {
         this.id = id;
     }
 
@@ -59,12 +58,12 @@ public class Porver implements Serializable {
         this.id = id;
     }
 
-    public Pelicula getIdpelicula() {
-        return idpelicula;
+    public Usuario getIdamigo() {
+        return idamigo;
     }
 
-    public void setIdpelicula(Pelicula idpelicula) {
-        this.idpelicula = idpelicula;
+    public void setIdamigo(Usuario idamigo) {
+        this.idamigo = idamigo;
     }
 
     public Usuario getIdusuario() {
@@ -85,10 +84,10 @@ public class Porver implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Porver)) {
+        if (!(object instanceof Amigo)) {
             return false;
         }
-        Porver other = (Porver) object;
+        Amigo other = (Amigo) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -97,7 +96,7 @@ public class Porver implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Porver[ id=" + id + " ]";
+        return "entities.Amigo[ id=" + id + " ]";
     }
     
 }

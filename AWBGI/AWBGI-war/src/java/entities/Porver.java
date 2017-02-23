@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package modelo;
+package entities;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -24,13 +24,12 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author mario
  */
 @Entity
-@Table(name = "valoracion")
+@Table(name = "porver")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Valoracion.findAll", query = "SELECT v FROM Valoracion v"),
-    @NamedQuery(name = "Valoracion.findById", query = "SELECT v FROM Valoracion v WHERE v.id = :id"),
-    @NamedQuery(name = "Valoracion.findByValor", query = "SELECT v FROM Valoracion v WHERE v.valor = :valor")})
-public class Valoracion implements Serializable {
+    @NamedQuery(name = "Porver.findAll", query = "SELECT p FROM Porver p"),
+    @NamedQuery(name = "Porver.findById", query = "SELECT p FROM Porver p WHERE p.id = :id")})
+public class Porver implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -38,8 +37,6 @@ public class Valoracion implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "valor")
-    private Integer valor;
     @JoinColumn(name = "idpelicula", referencedColumnName = "id")
     @ManyToOne
     private Pelicula idpelicula;
@@ -47,10 +44,10 @@ public class Valoracion implements Serializable {
     @ManyToOne
     private Usuario idusuario;
 
-    public Valoracion() {
+    public Porver() {
     }
 
-    public Valoracion(Integer id) {
+    public Porver(Integer id) {
         this.id = id;
     }
 
@@ -60,14 +57,6 @@ public class Valoracion implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getValor() {
-        return valor;
-    }
-
-    public void setValor(Integer valor) {
-        this.valor = valor;
     }
 
     public Pelicula getIdpelicula() {
@@ -96,10 +85,10 @@ public class Valoracion implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Valoracion)) {
+        if (!(object instanceof Porver)) {
             return false;
         }
-        Valoracion other = (Valoracion) object;
+        Porver other = (Porver) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -108,7 +97,7 @@ public class Valoracion implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Valoracion[ id=" + id + " ]";
+        return "entities.Porver[ id=" + id + " ]";
     }
     
 }
