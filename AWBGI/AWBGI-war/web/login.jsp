@@ -20,10 +20,10 @@
         <div class="container" style="text-align: center; padding-top: 6%; padding-bottom: 6%; padding-left: 30%; padding-right: 30%">
             <div class="row">
                 <div class="col-md-6">
-                    <a href="#" id="einiciosesion">Iniciar Sesión</a>                    
+                    <a id="einiciosesion">Iniciar Sesión</a>                    
                 </div>
                 <div class="col-md-6">
-                    <a href="#" id="eregistrarse">Registrarse</a>
+                    <a id="eregistrarse">Registrarse</a>
                 </div>
             </div>
             <div class="row" id="iniciosesion">
@@ -111,9 +111,10 @@
                         success:function (responseText) {
                             if(responseText === "yes"){
                                 $('#apodo_enuso').show();
-                                
+                                $('#boton_registro').prop('disabled',true);                                
                             }else{
                                 $('#apodo_enuso').hide();
+                                $('#boton_registro').prop('disabled',false); 
                             }
                         }
                     });           
