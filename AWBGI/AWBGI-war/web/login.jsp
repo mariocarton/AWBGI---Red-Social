@@ -53,8 +53,8 @@
                             <h1>Registro</h1>
                         </div>
                         <div class="form-group">
-                            <label>Apodo</label>
-                            <input type="text" class="form-control" id="email" name="r_apodo"
+                            <label>Apodo <span id="apodo_enuso"> <span class="glyphicon glyphicon-remove" style="color: red" aria-hidden="true"></span><em style="color:red">Apodo en uso</em></span></label>
+                            <input type="text" class="form-control" id="r_apodo" name="r_apodo"
                                    placeholder="Introduce un apodo">
                         </div>
                          <div class="form-group">
@@ -69,7 +69,7 @@
                         </div>
                         <div class="form-group">
                             <label for="ejemplo_email_1" >Nombre</label>
-                            <input type="email" class="form-control" id="email" name="email"
+                            <input type="text" class="form-control" id="nombre" name="email"
                                    placeholder="Introduce tu nombre">
                         </div>
                         <div class="form-group">
@@ -78,7 +78,7 @@
                                    placeholder="Introduce tus apellidos">
                         </div>
                        
-                        <button type="submit" class="btn btn-default">Registrarse</button>
+                        <button id="boton_registro" type="submit" class="btn btn-default">Registrarse</button>
                     </form>
                 </div>                
             </div>
@@ -101,11 +101,35 @@
         </script>
         
         <script type="text/javascript">
-           $(function(){
-              $('#r_apodo').keyup()(funtion(){
-                  
+            $(function(){
+                $('#r_apodo').keyup(function(){
+                    $.ajax({
+                        url: 'login',
+                        data: {
+                            apodo : $('#r_apodo').val()
+                        },
+                        success:function (responseText) {
+                            if(responseText === "yes"){
+                                $('#apodo_enuso').show();
+                                
+                            }else{
+                                $('#apodo_enuso').hide();
+                            }
+                        }
+                    });           
+        
+            //        $get('login',{
+            //            apodo : $('#r_apodo').val()
+            //        }, function (responseText) {
+            //            if(responseText == "yes"){
+            //                $('#apodo_enuso').show();
+            //            }else{
+            //                $('#apodo_enuso').hide();
+            //            }   
+            //      });
               }); 
-           });           
+           });
+           $('#apodo_enuso').hide();
         </script>
     </body>
 </html>

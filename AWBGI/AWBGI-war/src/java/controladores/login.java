@@ -35,7 +35,7 @@ public class login extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            response.sendRedirect("./login.jsp");
+            response.sendRedirect("./login.jsp");            
         }
     }
 
@@ -51,7 +51,23 @@ public class login extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        if(request.getParameter("apodo")!= null){
+            String apodo = request.getParameter("apodo").trim();
+            if (apodo.length()<3){
+                response.getWriter().write("no");
+            }else{
+            String r = "yes";
+            response.setContentType("text/plain");
+            response.getWriter().write(r);
+            }
+            
+        }else{
+             response.sendRedirect("./login.jsp");
+        }
+        
+        
+        //processRequest(request, response);
     }
 
     /**
