@@ -3,19 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package modelo;
+package entities;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -23,30 +24,33 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author mario
  */
 @Entity
-@Table(name = "amigo")
+@Table(name = "valoracion")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Amigo.findAll", query = "SELECT a FROM Amigo a"),
-    @NamedQuery(name = "Amigo.findById", query = "SELECT a FROM Amigo a WHERE a.id = :id")})
-public class Amigo implements Serializable {
+    @NamedQuery(name = "Valoracion.findAll", query = "SELECT v FROM Valoracion v"),
+    @NamedQuery(name = "Valoracion.findById", query = "SELECT v FROM Valoracion v WHERE v.id = :id"),
+    @NamedQuery(name = "Valoracion.findByValor", query = "SELECT v FROM Valoracion v WHERE v.valor = :valor")})
+public class Valoracion implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id")
     private Integer id;
-    @JoinColumn(name = "idamigo", referencedColumnName = "id")
+    @Column(name = "valor")
+    private Integer valor;
+    @JoinColumn(name = "idpelicula", referencedColumnName = "id")
     @ManyToOne
-    private Usuario idamigo;
+    private Pelicula idpelicula;
     @JoinColumn(name = "idusuario", referencedColumnName = "id")
     @ManyToOne
     private Usuario idusuario;
 
-    public Amigo() {
+    public Valoracion() {
     }
 
-    public Amigo(Integer id) {
+    public Valoracion(Integer id) {
         this.id = id;
     }
 
@@ -58,12 +62,20 @@ public class Amigo implements Serializable {
         this.id = id;
     }
 
-    public Usuario getIdamigo() {
-        return idamigo;
+    public Integer getValor() {
+        return valor;
     }
 
-    public void setIdamigo(Usuario idamigo) {
-        this.idamigo = idamigo;
+    public void setValor(Integer valor) {
+        this.valor = valor;
+    }
+
+    public Pelicula getIdpelicula() {
+        return idpelicula;
+    }
+
+    public void setIdpelicula(Pelicula idpelicula) {
+        this.idpelicula = idpelicula;
     }
 
     public Usuario getIdusuario() {
@@ -84,10 +96,10 @@ public class Amigo implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Amigo)) {
+        if (!(object instanceof Valoracion)) {
             return false;
         }
-        Amigo other = (Amigo) object;
+        Valoracion other = (Valoracion) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -96,7 +108,7 @@ public class Amigo implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Amigo[ id=" + id + " ]";
+        return "entities.Valoracion[ id=" + id + " ]";
     }
     
 }

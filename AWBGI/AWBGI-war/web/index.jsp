@@ -16,7 +16,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     </head>
     <body>
-        <nav class="navbar navbar-inverse navbar-fixed-top" >
+        <nav class="navbar navbar-inverse navbar-fixed-top"  >
             <div class="container-fluid">
                 <div class="navbar-header">
                     <a class="navbar-brand" href="#" > MUCHAPELI </a>
