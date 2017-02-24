@@ -42,23 +42,76 @@
                 <h1>MUCHAPELI <small></small></h1>
             </div>
 
-            <div class="col-sm-2 col-md-2 sidebar panel panel-primary" style="height: 100%">
+            <div class="col-xs-2 sidebar" style="height: 100%">
                 <ul class="nav nav-sidebar">
-                    <li class="active">
-                        <a href="#"> Perfil </a>
+                    <li>
+                        <input type="text" class="form-control" placeholder="Buscar...">
+                        <i class="glyphicon glyphicon-search form-control-feedback"></i>
                     </li>
                     <li>
-                        <a href="#"> Actividad </a>
+                        <a class="glyphicon glyphicon-plus-sign" href="#"> Añadir </a> 
+                    </li>
+                    <li class="active">
+                        <a class="glyphicon glyphicon-user" href="#"> Perfil </a>
+                    </li>
+                    <li>
+                        <a class="glyphicon glyphicon-transfer" href="#" > Actividad </a>
+                    </li>
+                    <li>
+                        <a class="glyphicon glyphicon-eye-close" href="#"> Por Ver </a> 
+                    </li>
+                    <li>
+                        <a class="glyphicon glyphicon-" href="#"> Amigos </a> 
+                    </li>
+                </ul>
+                <hr style="color: red" />
+                <ul class="nav nav-sidebar">
+                    <li> 
+                        <h7 style="text-align: center"> Usuario 1 </h7>
+                    </li>
+                    <li>
+                        <a class="glyphicon glyphicon-cog" href="#"> Ajustes </a> 
+                    </li>
+                    <li>
+                        <a class="glyphicon glyphicon-question-sign" href="#"> Ayuda </a> 
+                    </li>
+                </ul>
+                <hr style="color: red" />
+                <ul class="nav nav-sidebar">
+                    <li>
+                        <a class="glyphicon glyphicon-log-out" href="#"> Salir </a> 
                     </li>
                 </ul>
             </div>
 
-            <div class="col-sm-8">
+            <div class="col-xs-8">
                 <h4  > Usuario 1 </h4>
+                <div class="nav nav-tabs">
+                    <li role="presentation" class="active">
+                        <a class="active glyphicon glyphicon-eye-open" href="#"> Visto</a>
+                    </li>
+                     <li role="presentation">
+                        <a class="active glyphicon glyphicon-adjust" href="#"> Mi Actividad</a>
+                    </li>
+                     <li role="presentation">
+                        <a class="active glyphicon glyphicon-alert" href="#"> Alertas</a>
+                    </li>
+                </div>
+                <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-default glyphicon glyphicon-eye-open"> Visto</button>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-default glyphicon glyphicon-adjust"> Mi Actividad</button>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-default glyphicon glyphicon-alert"> Alertas</button>
+                    </div>
+                </div>
                 <hr style="color: red" />
 
                 <div class="row">
-                    <div class="col-sm-4 col-md-4">
+                    <div class="col-xs-4">
                         <div class="thumbnail">
                             <img src="..." alt="...">
                             <div class="caption">
@@ -68,7 +121,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-4 col-md-4">
+                    <div class="col-xs-4">
                         <div class="thumbnail">
                             <img src="..." alt="...">
                             <div class="caption">
@@ -81,7 +134,7 @@
                 </div>
             </div>
 
-            <div class="col-sm-2 panel panel-primary">
+            <div class="col-xs-2 panel panel-primary">
                 <a href="#"> saf </a>
             </div>
         </div>   

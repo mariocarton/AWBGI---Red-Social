@@ -16,44 +16,47 @@
         <link rel="stylesheet" href="recursos/bootstrap/css/bootstrap-theme.min.css">
     </head>
     <body>
-    <div class="container-fluid">
-      <form role="form">
-        <div class="form-group">
-             <label for="titulo">Título</label>
-                <input type="text" class="form-control" id="titulo"
-                                       placeholder="Introduce el Título">
-        </div>
-        <div class="form-group">
-              <label for="ano">Año</label>
-                  <input type="text" class="form-control" id="ano" 
-                        placeholder="Introduce el año">
-        </div
-        <div class="form-group">
-              <label for="director">Director</label>
-                  <input type="text" class="form-control" id="director" 
-                        placeholder="Introduce el Director">
-        </div>
-        <div class="form-group">
-              <label for="pais">País</label>
-                  <input type="text" class="form-control" id="pais" 
-                        placeholder="Introduce el País de origen">
-        </div>
-        <div class="form-group">
-              <label for="sinopsis">Sinopsis</label>
-                  <input type="text" class="form-control" id="sinopsis" 
-                        placeholder="Introduce una breve descripción">
-        </div>
-        <div class="form-group">
-             <label for="ejemplo_archivo_1">Adjuntar un archivo</label>
-                  <input type="file" id="imagenpelicula">
-                      <p class="help-block">Adjunta una imagen para su película.</p>
-        </div>
+        <div class="row">
+            <div class="col-xs-8">
+                <div class="container-fluid">
+                    <form role="form">
+                        <div class="form-group">
+                            <label for="titulo">Título</label>
+                            <input type="text" class="form-control" id="titulo"
+                                   placeholder="Introduce el Título">
+                        </div>
+                        <div class="form-group">
+                            <label for="ano">Año</label>
+                            <input type="text" class="form-control" id="ano" 
+                                   placeholder="Introduce el año">
+                        </div
+                        <div class="form-group">
+                            <label for="director">Director</label>
+                            <input type="text" class="form-control" id="director" 
+                                   placeholder="Introduce el Director">
+                        </div>
+                        <div class="form-group">
+                            <label for="pais">País</label>
+                            <input type="text" class="form-control" id="pais" 
+                                   placeholder="Introduce el País de origen">
+                        </div>
+                        <div class="form-group">
+                            <label for="sinopsis">Sinopsis</label>
+                            <input type="text" class="form-control" id="sinopsis" 
+                                   placeholder="Introduce una breve descripción">
+                        </div>
+                        <div class="form-group">
+                            <label for="ejemplo_archivo_1">Adjuntar un archivo</label>
+                            <input type="file" id="imagenpelicula">
+                            <p class="help-block">Adjunta una imagen para su película.</p>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Enviar</button>
+                    </form>
+                </div>
+            </div>
         
-        <button type="submit" class="btn btn-primary">Enviar</button>
-      </form>
-    </div>
-        
-    <!-- Latest compiled and minified JavaScript -->
-           <script src="recursos/bootstrap/js/bootstrap.min.js" ></script> 
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="recursos/bootstrap/js/bootstrap.min.js" ></script> 
     </body>
 </html>
