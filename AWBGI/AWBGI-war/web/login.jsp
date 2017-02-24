@@ -35,13 +35,14 @@
                         <div class="form-group">
                             <label for="ejemplo_email_1" >Apodo</label>
                             <input type="text" class="form-control" id="email" name="email"
-                                   placeholder="Introduce tu apodo">
+                                   placeholder="Introduce tu apodo" required="">
                         </div>
                         <div class="form-group">
                             <label for="ejemplo_password_1">Contraseña</label>
                             <input type="password" class="form-control" id="password" name="password"
-                                   placeholder="Introduce tu contraseña">
-                        </div>                       
+                                   placeholder="Introduce tu contraseña" required="">
+                        </div>
+                        <input hidden name="accion" value="login"/>
                         <button type="submit" class="btn btn-default">Entrar</button>
                     </form>
                 </div>                
@@ -55,29 +56,29 @@
                         <div class="form-group">
                             <label>Apodo <span id="apodo_enuso"> <span class="glyphicon glyphicon-remove" style="color: red" aria-hidden="true"></span><em style="color:red">Apodo en uso</em></span></label>
                             <input type="text" class="form-control" id="r_apodo" name="r_apodo"
-                                   placeholder="Introduce un apodo">
+                                   placeholder="Introduce un apodo" required="">
                         </div>
                          <div class="form-group">
                             <label for="ejemplo_password_1">Contraseña <span id="l_password1"> <span class="glyphicon glyphicon-remove" style="color: red" aria-hidden="true"></span><em style="color:red">La contraseña no es igual</em></span></label>
                             <input type="password" class="form-control" id="r_password1" name="password"
-                                   placeholder="Introduce una contraseña">
+                                   placeholder="Introduce una contraseña" required="">
                         </div>  
                         <div class="form-group">
                             <label for="ejemplo_password_1">Repetir Contraseña <span id="l_password2"> <span class="glyphicon glyphicon-remove" style="color: red" aria-hidden="true"></span><em style="color:red">La contraseña no es igual</em></span></label>
                             <input type="password" class="form-control" id="r_password2" name="password"
-                                   placeholder="Repite la contraseña">
+                                   placeholder="Repite la contraseña" required="">
                         </div>
                         <div class="form-group">
                             <label for="ejemplo_email_1" >Nombre</label>
                             <input type="text" class="form-control" id="nombre" name="email"
-                                   placeholder="Introduce tu nombre">
+                                   placeholder="Introduce tu nombre" required="">
                         </div>
                         <div class="form-group">
                             <label for="ejemplo_email_1" >Apellidos</label>
                             <input type="email" class="form-control" id="email" name="email"
-                                   placeholder="Introduce tus apellidos">
+                                   placeholder="Introduce tus apellidos" required="">
                         </div>
-                       
+                        <input hidden name="accion" value="registro"/>
                         <button id="boton_registro" type="submit" class="btn btn-default">Registrarse</button>
                     </form>
                 </div>                
@@ -122,37 +123,37 @@
            });
            $('#apodo_enuso').hide();
            
-           $('#l_password1').hide();
-           $('#l_password2').hide();
         </script>
         
         <script type="text/javascript">
             $(function(){
                 $('#r_password1').keyup(function(){
-                    val pass1 = $('#r_password1').val();
-                    val pass2 = $('#r_password2').val();
-                    if (pass1!=pass2){
+                    var pass1 = $('#r_password1').val()
+                    var pass2 = $('#r_password2').val()
+                    if (pass1!==pass2){
                         $('#l_password1').show();
                         $('#l_password2').show();
+                        $('#boton_registro').prop('disabled',true);
+                    }else{
+                       $('#l_password1').hide();
+                       $('#l_password2').hide(); 
+                       $('#boton_registro').prop('disabled',false); 
                     }
               }); 
-               $('#r_password2').keyup(function(){
-                    val pass1 = $('#r_password1').val();
-                    val pass2 = $('#r_password2').val();
-                    if (pass1!=pass2){
-                        $('#l_password1').show();
-                        $('#l_password2').show();
-                    }
-              });
-           }); 
-           $(function(){
                
+           }); 
+           $(function(){               
                $('#r_password2').keyup(function(){
-                    val pass1 = $('#r_password1').val();
-                    val pass2 = $('#r_password2').val();
-                    if (pass1!=pass2){
+                    var pass1 = $('#r_password1').val();
+                    var pass2 = $('#r_password2').val();
+                    if (pass1!==pass2){
                         $('#l_password1').show();
                         $('#l_password2').show();
+                        $('#boton_registro').prop('disabled',true);
+                    }else{
+                        $('#l_password1').hide();
+                        $('#l_password2').hide();
+                        $('#boton_registro').prop('disabled',false); 
                     }
               });
            });

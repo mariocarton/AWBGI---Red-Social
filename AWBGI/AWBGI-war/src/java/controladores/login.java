@@ -54,14 +54,20 @@ public class login extends HttpServlet {
         
         if(request.getParameter("apodo")!= null){
             String apodo = request.getParameter("apodo").trim();
-            if (apodo.length()<3){
-                response.getWriter().write("no");
-            }else{
-            String r = "yes";
-            response.setContentType("text/plain");
-            response.getWriter().write(r);
+            GestorUsuarios gu = new GestorUsuarios();
+            Usuario u = gu.getUsuarioPorApodo(apodo);
+            if (u!=null) {
+                System.out.println(u.getId()+" "+u.getApodo()+" "+u.getNombre()+" "+u.getApellidos()+" "+u.getContraseña()+" "+u.getTipo());
             }
-            
+            if (u!=null && u.getApodo().equals(apodo)){
+                String r = "yes";
+                response.setContentType("text/plain");
+                response.getWriter().write(r);
+            }else{
+                String r = "no";
+                response.setContentType("text/plain");
+                response.getWriter().write(r);
+            }            
         }else{
              response.sendRedirect("./login.jsp");
         }
@@ -83,29 +89,43 @@ public class login extends HttpServlet {
             throws ServletException, IOException {
         //processRequest(request, response);
         // Set response content type
-        response.setContentType("text/html");
-
-        PrintWriter out = response.getWriter();
-        String title = "Using GET Method to Read Form Data";
-
-        String docType = "<!doctype html public \"-//w3c//dtd html 4.0 "
-                + "transitional//en\">\n";
-        Usuario u = new Usuario(-1,"mate","Mario","Matesanz","marmate",0);
-        GestorUsuarios gu = new GestorUsuarios();
-        gu.guardaUsuario(u);
-        out.println(docType + "<html>\n"
-                + "<head><title>" + title + "</title></head>\n"
-                + "<body bgcolor=\"#f0f0f0\">\n"
-                + "<h1 align=\"center\">" + title + "</h1>\n"
-                + "<ul>\n"
-                + "  <li><b>Email</b>: "
-                + request.getParameter("email") + "\n"
-                + "  <li><b>Password</b>: "
-                + request.getParameter("password") + "\n"
-                + "  <li><b>Objeto</b>: "
-                + u.getApodo() + "\n"
-                + "</ul>\n"
-                + "</body></html>");
+        
+        String accion = request.getParameter("accion").trim();
+        switch(accion){
+            case "login":
+                System.out.println(accion);
+                break;
+            case "registro":
+                System.out.println(accion);
+                break;
+            default: 
+                response.sendRedirect("./login.jsp");
+        }
+        
+        
+//        response.setContentType("text/html");
+//
+//        PrintWriter out = response.getWriter();
+//        String title = "Using GET Method to Read Form Data";
+//
+//        String docType = "<!doctype html public \"-//w3c//dtd html 4.0 "
+//                + "transitional//en\">\n";
+//        Usuario u = new Usuario(-1,"mate","Mario","Matesanz","marmate",0);
+//        GestorUsuarios gu = new GestorUsuarios();
+//        gu.guardaUsuario(u);
+//        out.println(docType + "<html>\n"
+//                + "<head><title>" + title + "</title></head>\n"
+//                + "<body bgcolor=\"#f0f0f0\">\n"
+//                + "<h1 align=\"center\">" + title + "</h1>\n"
+//                + "<ul>\n"
+//                + "  <li><b>Email</b>: "
+//                + request.getParameter("email") + "\n"
+//                + "  <li><b>Password</b>: "
+//                + request.getParameter("password") + "\n"
+//                + "  <li><b>Objeto</b>: "
+//                + u.getApodo() + "\n"
+//                + "</ul>\n"
+//                + "</body></html>");
     }
 
     /**
