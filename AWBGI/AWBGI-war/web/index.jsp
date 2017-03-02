@@ -20,7 +20,7 @@
         <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: blue">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" id="iconmuchapeli" style="color: white"> MUCHAPELI </a>
+                    <a class="navbar-brand" id="iconmuchapeli" style="color: white"> MuchaPeli </a>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
@@ -40,7 +40,7 @@
 
         <div class="container-fluid" style="padding-top: 3%">
             <div class="page-header" style="text-align: center" >
-                <h1>MUCHAPELI <small></small></h1>
+                <h1>MuchaPeli <small></small></h1>
             </div>
 
             <div class="col-xs-2 sidebar" style="height: 100%">
@@ -65,7 +65,7 @@
                         <a class="glyphicon" id="bamigos"> 
                             <i class="fa fa-users" aria-hidden="true"></i> Amigos 
                         </a> 
-                        
+
                     </li>
                 </ul>
                 <hr style="color: red" />
@@ -89,7 +89,7 @@
             </div>
 
             <div class="col-xs-8" >
-                
+
                 <div class="nav nav-tabs" id="navperfil" style="display:none">
                     <h4  > Usuario 1 </h4>
                     <li role="presentation" class="active">
@@ -145,27 +145,32 @@
                         <form role="form" action="index" method="POST" id="formpeliadd">
                             <div class="form-group">
                                 <label for="titulo">Título</label>
-                                <input type="text" class="form-control" id="titulo" name="titulo"
+                                <input type="text" class="form-control" id="titulopf" name="titulopf"
                                        placeholder="Introduce el Título" required="">
                             </div>
                             <div class="form-group">
                                 <label for="ano">Año</label>
-                                <input type="text" class="form-control" id="ano" 
+                                <input type="text" class="form-control" id="anopf" name="anopf"
                                        placeholder="Introduce el año" required="">
                             </div>
                             <div class="form-group">
                                 <label for="director">Director</label>
-                                <input type="text" class="form-control" id="director" 
+                                <input type="text" class="form-control" id="directorpf" name="directorpf"
                                        placeholder="Introduce el Director" required="">
                             </div>
                             <div class="form-group">
                                 <label for="pais">País</label>
-                                <input type="text" class="form-control" id="pais" 
+                                <input type="text" class="form-control" id="paispf" name="paispf"
                                        placeholder="Introduce el País de origen" required="">
                             </div>
                             <div class="form-group">
+                                <label for="pais">Género</label>
+                                <input type="text" class="form-control" id="generopf" name="generopf"
+                                       placeholder="Introduce el genero de la película" required="">
+                            </div>
+                            <div class="form-group">
                                 <label for="sinopsis">Sinopsis</label>
-                                <input type="text" class="form-control" id="sinopsis" 
+                                <input type="text" class="form-control" id="sinopsispf" name="sinopsispf"
                                        placeholder="Introduce una breve descripción" required="">
                             </div>
                             <div class="form-group">
@@ -201,6 +206,18 @@
                         </div>
                     </div>
                 </div>
+                <div class="modal-content" style="display:none" id="pelianadida">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Modal Header</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Some text in the modal.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" id="btnpelianadida">Close</button>
+                    </div>
+                </div>
             </div>
             <div class="col-xs-2 panel panel-primary">
                 <a href="#"> saf </a>
@@ -213,7 +230,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>-->
     <script src="recursos/bootstrap/js/bootstrap.min.js" ></script> 
-    
+
     <script type="text/javascript">
         $('#bvisto').click(function () {
             $('#anadir').hide();
@@ -242,24 +259,31 @@
     </script>
 
     <script type="text/javascript">
-        $(function(){
-                $('#enviapeli').click(function(){
-                    $.ajax({
-                        url: 'index',
-                        data: {
-                            $('#formpeliadd').val()
-                        },
-                        success:function (data) {
-                            if(responseText === ""){
-                                
-                            }else{
-                                
-                            }
-                        }
+
+        $('#enviapeli').submit(function (event) {
+            $.ajax({
+                url: 'index',
+                data: {
+                    titulopf: $('#titulopf').val(),
+                    anopf: $('#anopf').val(),
+                    directorpf: $('#directorpf').val(),
+                    paispf: $('#paispf').val(),
+                    generopf: $('#generopf').val(),
+                    sinopsispf: $('#sinopsispf').val()
+
+                }, success: function (responseText) {
+                    if (responseText === "yes") {
+                        $('#pelianadida').show();
                     }
-                });
+                    if (responseText === "no") {
+
+                    }
+                }
             });
-        
+            //alert( "Handler for .submit() called." );
+            event.preventDefault();
+        });
+
     </script>
 
 </body>

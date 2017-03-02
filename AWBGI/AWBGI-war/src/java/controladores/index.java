@@ -5,7 +5,6 @@ package controladores;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -17,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author mario
  */
-
 public class index extends HttpServlet {
 
     /**
@@ -33,7 +31,7 @@ public class index extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-           response.sendRedirect("./index.jsp");
+            response.sendRedirect("./index.jsp");
         }
     }
 
@@ -49,11 +47,28 @@ public class index extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-           response.sendRedirect("./index.jsp");
+        //response.setContentType("text/html;charset=UTF-8");
+        //try (PrintWriter out = response.getWriter()) {
+        //   response.sendRedirect("./index.jsp");
+        //}
+
+        String accion = request.getParameter("accion");
+        if (accion != null) {
+            System.out.println("aqui2");
+            switch (accion) {
+                case "savepeli":
+                    
+                    break;
+
+                default:
+                    response.sendRedirect("./index.jsp");
+            }
+        } else {
+            System.out.println("aqui");
+            response.sendRedirect("./index.jsp");
+            
         }
-        
+
     }
 
     /**
@@ -69,12 +84,24 @@ public class index extends HttpServlet {
             throws ServletException, IOException {
         //processRequest(request, response);
         String accion = request.getParameter("accion").trim();
-        switch(accion){
+        switch (accion) {
             case "anadirpeli":
-                System.out.println(request.getParameter("titulo"));
-                response.sendRedirect("./index.jsp");
+                String titulo = request.getParameter("titulopf").trim();
+                String ano = request.getParameter("anopf").trim();
+                String director = request.getParameter("directorpf").trim();
+                String pais = request.getParameter("paispf").trim();
+                String genero = request.getParameter("generopf").trim();
+                String sinopsis = request.getParameter("sinopsispf").trim();
+                
+                System.out.println(titulo+" "+ano+" "+director+" "+pais+" "+genero+" "+sinopsis);
+                String r = "yes";
+                response.setContentType("text/plain");
+                response.getWriter().write(r); 
+                //response.sendRedirect("./index.jsp");
                 break;
-            default: 
+                
+            default:
+                 System.out.println("aqui4");
                 response.sendRedirect("./index.jsp");
         }
     }
