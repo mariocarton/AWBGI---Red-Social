@@ -138,10 +138,10 @@
 
                 <div class="row " id="anadir" style="display:none" style="margin: 4%">
                     <div class="container-fluid" style="margin: 4%">
-                        <form role="form" action="guardapeli" method="POST">
+                        <form role="form" action="index" method="POST">
                             <div class="form-group">
                                 <label for="titulo">Título</label>
-                                <input type="text" class="form-control" id="titulo"
+                                <input type="text" class="form-control" id="titulo" name="titulo"
                                        placeholder="Introduce el Título" required="">
                             </div>
                             <div class="form-group">

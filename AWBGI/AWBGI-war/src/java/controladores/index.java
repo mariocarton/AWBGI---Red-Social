@@ -49,7 +49,10 @@ public class index extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+           response.sendRedirect("./index.jsp");
+        }
         
     }
 
@@ -68,7 +71,8 @@ public class index extends HttpServlet {
         String accion = request.getParameter("accion").trim();
         switch(accion){
             case "anadirpeli":
-                System.out.println(accion);
+                System.out.println(request.getParameter("titulo"));
+                response.sendRedirect("./index.jsp");
                 break;
             default: 
                 response.sendRedirect("./index.jsp");
