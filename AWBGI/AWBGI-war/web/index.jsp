@@ -14,13 +14,13 @@
         <link rel="stylesheet" href="recursos/bootstrap/css/bootstrap.min.css" >
         <!-- Optional theme -->
         <link rel="stylesheet" href="recursos/bootstrap/css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="recursos/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <body>
         <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: blue">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="#" style="color: white"> MUCHAPELI </a>
+                    <a class="navbar-brand" id="iconmuchapeli" style="color: white"> MUCHAPELI </a>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
@@ -62,8 +62,10 @@
                         <a class="glyphicon glyphicon-eye-close" href="#"> Por Ver </a> 
                     </li>
                     <li>
-                        <a class="glyphicon" id="bamigos"> Amigos </a> 
-                        <i class="fa fa-users" aria-hidden="true"></i>
+                        <a class="glyphicon" id="bamigos"> 
+                            <i class="fa fa-users" aria-hidden="true"></i> Amigos 
+                        </a> 
+                        
                     </li>
                 </ul>
                 <hr style="color: red" />
@@ -140,7 +142,7 @@
 
                 <div class="row " id="anadir" style="display:none" style="margin: 4%">
                     <div class="container-fluid" style="margin: 4%">
-                        <form role="form" action="index" method="POST">
+                        <form role="form" action="index" method="POST" id="formpeliadd">
                             <div class="form-group">
                                 <label for="titulo">Título</label>
                                 <input type="text" class="form-control" id="titulo" name="titulo"
@@ -172,7 +174,7 @@
                                 <p class="help-block">Adjunta una imagen para su película.</p>
                             </div>
                             <input hidden name="accion" value="anadirpeli"/>
-                            <button type="submit" class="btn btn-primary">Enviar</button>
+                            <button type="submit" class="btn btn-primary" id="enviapeli">Enviar</button>
                         </form>
                     </div>
 
@@ -241,13 +243,13 @@
 
     <script type="text/javascript">
         $(function(){
-                $('#').keyup(function(){
+                $('#enviapeli').click(function(){
                     $.ajax({
                         url: 'index',
                         data: {
-                            apodo : $('#').val()
+                            $('#formpeliadd').val()
                         },
-                        success:function (responseText) {
+                        success:function (data) {
                             if(responseText === ""){
                                 
                             }else{
@@ -255,8 +257,8 @@
                             }
                         }
                     }
-                }
-            }
+                });
+            });
         
     </script>
 
