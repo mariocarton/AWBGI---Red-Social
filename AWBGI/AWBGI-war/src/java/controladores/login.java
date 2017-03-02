@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import modelo.Usuario;
 
 /**
@@ -35,7 +36,7 @@ public class login extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            response.sendRedirect("./login.jsp");            
+            response.sendRedirect("./login.jsp");
         }
     }
 
@@ -51,7 +52,51 @@ public class login extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
+        String accion = request.getParameter("accion");
+        if (accion != null) {
+            GestorUsuarios gu = new GestorUsuarios();
+            Usuario u;
+            switch (accion) {
+                case "existe_apodo":
+                    String apodo = request.getParameter("apodo").trim();                    
+                    u = gu.getUsuarioPorApodo(apodo);
+                    if (u != null) {
+                        System.out.println(u.getId() + " " + u.getApodo() + " " + u.getNombre() + " " + u.getApellidos() + " " + u.getContraseña() + " " + u.getTipo());
+                    }
+                    if (u != null && u.getApodo().equals(apodo)) {
+                        String r = "yes";
+                        response.setContentType("text/plain");
+                        response.getWriter().write(r);
+                    } else {
+                        String r = "no";
+                        response.setContentType("text/plain");
+                        response.getWriter().write(r);
+                    }
+                    break;
+                case "login_submit":                   
+                    String l_apodo = request.getParameter("apodo").trim();
+                    String l_pass = request.getParameter("pass").trim();
+                    u = gu.getUsuarioPorApodo(l_apodo);                    
+                    //Si no esta en la base de datos o las contraseñas no son iguales
+                    if(u==null || !u.getContraseña().equals(l_pass)){ 
+                       String r = "no";
+                       response.setContentType("text/plain");
+                       response.getWriter().write(r); 
+                    }else{
+                        System.out.println("redirige");
+                        String r = "yes";
+                        response.setContentType("text/plain");
+                        response.getWriter().write(r);                         
+                    }
+                    break;
+                default:
+                    response.sendRedirect("./login.jsp");
+            }
+        } else {
+            response.sendRedirect("./login.jsp");
+        }
+        /*
         if(request.getParameter("apodo")!= null){
             String apodo = request.getParameter("apodo").trim();
             GestorUsuarios gu = new GestorUsuarios();
@@ -71,7 +116,7 @@ public class login extends HttpServlet {
         }else{
              response.sendRedirect("./login.jsp");
         }
-        
+        */
         
         //processRequest(request, response);
     }
@@ -93,6 +138,8 @@ public class login extends HttpServlet {
         String accion = request.getParameter("accion").trim();
         switch(accion){
             case "login":
+                HttpSession session = request.getSession();
+                
                 System.out.println(accion);
                 break;
             case "registro":

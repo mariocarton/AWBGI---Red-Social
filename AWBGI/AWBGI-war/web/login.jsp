@@ -25,22 +25,25 @@
         <div class="container" style="text-align: center; padding-top: 25px; padding-bottom: 6%; padding-left: 30%; padding-right: 30%">
             <div class="row" id="iniciosesion">
                 <div class="col-md-12" >
-                    <form role="form" action="login" method="POST">
+                    <form role="form" action="login" method="POST" id="entrar_form">
                         <div class="form-group">
                             <h2>Entrar</h2>
                         </div>
+                        <div id="error_entrar" class="form-group">
+                            <label><span class="glyphicon glyphicon-remove" style="color: red" aria-hidden="true"></span></label>
+                        </div>
                         <div class="form-group">
-                            <label for="ejemplo_email_1" >Apodo</label>
-                            <input type="text" class="form-control" id="email" name="email"
+                            <label>Apodo</label>
+                            <input type="text" class="form-control" id="e_apodo" name="e_apodo"
                                    placeholder="Introduce tu apodo" required="">
                         </div>
                         <div class="form-group">
-                            <label for="ejemplo_password_1">Contraseña</label>
-                            <input type="password" class="form-control" id="password" name="password"
+                            <label>Contraseña</label>
+                            <input type="password" class="form-control" id="e_pass" name="e_pass"
                                    placeholder="Introduce tu contraseña" required="">
                         </div>
                         <input hidden name="accion" value="login"/>
-                        <button type="submit" class="btn btn-default">Entrar</button>
+                        <button id="boton_entrar" type="submit" class="btn btn-default">Entrar</button>
                     </form>
                 </div>                
             </div>
@@ -56,7 +59,7 @@
                                    placeholder="Introduce un apodo" required="">
                         </div>
                          <div class="form-group">
-                            <label for="ejemplo_password_1">Contraseña <span id="l_password1"> <span class="glyphicon glyphicon-remove" style="color: red" aria-hidden="true"></span><em style="color:red">La contraseña no es igual</em></span></label>
+                            <label>Contraseña <span id="l_password1"> <span class="glyphicon glyphicon-remove" style="color: red" aria-hidden="true"></span><em style="color:red">La contraseña no es igual</em></span></label>
                             <input type="password" class="form-control" id="r_password1" name="password"
                                    placeholder="Introduce una contraseña" required="">
                         </div>  
@@ -112,7 +115,8 @@
                     $.ajax({
                         url: 'login',
                         data: {
-                            apodo : $('#r_apodo').val()
+                            apodo : $('#r_apodo').val(),
+                            accion : "existe_apodo"
                         },
                         success:function (responseText) {
                             if(responseText === "yes"){
@@ -165,6 +169,28 @@
            $('#l_password1').hide();
            $('#l_password2').hide();
         </script>
-        
+        <script type="text/javascript">
+           $('#entrar_form').submit(function(event){
+                $('#error_entrar').hide();
+                $.ajax({
+                   url: 'login',
+                   data:{
+                       apodo: $('#e_apodo').val(),
+                       pass: $('#e_pass').val(),
+                       accion: "login_submit"                              
+                   },success: function (responseText) {
+                        if(responseText==="yes"){
+                            window.location = "index";
+                        }
+                        if (responseText==="no"){
+                            $('#error_entrar').show();
+                        }
+                    }
+               });
+               //alert( "Handler for .submit() called." );
+               event.preventDefault();
+           });
+           $('#error_entrar').hide();
+        </script>  
     </body>
 </html>
