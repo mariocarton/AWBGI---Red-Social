@@ -17,20 +17,17 @@
     
     </head>
     <body>
-        <div class="container" style="text-align: center; padding-top: 6%; padding-bottom: 6%; padding-left: 30%; padding-right: 30%">
-            <div class="row">
-                <div class="col-md-6">
-                    <a id="einiciosesion">Iniciar Sesión</a>                    
-                </div>
-                <div class="col-md-6">
-                    <a id="eregistrarse">Registrarse</a>
-                </div>
+        <div class="container" style="text-align: center; padding-top: 2%">
+            <div class="page-header" style="text-align: center" >
+                <h1>MuchaPeli</h1>
             </div>
+        </div>
+        <div class="container" style="text-align: center; padding-top: 25px; padding-bottom: 6%; padding-left: 30%; padding-right: 30%">
             <div class="row" id="iniciosesion">
                 <div class="col-md-12" >
                     <form role="form" action="login" method="POST">
                         <div class="form-group">
-                            <h1>Entrar</h1>
+                            <h2>Entrar</h2>
                         </div>
                         <div class="form-group">
                             <label for="ejemplo_email_1" >Apodo</label>
@@ -51,7 +48,7 @@
                 <div class="col-md-12" >
                     <form role="form" action="login" method="POST">
                         <div class="form-group">
-                            <h1>Registro</h1>
+                            <h2>Registro</h2>
                         </div>
                         <div class="form-group">
                             <label>Apodo <span id="apodo_enuso"> <span class="glyphicon glyphicon-remove" style="color: red" aria-hidden="true"></span><em style="color:red">Apodo en uso</em></span></label>
@@ -65,23 +62,31 @@
                         </div>  
                         <div class="form-group">
                             <label for="ejemplo_password_1">Repetir Contraseña <span id="l_password2"> <span class="glyphicon glyphicon-remove" style="color: red" aria-hidden="true"></span><em style="color:red">La contraseña no es igual</em></span></label>
-                            <input type="password" class="form-control" id="r_password2" name="password"
+                            <input type="password" class="form-control" id="r_password2" name="password2"
                                    placeholder="Repite la contraseña" required="">
                         </div>
                         <div class="form-group">
                             <label for="ejemplo_email_1" >Nombre</label>
-                            <input type="text" class="form-control" id="nombre" name="email"
+                            <input type="text" class="form-control" id="nombre" name="nombre"
                                    placeholder="Introduce tu nombre" required="">
                         </div>
                         <div class="form-group">
                             <label for="ejemplo_email_1" >Apellidos</label>
-                            <input type="email" class="form-control" id="email" name="email"
+                            <input type="email" class="form-control" id="email" name="apellidos"
                                    placeholder="Introduce tus apellidos" required="">
                         </div>
                         <input hidden name="accion" value="registro"/>
                         <button id="boton_registro" type="submit" class="btn btn-default">Registrarse</button>
                     </form>
                 </div>                
+            </div>
+            <div class="row" style="margin-top: 35px">
+                <div class="col-md-6">
+                    <a id="einiciosesion" style="cursor: hand; cursor: pointer; text-decoration: none">Iniciar Sesión</a>                    
+                </div>
+                <div class="col-md-6">
+                    <a id="eregistrarse" style="cursor: hand; cursor: pointer; text-decoration: none">Registrarse</a>
+                </div>
             </div>
         </div>        
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>

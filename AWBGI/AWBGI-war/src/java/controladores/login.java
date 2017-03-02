@@ -97,6 +97,11 @@ public class login extends HttpServlet {
                 break;
             case "registro":
                 System.out.println(accion);
+                String apodo = request.getParameter("apodo").trim();
+                String pass = request.getParameter("password").trim();
+                String nombre = request.getParameter("nombre").trim();
+                String apellidos = request.getParameter("apellidos").trim();
+                
                 break;
             default: 
                 response.sendRedirect("./login.jsp");
