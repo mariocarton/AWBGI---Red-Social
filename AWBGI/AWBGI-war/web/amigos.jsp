@@ -17,7 +17,6 @@
     </head>
     <body>
         <div class="row">
-            <div class="col-xs-8 ">
                 <div class="container-fluid">
                     <div class="jumbotron col-xs-4" style="margin: 1%">
                         <h3 style="text-height: auto">Mario Cartón</h3>
@@ -38,7 +37,6 @@
                         <p><a class="btn btn-primary btn-lg" href="#" role="button">Añadir</a></p>
                     </div>
                 </div>
-            </div>
         </div>
 
         <!-- Latest compiled and minified JavaScript -->

@@ -49,10 +49,10 @@
                         <i class="glyphicon glyphicon-search form-control-feedback"></i>
                     </li>
                     <li>
-                        <a class="glyphicon glyphicon-plus-sign" href="#"> Añadir </a> 
+                        <a id="banadir" class="glyphicon glyphicon-plus-sign"> Añadir </a> 
                     </li>
                     <li class="active">
-                        <a class="glyphicon glyphicon-user" href="#"> Perfil </a>
+                        <a class="glyphicon glyphicon-user" id="bperfil"> Perfil </a>
                     </li>
                     <li>
                         <a class="glyphicon glyphicon-transfer" href="#" > Actividad </a>
@@ -61,13 +61,13 @@
                         <a class="glyphicon glyphicon-eye-close" href="#"> Por Ver </a> 
                     </li>
                     <li>
-                        <a class="glyphicon glyphicon-" href="#"> Amigos </a> 
+                        <a class="glyphicon glyphicon-" id="bamigos"> Amigos </a> 
                     </li>
                 </ul>
                 <hr style="color: red" />
                 <ul class="nav nav-sidebar">
                     <li> 
-                        <h7 style="text-align: center"> Usuario 1 </h7>
+                    <h7 style="text-align: center"> Usuario 1 </h7>
                     </li>
                     <li>
                         <a class="glyphicon glyphicon-cog" href="#"> Ajustes </a> 
@@ -79,24 +79,26 @@
                 <hr style="color: red" />
                 <ul class="nav nav-sidebar">
                     <li>
-                        <a class="glyphicon glyphicon-log-out" href="#"> Salir </a> 
+                        <a class="glyphicon glyphicon-log-out" href="login.jsp"> Salir </a> 
                     </li>
                 </ul>
             </div>
 
-            <div class="col-xs-8">
-                <h4  > Usuario 1 </h4>
-                <div class="nav nav-tabs">
+            <div class="col-xs-8" >
+                
+                <div class="nav nav-tabs" id="navperfil" style="display:none">
+                    <h4  > Usuario 1 </h4>
                     <li role="presentation" class="active">
-                        <a class="active glyphicon glyphicon-eye-open" href="#"> Visto</a>
+                        <a class="active glyphicon glyphicon-eye-open" id="bvisto"> Visto</a>
                     </li>
-                     <li role="presentation">
-                        <a class="active glyphicon glyphicon-adjust" href="#"> Mi Actividad</a>
+                    <li role="presentation">
+                        <a id="bmiactividad" class="active glyphicon glyphicon-adjust"> Mi Actividad</a>
                     </li>
-                     <li role="presentation">
-                        <a class="active glyphicon glyphicon-alert" href="#"> Alertas</a>
+                    <li role="presentation">
+                        <a class="active glyphicon glyphicon-alert"> Alertas</a>
                     </li>
                 </div>
+                <!--
                 <div class="btn-group btn-group-justified" role="group" aria-label="...">
                     <div class="btn-group" role="group">
                         <button type="button" class="btn btn-default glyphicon glyphicon-eye-open"> Visto</button>
@@ -108,9 +110,10 @@
                         <button type="button" class="btn btn-default glyphicon glyphicon-alert"> Alertas</button>
                     </div>
                 </div>
+                -->
                 <hr style="color: red" />
 
-                <div class="row">
+                <div class="row" id="visto" style="display:none">
                     <div class="col-xs-4">
                         <div class="thumbnail">
                             <img src="..." alt="...">
@@ -132,20 +135,128 @@
                         </div>
                     </div>
                 </div>
-            </div>
 
+                <div class="row " id="anadir" style="display:none" style="margin: 4%">
+                    <div class="container-fluid" style="margin: 4%">
+                        <form role="form" action="guardapeli" method="POST">
+                            <div class="form-group">
+                                <label for="titulo">Título</label>
+                                <input type="text" class="form-control" id="titulo"
+                                       placeholder="Introduce el Título" required="">
+                            </div>
+                            <div class="form-group">
+                                <label for="ano">Año</label>
+                                <input type="text" class="form-control" id="ano" 
+                                       placeholder="Introduce el año" required="">
+                            </div>
+                            <div class="form-group">
+                                <label for="director">Director</label>
+                                <input type="text" class="form-control" id="director" 
+                                       placeholder="Introduce el Director" required="">
+                            </div>
+                            <div class="form-group">
+                                <label for="pais">País</label>
+                                <input type="text" class="form-control" id="pais" 
+                                       placeholder="Introduce el País de origen" required="">
+                            </div>
+                            <div class="form-group">
+                                <label for="sinopsis">Sinopsis</label>
+                                <input type="text" class="form-control" id="sinopsis" 
+                                       placeholder="Introduce una breve descripción" required="">
+                            </div>
+                            <div class="form-group">
+                                <label for="archivo_foto">Adjuntar un archivo</label>
+                                <input type="file" id="imagenpelicula">
+                                <p class="help-block">Adjunta una imagen para su película.</p>
+                            </div>
+                            <input hidden name="accion" value="anadirpeli"/>
+                            <button type="submit" class="btn btn-primary">Enviar</button>
+                        </form>
+                    </div>
+
+                </div>
+                <div class="row" id="amigos" style="display:none">
+                    <div class="container-fluid">
+                        <div class="jumbotron col-xs-4" style="margin: 1%">
+                            <h3 style="text-height: auto">Mario Cartón</h3>
+                            <p>Vistas 17</p>
+                            <p>Por Ver 17</p>
+                            <p><a class="btn btn-primary btn-lg" href="#" role="button">Añadir</a></p>
+                        </div>
+                        <div class="jumbotron col-xs-4" style="margin: 1%">
+                            <h3 style="text-height: auto">Mario</h3>
+                            <p>Vistas 17</p>
+                            <p>Por Ver 17</p>
+                            <p><a class="btn btn-primary btn-lg" href="#" role="button">Añadir</a></p>
+                        </div>
+                        <div class="jumbotron col-xs-4" style="margin: 1%">
+                            <h3 style="text-height: auto">Mario González</h3>
+                            <p>Vistas 17</p>
+                            <p>Por Ver 17</p>
+                            <p><a class="btn btn-primary btn-lg" href="#" role="button">Añadir</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="col-xs-2 panel panel-primary">
                 <a href="#"> saf </a>
             </div>
-        </div>   
+
+        </div>
+
+
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>-->
+    <script src="recursos/bootstrap/js/bootstrap.min.js" ></script> 
+    
+    <script type="text/javascript">
+        $('#bvisto').click(function () {
+            $('#anadir').hide();
+            $('#visto').show();
+            $('#amigos').hide();
+        });
+        $('#banadir').click(function () {
+            $('#anadir').show();
+            $('#visto').hide();
+            $('#amigos').hide();
+            $('#navperfil').hide();
+        });
+        $('#bamigos').click(function () {
+            $('#anadir').hide();
+            $('#visto').hide();
+            $('#amigos').show();
+            $('#navperfil').hide();
+        });
+        $('#bperfil').click(function () {
+            $('#anadir').hide();
+            $('#visto').hide();
+            $('#amigos').hide();
+            $('#navperfil').show();
+            $('#visto').show();
+        });
+    </script>
 
-
-</div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>-->
-<script src="recursos/bootstrap/js/bootstrap.min.js" ></script> 
-
+    <script type="text/javascript">
+        $(function(){
+                $('#').keyup(function(){
+                    $.ajax({
+                        url: 'index',
+                        data: {
+                            apodo : $('#').val()
+                        },
+                        success:function (responseText) {
+                            if(responseText === ""){
+                                
+                            }else{
+                                
+                            }
+                        }
+                    }
+                }
+            }
+        
+    </script>
 
 </body>
 </html>

@@ -49,7 +49,8 @@ public class index extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        //processRequest(request, response);
+        
     }
 
     /**
@@ -63,7 +64,15 @@ public class index extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        //processRequest(request, response);
+        String accion = request.getParameter("accion").trim();
+        switch(accion){
+            case "anadirpeli":
+                System.out.println(accion);
+                break;
+            default: 
+                response.sendRedirect("./index.jsp");
+        }
     }
 
     /**
