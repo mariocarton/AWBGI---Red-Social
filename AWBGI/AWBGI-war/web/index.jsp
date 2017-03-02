@@ -14,6 +14,7 @@
         <link rel="stylesheet" href="recursos/bootstrap/css/bootstrap.min.css" >
         <!-- Optional theme -->
         <link rel="stylesheet" href="recursos/bootstrap/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="recursos/font-awesome/css/font-awesome.min.css">
     </head>
     <body>
         <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: blue">
@@ -61,7 +62,8 @@
                         <a class="glyphicon glyphicon-eye-close" href="#"> Por Ver </a> 
                     </li>
                     <li>
-                        <a class="glyphicon glyphicon-" id="bamigos"> Amigos </a> 
+                        <a class="glyphicon" id="bamigos"> Amigos </a> 
+                        <i class="fa fa-users" aria-hidden="true"></i>
                     </li>
                 </ul>
                 <hr style="color: red" />
