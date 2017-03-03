@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title id="titulopestana">Perfil</title>
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="recursos/bootstrap/css/bootstrap.min.css" >
         <!-- Optional theme -->
@@ -17,7 +17,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <body>
-        <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: blue">
+        <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: #31708f">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <a class="navbar-brand" id="iconmuchapeli" style="color: white"> MuchaPeli </a>
@@ -208,11 +208,11 @@
                 </div>
                 <div class="modal-content" style="display:none" id="pelianadida">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Modal Header</h4>
+                        <button type="button" class="close" id="btnpelianadida" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Película Añadida</h4>
                     </div>
                     <div class="modal-body">
-                        <p>Some text in the modal.</p>
+                        <p>La pelicula fue añadida con éxito</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal" id="btnpelianadida">Close</button>
@@ -236,18 +236,21 @@
             $('#anadir').hide();
             $('#visto').show();
             $('#amigos').hide();
+            $('#titulopestana').html("Perfil")
         });
         $('#banadir').click(function () {
             $('#anadir').show();
             $('#visto').hide();
             $('#amigos').hide();
             $('#navperfil').hide();
+            $('#titulopestana').html("Añadir Película")
         });
         $('#bamigos').click(function () {
             $('#anadir').hide();
             $('#visto').hide();
             $('#amigos').show();
             $('#navperfil').hide();
+            $('#titulopestana').html("Amigos");
         });
         $('#bperfil').click(function () {
             $('#anadir').hide();
@@ -255,7 +258,20 @@
             $('#amigos').hide();
             $('#navperfil').show();
             $('#visto').show();
+            $('#titulopestana').html("Perfil");
+             
         });
+        
+        $('#btnpelianadida').click(function () {
+            $('#anadir').hide();
+            $('#visto').hide();
+            $('#amigos').hide();
+            $('#navperfil').show();
+            $('#visto').show();
+            $('#titulopestana').html("Perfil");
+             
+        });
+        
     </script>
 
     <script type="text/javascript">
@@ -272,7 +288,9 @@
                     sinopsispf: $('#sinopsispf').val()
 
                 }, success: function (responseText) {
-                    if (responseText === "yes") {
+                    if (responseText === "yes"){
+                        $('#titulopestana').html("aqui");
+                        window.location = "index",
                         $('#pelianadida').show();
                     }
                     if (responseText === "no") {

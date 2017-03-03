@@ -139,7 +139,8 @@ public class login extends HttpServlet {
         switch(accion){
             case "login":
                 HttpSession session = request.getSession();
-                
+                //session.setAttribute("id", id);
+               
                 System.out.println(accion);
                 break;
             case "registro":

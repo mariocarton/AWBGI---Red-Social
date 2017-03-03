@@ -5,12 +5,15 @@ package controladores;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import datos.GestorPeliculas;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import modelo.Pelicula;
 
 /**
  *
@@ -92,7 +95,10 @@ public class index extends HttpServlet {
                 String pais = request.getParameter("paispf").trim();
                 String genero = request.getParameter("generopf").trim();
                 String sinopsis = request.getParameter("sinopsispf").trim();
-                
+                GestorPeliculas gp = new GestorPeliculas();
+                HttpSession session = request.getSession();
+                //session.getAttribute("id");
+                //Pelicula pe = new Pelicula();
                 System.out.println(titulo+" "+ano+" "+director+" "+pais+" "+genero+" "+sinopsis);
                 String r = "yes";
                 response.setContentType("text/plain");
