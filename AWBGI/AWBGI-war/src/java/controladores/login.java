@@ -57,10 +57,12 @@ public class login extends HttpServlet {
         if (accion != null) {
             GestorUsuarios gu = new GestorUsuarios();
             Usuario u;
+            
             switch (accion) {
-                case "existe_apodo":
+                case "existe_apodo":                    
                     String apodo = request.getParameter("apodo").trim();                    
                     u = gu.getUsuarioPorApodo(apodo);
+                    
                     if (u != null) {
                         System.out.println(u.getId() + " " + u.getApodo() + " " + u.getNombre() + " " + u.getApellidos() + " " + u.getContraseña() + " " + u.getTipo());
                     }
@@ -74,51 +76,66 @@ public class login extends HttpServlet {
                         response.getWriter().write(r);
                     }
                     break;
-                case "login_submit":                   
+                    
+                case "login_submit":             
                     String l_apodo = request.getParameter("apodo").trim();
-                    String l_pass = request.getParameter("pass").trim();
+                    String l_pass  = request.getParameter("pass").trim();
                     u = gu.getUsuarioPorApodo(l_apodo);                    
+                    
                     //Si no esta en la base de datos o las contraseñas no son iguales
                     if(u==null || !u.getContraseña().equals(l_pass)){ 
                        String r = "no";
                        response.setContentType("text/plain");
                        response.getWriter().write(r); 
                     }else{
-                        System.out.println("redirige");
+                        HttpSession session = request.getSession();
+                        session.setAttribute("auth", true);
+                        session.setAttribute("usuario", u);
                         String r = "yes";
                         response.setContentType("text/plain");
                         response.getWriter().write(r);                         
                     }
                     break;
+                    
+                case "registro_submit":  
+                    System.out.println("entra aqui");
+                    String r_apodo = request.getParameter("apodo").trim();
+                    String r_pass1 = request.getParameter("pass1").trim();
+                    String r_pass2 = request.getParameter("pass2").trim();
+                    String r_nombre = request.getParameter("nombre").trim();
+                    String r_apellidos = request.getParameter("apellidos").trim();
+                    u = gu.getUsuarioPorApodo(r_apodo);
+                    
+                    if(!r_pass1.equals(r_pass2) && u!=null){
+                        String r = "3";
+                        response.setContentType("text/plain");
+                        response.getWriter().write(r);
+                    }else if(u!=null){
+                        String r = "2";
+                        response.setContentType("text/plain");
+                        response.getWriter().write(r);
+                    }else if(!r_pass1.equals(r_pass2)){
+                        String r = "1";
+                        response.setContentType("text/plain");
+                        response.getWriter().write(r);
+                    }else{
+                        Usuario r_usuario = new Usuario(-1,r_apodo,r_nombre,r_apellidos,r_pass1,0);
+                        gu.guardaUsuario(r_usuario);
+                        HttpSession session = request.getSession();
+                        session.setAttribute("auth", true);
+                        session.setAttribute("usuario", r_usuario);
+                        String r = "0";
+                        response.setContentType("text/plain");
+                        response.getWriter().write(r);
+                    }
+                    break;
+                    
                 default:
                     response.sendRedirect("./login.jsp");
             }
         } else {
             response.sendRedirect("./login.jsp");
-        }
-        /*
-        if(request.getParameter("apodo")!= null){
-            String apodo = request.getParameter("apodo").trim();
-            GestorUsuarios gu = new GestorUsuarios();
-            Usuario u = gu.getUsuarioPorApodo(apodo);
-            if (u!=null) {
-                System.out.println(u.getId()+" "+u.getApodo()+" "+u.getNombre()+" "+u.getApellidos()+" "+u.getContraseña()+" "+u.getTipo());
-            }
-            if (u!=null && u.getApodo().equals(apodo)){
-                String r = "yes";
-                response.setContentType("text/plain");
-                response.getWriter().write(r);
-            }else{
-                String r = "no";
-                response.setContentType("text/plain");
-                response.getWriter().write(r);
-            }            
-        }else{
-             response.sendRedirect("./login.jsp");
-        }
-        */
-        
-        //processRequest(request, response);
+        }        
     }
 
     /**
@@ -132,53 +149,7 @@ public class login extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
-        // Set response content type
-        
-        String accion = request.getParameter("accion").trim();
-        switch(accion){
-            case "login":
-                HttpSession session = request.getSession();
-                //session.setAttribute("id", id);
-               
-                System.out.println(accion);
-                break;
-            case "registro":
-                System.out.println(accion);
-                String apodo = request.getParameter("apodo").trim();
-                String pass = request.getParameter("password").trim();
-                String nombre = request.getParameter("nombre").trim();
-                String apellidos = request.getParameter("apellidos").trim();
-                
-                break;
-            default: 
-                response.sendRedirect("./login.jsp");
-        }
-        
-        
-//        response.setContentType("text/html");
-//
-//        PrintWriter out = response.getWriter();
-//        String title = "Using GET Method to Read Form Data";
-//
-//        String docType = "<!doctype html public \"-//w3c//dtd html 4.0 "
-//                + "transitional//en\">\n";
-//        Usuario u = new Usuario(-1,"mate","Mario","Matesanz","marmate",0);
-//        GestorUsuarios gu = new GestorUsuarios();
-//        gu.guardaUsuario(u);
-//        out.println(docType + "<html>\n"
-//                + "<head><title>" + title + "</title></head>\n"
-//                + "<body bgcolor=\"#f0f0f0\">\n"
-//                + "<h1 align=\"center\">" + title + "</h1>\n"
-//                + "<ul>\n"
-//                + "  <li><b>Email</b>: "
-//                + request.getParameter("email") + "\n"
-//                + "  <li><b>Password</b>: "
-//                + request.getParameter("password") + "\n"
-//                + "  <li><b>Objeto</b>: "
-//                + u.getApodo() + "\n"
-//                + "</ul>\n"
-//                + "</body></html>");
+        processRequest(request, response);        
     }
 
     /**

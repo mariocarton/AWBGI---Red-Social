@@ -25,12 +25,12 @@
         <div class="container" style="text-align: center; padding-top: 25px; padding-bottom: 6%; padding-left: 30%; padding-right: 30%">
             <div class="row" id="iniciosesion">
                 <div class="col-md-12" >
-                    <form role="form" action="login" method="POST" id="entrar_form">
+                    <form role="form" id="entrar_form">
                         <div class="form-group">
                             <h2>Entrar</h2>
                         </div>
                         <div id="error_entrar" class="form-group">
-                            <label><span class="glyphicon glyphicon-remove" style="color: red" aria-hidden="true"></span></label>
+                            <label><span class="glyphicon glyphicon-remove" style="color: red" aria-hidden="true"></span><em style="color:red"> Nombre de usuario o contraseña incorrectos</em></label>
                         </div>
                         <div class="form-group">
                             <label>Apodo</label>
@@ -49,7 +49,7 @@
             </div>
             <div class="row" id="registro">
                 <div class="col-md-12" >
-                    <form role="form" action="login" method="POST">
+                    <form role="form"  id="registro_form">
                         <div class="form-group">
                             <h2>Registro</h2>
                         </div>
@@ -60,22 +60,22 @@
                         </div>
                          <div class="form-group">
                             <label>Contraseña <span id="l_password1"> <span class="glyphicon glyphicon-remove" style="color: red" aria-hidden="true"></span><em style="color:red">La contraseña no es igual</em></span></label>
-                            <input type="password" class="form-control" id="r_password1" name="password"
+                            <input type="password" class="form-control" id="r_password1" name="r_password1"
                                    placeholder="Introduce una contraseña" required="">
                         </div>  
                         <div class="form-group">
                             <label for="ejemplo_password_1">Repetir Contraseña <span id="l_password2"> <span class="glyphicon glyphicon-remove" style="color: red" aria-hidden="true"></span><em style="color:red">La contraseña no es igual</em></span></label>
-                            <input type="password" class="form-control" id="r_password2" name="password2"
+                            <input type="password" class="form-control" id="r_password2" name="r_password2"
                                    placeholder="Repite la contraseña" required="">
                         </div>
                         <div class="form-group">
                             <label for="ejemplo_email_1" >Nombre</label>
-                            <input type="text" class="form-control" id="nombre" name="nombre"
+                            <input type="text" class="form-control" id="r_nombre" name="r_nombre"
                                    placeholder="Introduce tu nombre" required="">
                         </div>
                         <div class="form-group">
                             <label for="ejemplo_email_1" >Apellidos</label>
-                            <input type="email" class="form-control" id="email" name="apellidos"
+                            <input type="text" class="form-control" id="r_apellidos" name="r_apellidos"
                                    placeholder="Introduce tus apellidos" required="">
                         </div>
                         <input hidden name="accion" value="registro"/>
@@ -84,113 +84,32 @@
                 </div>                
             </div>
             <div class="row" style="margin-top: 35px">
-                <div class="col-md-6">
+                <div class="col-md-12" id="einiciosesion_cont">
+                    Si ya tienes cuenta puedes
                     <a id="einiciosesion" style="cursor: hand; cursor: pointer; text-decoration: none">Iniciar Sesión</a>                    
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-12" id="eregistrarse_cont">
+                    Si no tienes cuenta puedes
                     <a id="eregistrarse" style="cursor: hand; cursor: pointer; text-decoration: none">Registrarse</a>
                 </div>
             </div>
-        </div>        
+        </div> 
+        
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>-->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> 
         
+        <!-- Funciones javascript que contolan la vista de la pagina -->
+        <script type="text/javascript" src="js/login.js"></script>
         <script type="text/javascript">
-            $('#einiciosesion').click(function() {                
-                $('#registro').hide();
-                $('#iniciosesion').show();  
-            });
-            $('#eregistrarse').click(function() {
-                $('#registro').show();
-                $('#iniciosesion').hide();                
-            });
+            // Iicializacion de los scripts
             $('#registro').hide();
-           
+            $('#einiciosesion_cont').hide();
+            $('#apodo_enuso').hide();
+            $('#l_password1').hide();
+            $('#l_password2').hide();
+            $('#error_entrar').hide();
         </script>
         
-        <script type="text/javascript">
-            $(function(){
-                $('#r_apodo').keyup(function(){
-                    $.ajax({
-                        url: 'login',
-                        data: {
-                            apodo : $('#r_apodo').val(),
-                            accion : "existe_apodo"
-                        },
-                        success:function (responseText) {
-                            if(responseText === "yes"){
-                                $('#apodo_enuso').show();
-                                $('#boton_registro').prop('disabled',true);                                
-                            }else{
-                                $('#apodo_enuso').hide();
-                                $('#boton_registro').prop('disabled',false); 
-                            }
-                        }
-                    });
-              }); 
-           });
-           $('#apodo_enuso').hide();
-           
-        </script>
-        
-        <script type="text/javascript">
-            $(function(){
-                $('#r_password1').keyup(function(){
-                    var pass1 = $('#r_password1').val()
-                    var pass2 = $('#r_password2').val()
-                    if (pass1!==pass2){
-                        $('#l_password1').show();
-                        $('#l_password2').show();
-                        $('#boton_registro').prop('disabled',true);
-                    }else{
-                       $('#l_password1').hide();
-                       $('#l_password2').hide(); 
-                       $('#boton_registro').prop('disabled',false); 
-                    }
-              }); 
-               
-           }); 
-           $(function(){               
-               $('#r_password2').keyup(function(){
-                    var pass1 = $('#r_password1').val();
-                    var pass2 = $('#r_password2').val();
-                    if (pass1!==pass2){
-                        $('#l_password1').show();
-                        $('#l_password2').show();
-                        $('#boton_registro').prop('disabled',true);
-                    }else{
-                        $('#l_password1').hide();
-                        $('#l_password2').hide();
-                        $('#boton_registro').prop('disabled',false); 
-                    }
-              });
-           });
-           $('#l_password1').hide();
-           $('#l_password2').hide();
-        </script>
-        <script type="text/javascript">
-           $('#entrar_form').submit(function(event){
-                $('#error_entrar').hide();
-                $.ajax({
-                   url: 'login',
-                   data:{
-                       apodo: $('#e_apodo').val(),
-                       pass: $('#e_pass').val(),
-                       accion: "login_submit"                              
-                   },success: function (responseText) {
-                        if(responseText==="yes"){
-                            window.location = "index";
-                        }
-                        if (responseText==="no"){
-                            $('#error_entrar').show();
-                        }
-                    }
-               });
-               //alert( "Handler for .submit() called." );
-               event.preventDefault();
-           });
-           $('#error_entrar').hide();
-        </script>  
     </body>
 </html>
