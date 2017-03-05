@@ -17,6 +17,15 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <body>
+        <%
+            // Si no esta iniciada la sesion se reenvia al formulario de registro
+            Boolean sesion = (Boolean) session.getAttribute("auth");
+            if (sesion != null) {
+                if (!sesion) {
+                    response.sendRedirect("./login");
+                }
+            }
+        %>
         <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: #31708f">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -83,7 +92,7 @@
                 <hr style="color: red" />
                 <ul class="nav nav-sidebar">
                     <li>
-                        <a class="glyphicon glyphicon-log-out" href="login.jsp"> Salir </a> 
+                        <a class="glyphicon glyphicon-log-out" href="index?accion=cierra_sesion"> Salir </a> 
                     </li>
                 </ul>
             </div>

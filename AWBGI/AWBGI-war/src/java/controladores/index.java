@@ -54,24 +54,45 @@ public class index extends HttpServlet {
         //try (PrintWriter out = response.getWriter()) {
         //   response.sendRedirect("./index.jsp");
         //}
-
-        String accion = request.getParameter("accion");
-        if (accion != null) {
-            System.out.println("aqui2");
-            switch (accion) {
-                case "savepeli":
+        
+        // Mira en la session si esta autenticado el usuario
+        HttpSession session = request.getSession();
+        Boolean sesion = (Boolean) session.getAttribute("auth");
+        if (sesion != null) {
+            if (sesion) {                
+                
+                String accion = request.getParameter("accion");
+                if (accion != null) {
+                                       
                     
-                    break;
+                    switch (accion) {
+                        case "savepeli":
+                            System.out.println("savepeli");
+                            break;
+                        case "cierra_sesion":
+                            System.out.println("cierra sesion");
+                            session.setAttribute("auth", false);
+                            response.sendRedirect("./login");
+                            break;
 
-                default:
+                        default:
+                            System.out.println("default");
+                            response.sendRedirect("./index.jsp");
+                    }
+                    
+                    
+                    
+                } else {
+                    System.out.println("aqui");
                     response.sendRedirect("./index.jsp");
+                }
+                
+            } else {
+                response.sendRedirect("./login");
             }
         } else {
-            System.out.println("aqui");
-            response.sendRedirect("./index.jsp");
-            
+            response.sendRedirect("./login");
         }
-
     }
 
     /**
