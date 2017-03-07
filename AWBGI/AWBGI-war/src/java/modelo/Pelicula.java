@@ -15,7 +15,8 @@ import java.util.Date;
 public class Pelicula {
     private int id;
     private int idusuario;
-    private Date ano;
+    private String titulo;
+    private int ano;
     private int duracion;
     private String pais;
     private String director;
@@ -24,9 +25,21 @@ public class Pelicula {
     
     
             
-    public Pelicula(int id,int idusuario,Date ano,int duracion,String pais,String director,String genero,String sinopsis) {
+    public Pelicula(int idusuario,String titulo,int ano,int duracion,String pais,String director,String genero,String sinopsis) {
+        //this.id = id;
+        this.idusuario = idusuario;
+        this.titulo = titulo;
+        this.ano = ano;
+        this.duracion = duracion;
+        this.pais = pais;
+        this.director = director;
+        this.sinopsis = sinopsis;
+        this.genero = genero;
+    }
+    public Pelicula(int id,int idusuario,String titulo,int ano,int duracion,String pais,String director,String genero,String sinopsis) {
         this.id = id;
         this.idusuario = idusuario;
+        this.titulo = titulo;
         this.ano = ano;
         this.duracion = duracion;
         this.pais = pais;
@@ -43,6 +56,7 @@ public class Pelicula {
     public void setId(Integer id) {
         this.id = id;
     }
+
     public Integer getIdusuario() {
         return idusuario;
     }
@@ -50,11 +64,19 @@ public class Pelicula {
     public void setIdusuario(Integer idusuario) {
         this.idusuario = idusuario;
     }
-    public Date getAno() {
+     public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+    
+    public int getAno() {
         return ano;
     }
 
-    public void setAno(Date ano) {
+    public void setAno(int ano) {
         this.ano = ano;
     }
 

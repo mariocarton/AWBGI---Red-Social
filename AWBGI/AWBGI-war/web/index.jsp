@@ -34,7 +34,9 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <a href="#"> Explorar </a>
+                            <a class="glyphicon" id="explorar"> 
+                                <i class="fa fa-wpexplorer" aria-hidden="true"></i>
+                                Explorar </a>
                         </li>
                     </ul>
 
@@ -56,7 +58,6 @@
                 <ul class="nav nav-sidebar">
                     <li>
                         <input type="text" class="form-control" placeholder="Buscar...">
-                        <i class="glyphicon glyphicon-search form-control-feedback"></i>
                     </li>
                     <li>
                         <a id="banadir" class="glyphicon glyphicon-plus-sign"> Añadir </a> 
@@ -151,7 +152,8 @@
 
                 <div class="row " id="anadir" style="display:none" style="margin: 4%">
                     <div class="container-fluid" style="margin: 4%">
-                        <form role="form" action="index" method="POST" id="formpeliadd">
+                        <h2 style="text-align: center"> Añadir película </h2>
+                        <form role="form" id="formpeliadd">
                             <div class="form-group">
                                 <label for="titulo">Título</label>
                                 <input type="text" class="form-control" id="titulopf" name="titulopf"
@@ -173,6 +175,11 @@
                                        placeholder="Introduce el País de origen" required="">
                             </div>
                             <div class="form-group">
+                                <label for="duracion">Duración</label>
+                                <input type="text" class="form-control" id="duracionpf" name="duracionpf"
+                                       placeholder="Introduce la duración de la película" required="">
+                            </div>
+                            <div class="form-group">
                                 <label for="pais">Género</label>
                                 <input type="text" class="form-control" id="generopf" name="generopf"
                                        placeholder="Introduce el genero de la película" required="">
@@ -188,7 +195,7 @@
                                 <p class="help-block">Adjunta una imagen para su película.</p>
                             </div>
                             <input hidden name="accion" value="anadirpeli"/>
-                            <button type="submit" class="btn btn-primary" id="enviapeli">Enviar</button>
+                            <button id="enviapeli" type="submit" class="btn btn-primary" >Enviar</button>
                         </form>
                     </div>
 
@@ -215,16 +222,20 @@
                         </div>
                     </div>
                 </div>
+                
+                <div class="row" id="pexplorar" style="display:none">
+                    <h2 style="text-align: center"> Películas de la Página </h2>
+                </div>
                 <div class="modal-content" style="display:none" id="pelianadida">
                     <div class="modal-header">
                         <button type="button" class="close" id="btnpelianadida" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Película Añadida</h4>
+                        <h4 class="modal-title">Insercción ejecutada</h4>
                     </div>
-                    <div class="modal-body">
-                        <p>La pelicula fue añadida con éxito</p>
+                    <div class="modal-body" id="mensajepeli">
+                        <!--<p>La pelicula fue añadida con éxito</p>-->
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" id="btnpelianadida">Close</button>
+                        <button type="button" class="btn btn-default" id="btnpelianadida2">Close</button>
                     </div>
                 </div>
             </div>
@@ -245,14 +256,14 @@
             $('#anadir').hide();
             $('#visto').show();
             $('#amigos').hide();
-            $('#titulopestana').html("Perfil")
+            $('#titulopestana').html("Perfil");
         });
         $('#banadir').click(function () {
             $('#anadir').show();
             $('#visto').hide();
             $('#amigos').hide();
             $('#navperfil').hide();
-            $('#titulopestana').html("Añadir Película")
+            $('#titulopestana').html("Añadir Película");
         });
         $('#bamigos').click(function () {
             $('#anadir').hide();
@@ -268,24 +279,53 @@
             $('#navperfil').show();
             $('#visto').show();
             $('#titulopestana').html("Perfil");
-             
+
         });
-        
+
         $('#btnpelianadida').click(function () {
+            $('#pelianadida').hide();
             $('#anadir').hide();
             $('#visto').hide();
             $('#amigos').hide();
             $('#navperfil').show();
             $('#visto').show();
             $('#titulopestana').html("Perfil");
-             
+
         });
-        
+        $('#btnpelianadida2').click(function () {
+            $('#pelianadida').hide();
+            $('#anadir').hide();
+            $('#visto').hide();
+            $('#amigos').hide();
+            $('#navperfil').show();
+            $('#visto').show();
+            $('#titulopestana').html("Perfil");
+
+        });
+
     </script>
 
     <script type="text/javascript">
+        $('#explorar').click(function () {
+            $('#pelianadida').hide();
+            $('#anadir').hide();
+            $('#visto').hide();
+            $('#amigos').hide();
+            $('#navperfil').hide();
+            $('#visto').hide();
+            $('#pexplorar').show();
+            $('#titulopestana').html("Explorar");
+            $.ajax({
+                url: 'index',
+                data: {
+                    accion: "explorar"
+                }, success: function (responseText) {
 
-        $('#enviapeli').submit(function (event) {
+                }
+            });
+        });
+
+        $('#formpeliadd').submit(function (event) {
             $.ajax({
                 url: 'index',
                 data: {
@@ -293,17 +333,20 @@
                     anopf: $('#anopf').val(),
                     directorpf: $('#directorpf').val(),
                     paispf: $('#paispf').val(),
+                    duracionpf: $('#duracionpf').val(),
                     generopf: $('#generopf').val(),
-                    sinopsispf: $('#sinopsispf').val()
+                    sinopsispf: $('#sinopsispf').val(),
+                    accion: "savepeli"
 
                 }, success: function (responseText) {
-                    if (responseText === "yes"){
-                        $('#titulopestana').html("aqui");
-                        window.location = "index",
+                    if (responseText === "yes") {
+                        $('#titulopestana').html("Pelicula Añadida");
+                        $('#mensajepeli').html("La pelicula fue añadida con éxito");
+                        //window.location = "index",
+                        $('#anadir').hide();
                         $('#pelianadida').show();
-                    }
-                    if (responseText === "no") {
-
+                    } else {
+                        $('#mensajepeli').html(responseText);
                     }
                 }
             });

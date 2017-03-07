@@ -7,6 +7,7 @@ package datos;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,23 +19,24 @@ import modelo.Pelicula;
  */
 public class GestorPeliculas {
 
-    public void guardaPeliculas(Pelicula pelicula) {
+    public String guardaPeliculas(Pelicula pelicula) {
         try {
             ConexionBD conexion = ConexionBD.getInstancia();
-            String consulta = "insert into pelicula "
-                    + "(id,idusuario,ano,duracion,pais,director,genero,sinopsis) values ("
-                    + "'" + pelicula.getIdusuario() + "'"
-                    + "'"+pelicula.getAno()+"'"
-                    +"'"+pelicula.getAno()+"'"
-                    +"'"+pelicula.getDuracion()+"'"
-                    +"'"+pelicula.getPais()+"'"
-                    +"'"+pelicula.getDirector()+"'"
-                    +"'"+pelicula.getGenero()+"'"
+            String consulta = "insert into pelicula (idusuario,titulo,ano,duracion,pais,director,genero,sinopsis) values ("
+                    + pelicula.getIdusuario()+","
+                    +"'"+pelicula.getTitulo()+"',"
+                    +pelicula.getAno()+","
+                    +pelicula.getDuracion()+","
+                    +"'"+pelicula.getPais()+"',"
+                    +"'"+pelicula.getDirector()+"',"
+                    +"'"+pelicula.getGenero()+"',"
                     +"'"+pelicula.getSinopsis()+"'"
                     +")";
             conexion.ejecutaInserta(consulta);
+            return "yes";
         } catch (SQLException | ClassNotFoundException ex) {
             System.out.println("Error en gestor de Peliculas: " + ex);
+            return "Error en gestor de Peliculas";
         }
     }
     
@@ -48,13 +50,14 @@ public class GestorPeliculas {
             if (resultado.next()) {
                 int id = resultado.getInt("id");
                 int idusuario =resultado.getInt("idusuario");
-                Date ano = resultado.getDate("ano");
+                String titulo = resultado.getString("titulo");
+                int ano = resultado.getInt("ano");
                 int duracion = resultado.getInt("duracion");
                 String pais = resultado.getString("pais");
                 String director = resultado.getString("director");
                 String genero = resultado.getString("genero");
                 String sinopsis = resultado.getString("sinopsis");
-                Pelicula pelicula = new Pelicula(id,idusuario,ano,duracion,pais,director,genero,sinopsis);
+                Pelicula pelicula = new Pelicula(id,idusuario,titulo,ano,duracion,pais,director,genero,sinopsis);
                 return pelicula;
                 
             } else {
@@ -64,5 +67,34 @@ public class GestorPeliculas {
             System.out.println("Error: en gestor de Peliculas " + ex);
         }
         return null; 
+    }
+    
+    
+    public ArrayList extraePeliculas() {
+        try {
+            ConexionBD conexion = ConexionBD.getInstancia();
+            String consulta = "select * from peliculas";
+            ResultSet resultado = conexion.ejecutaRecuperacion(consulta);
+            ArrayList<Pelicula> arrayPeliculas = new ArrayList<>();
+            while (resultado.next()) {
+                int id = resultado.getInt("id");
+                int idusuario = resultado.getInt("idusuario");
+                String titulo = resultado.getString("titulo");
+                int ano = resultado.getInt("ano");
+                int duracion = resultado.getInt("duracion");
+                String director = resultado.getString("director");
+                String sinopsis = resultado.getString("genero");
+                String pais = resultado.getString("pais");
+                String genero = resultado.getString("sinopsis");
+                Pelicula cm = new Pelicula(id,idusuario,titulo,ano,duracion,pais,director,genero,sinopsis);
+                arrayPeliculas.add(cm);
+                
+            }
+            return arrayPeliculas;
+            
+        } catch (SQLException | ClassNotFoundException ex) {
+            System.out.println("Error en gestor de Comentarios: " + ex);
+        }
+        return null;
     }
 }

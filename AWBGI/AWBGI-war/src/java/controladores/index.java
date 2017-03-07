@@ -54,45 +54,72 @@ public class index extends HttpServlet {
         //try (PrintWriter out = response.getWriter()) {
         //   response.sendRedirect("./index.jsp");
         //}
-        
+        //System.out.println("doget");
         // Mira en la session si esta autenticado el usuario
+ /*
         HttpSession session = request.getSession();
         Boolean sesion = (Boolean) session.getAttribute("auth");
+        
         if (sesion != null) {
-            if (sesion) {                
-                
+            if (sesion) {
+*/
                 String accion = request.getParameter("accion");
                 if (accion != null) {
-                                       
-                    
+
                     switch (accion) {
-                        case "savepeli":
+                        /*case "savepeli":
                             System.out.println("savepeli");
-                            break;
+                            break;*/
+                        /*
                         case "cierra_sesion":
                             System.out.println("cierra sesion");
                             session.setAttribute("auth", false);
                             response.sendRedirect("./login");
                             break;
-
+                        */
+                        case "savepeli":
+                            String titulo = request.getParameter("titulopf").trim();
+                            String anoaux = request.getParameter("anopf").trim();
+                            int ano = Integer.parseInt(anoaux);
+                            String duracionaux = request.getParameter("duracionpf").trim();
+                            int duracion = Integer.parseInt(duracionaux);
+                            String director = request.getParameter("directorpf").trim();
+                            String pais = request.getParameter("paispf").trim();
+                            String genero = request.getParameter("generopf").trim();
+                            String sinopsis = request.getParameter("sinopsispf").trim();
+                            GestorPeliculas gp = new GestorPeliculas();
+                            //HttpSession session = request.getSession();
+                            //session.getAttribute("id");
+                            Pelicula pe = new Pelicula(1,titulo,ano,duracion,pais,director,genero,sinopsis);
+                            String mensaje = gp.guardaPeliculas(pe);
+                            System.out.println(titulo + " " + ano + " " + duracion +" " + director + " " + pais + " " + genero + " " + sinopsis);
+                            if ("yes".equals(mensaje)){
+                                String r = "yes";
+                                response.setContentType("text/plain");
+                                response.getWriter().write(r);
+                            //response.sendRedirect("./index.jsp");
+                            }else{
+                                response.setContentType("text/plain");
+                                response.getWriter().write(mensaje);
+                            }
+                            break;
                         default:
                             System.out.println("default");
                             response.sendRedirect("./index.jsp");
                     }
-                    
-                    
-                    
+
                 } else {
                     System.out.println("aqui");
                     response.sendRedirect("./index.jsp");
                 }
-                
+/*
             } else {
                 response.sendRedirect("./login");
             }
         } else {
             response.sendRedirect("./login");
         }
+*/
     }
 
     /**
@@ -107,6 +134,8 @@ public class index extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
+        System.out.println("dopost");
+        /*
         String accion = request.getParameter("accion").trim();
         switch (accion) {
             case "anadirpeli":
@@ -126,11 +155,11 @@ public class index extends HttpServlet {
                 response.getWriter().write(r); 
                 //response.sendRedirect("./index.jsp");
                 break;
-                
+             
             default:
                  System.out.println("aqui4");
                 response.sendRedirect("./index.jsp");
-        }
+        }*/
     }
 
     /**
