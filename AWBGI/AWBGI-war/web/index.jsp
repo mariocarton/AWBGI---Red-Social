@@ -303,6 +303,18 @@
     </script>
 
     <script type="text/javascript">
+  
+        //$('.accesopeli').click(function (){
+        $('.accesopeli').click(function (){
+           $('#titulopestana').html("peli");
+           alert('Evento click sobre un button ');
+           //return false;
+           //event.preventDefault();
+        });
+
+        
+        
+        
         $('#explorar').click(function () {
             $('#pelianadida').hide();
             $('#anadir').hide();

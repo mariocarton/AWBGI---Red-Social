@@ -73,7 +73,7 @@ public class GestorPeliculas {
     public ArrayList extraePeliculas() {
         try {
             ConexionBD conexion = ConexionBD.getInstancia();
-            String consulta = "select * from pelicula";
+            String consulta = "select * from pelicula order by titulo";
             ResultSet resultado = conexion.ejecutaRecuperacion(consulta);
             ArrayList<Pelicula> arrayPeliculas = new ArrayList<>();
             while (resultado.next()) {

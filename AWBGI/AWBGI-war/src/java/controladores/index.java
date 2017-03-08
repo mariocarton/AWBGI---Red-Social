@@ -98,7 +98,8 @@ public class index extends HttpServlet {
                                 out2.println("<div class='caption'>");
                                 out2.println("<h3>"+peli.getTitulo()+"</h3>");
                                 out2.println("<p>"+peli.getGenero()+"</p>");
-                                out2.println("<p><a class='btn btn-primary' role='button'>Button</a></p>");
+                                out2.println("<input type='hidden' name=idpeli value="+peli.getId()+">");
+                                out2.println("<a class='btn btn-primary accesopelis' role='button'>Ver Detalles</a>");
                                 out2.println("</div>");
                                 out2.println("</div>");
                                 out2.println("</div>");
@@ -119,13 +120,16 @@ public class index extends HttpServlet {
                                 out.println("<div class='caption'>");
                                 out.println("<h3>"+peli.getTitulo()+"</h3>");
                                 out.println("<p>"+peli.getGenero()+"</p>");
-                                out.println("<p><a class='btn btn-primary' role='button'>Button</a></p>");
+                                //out.println("<form role='form' class='formpeli'>");
+                                //out.println("<input type='hidden' name=idpeli value="+peli.getId()+">");
+                                out.println("<a name=idpeli value="+ peli.getId().toString()+" class='accesopeli btn btn-primary'>Ver Detalles</a>");
+                                //out.println("</form>");
                                 out.println("</div>");
                                 out.println("</div>");
                                 out.println("</div>");
                             }
                             
-                            System.out.println("extraepelis");
+                            //System.out.println("extraepelis");
                             break;
                         case "savepeli":
                             String titulo = request.getParameter("titulopf").trim();
