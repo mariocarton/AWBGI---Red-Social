@@ -128,26 +128,7 @@
                 <hr style="color: red" />
 
                 <div class="row" id="visto" style="display:none">
-                    <div class="col-xs-4">
-                        <div class="thumbnail">
-                            <img src="..." alt="...">
-                            <div class="caption">
-                                <h3>Peli 1</h3>
-                                <p>Muy bonita</p>
-                                <p><a href="#" class="btn btn-primary" role="button">Button</a></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-4">
-                        <div class="thumbnail">
-                            <img src="..." alt="...">
-                            <div class="caption">
-                                <h3>Peli 1</h3>
-                                <p>Muy bonita</p>
-                                <p><a href="#" class="btn btn-primary" role="button">Button</a></p>
-                            </div>
-                        </div>
-                    </div>
+                    
                 </div>
 
                 <div class="row " id="anadir" style="display:none" style="margin: 4%">
@@ -224,8 +205,9 @@
                 </div>
                 
                 <div class="row" id="pexplorar" style="display:none">
-                    <h2 style="text-align: center"> Películas de la Página </h2>
+                    
                 </div>
+                
                 <div class="modal-content" style="display:none" id="pelianadida">
                     <div class="modal-header">
                         <button type="button" class="close" id="btnpelianadida" data-dismiss="modal">&times;</button>
@@ -256,13 +238,24 @@
             $('#anadir').hide();
             $('#visto').show();
             $('#amigos').hide();
+            $('#pexplorar').hide();
             $('#titulopestana').html("Perfil");
+            $.ajax({
+                url: 'index',
+                data: {
+                    accion: "visto"
+                }, success: function (responseText) {
+                    $('#visto').html(responseText);
+                }
+            });
+
         });
         $('#banadir').click(function () {
             $('#anadir').show();
             $('#visto').hide();
             $('#amigos').hide();
             $('#navperfil').hide();
+            $('#pexplorar').hide();
             $('#titulopestana').html("Añadir Película");
         });
         $('#bamigos').click(function () {
@@ -270,12 +263,14 @@
             $('#visto').hide();
             $('#amigos').show();
             $('#navperfil').hide();
+            $('#pexplorar').hide();
             $('#titulopestana').html("Amigos");
         });
         $('#bperfil').click(function () {
             $('#anadir').hide();
             $('#visto').hide();
             $('#amigos').hide();
+            $('#pexplorar').hide();
             $('#navperfil').show();
             $('#visto').show();
             $('#titulopestana').html("Perfil");
@@ -287,6 +282,7 @@
             $('#anadir').hide();
             $('#visto').hide();
             $('#amigos').hide();
+            $('#pexplorar').hide();
             $('#navperfil').show();
             $('#visto').show();
             $('#titulopestana').html("Perfil");
@@ -299,6 +295,7 @@
             $('#amigos').hide();
             $('#navperfil').show();
             $('#visto').show();
+            $('#pexplorar').hide();
             $('#titulopestana').html("Perfil");
 
         });
@@ -320,7 +317,7 @@
                 data: {
                     accion: "explorar"
                 }, success: function (responseText) {
-
+                    $('#pexplorar').html(responseText);
                 }
             });
         });

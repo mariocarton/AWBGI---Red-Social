@@ -6,14 +6,19 @@ package controladores;
  * and open the template in the editor.
  */
 import datos.GestorPeliculas;
+import datos.GestorVistas;
 import java.io.IOException;
 import java.io.PrintWriter;
+import static java.lang.System.out;
+import java.util.ArrayList;
+import static javax.management.Query.div;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modelo.Pelicula;
+import modelo.Visto;
 
 /**
  *
@@ -77,6 +82,51 @@ public class index extends HttpServlet {
                             response.sendRedirect("./login");
                             break;
                         */
+                        case "visto":
+                            GestorVistas gv = new GestorVistas();
+                            ArrayList<Visto> arrayVistas = gv.extraeVistas(1);
+                            GestorPeliculas gp3 = new GestorPeliculas();
+                            response.setContentType( "text/html; charset=iso-8859-1" );
+                            PrintWriter out2 = response.getWriter();
+                            out2.println("<h2 style='text-align: center; margin-bottom: 3%'> Películas Vistas </h2>");
+                            for (int i = 0; i < arrayVistas.size(); i++) {
+                                Visto vista = arrayVistas.get(i);
+                                Pelicula peli = gp3.getPeliculaPorId(vista.getIdpelicula());
+                                out2.println("<div class='col-xs-4'>");
+                                out2.println("<div class='thumbnail'>");
+                                out2.println("<img src='...' alt='...'>");
+                                out2.println("<div class='caption'>");
+                                out2.println("<h3>"+peli.getTitulo()+"</h3>");
+                                out2.println("<p>"+peli.getGenero()+"</p>");
+                                out2.println("<p><a class='btn btn-primary' role='button'>Button</a></p>");
+                                out2.println("</div>");
+                                out2.println("</div>");
+                                out2.println("</div>");
+                                
+                            }
+                            break;
+                        case "explorar":
+                             GestorPeliculas gp2 = new GestorPeliculas();
+                             ArrayList<Pelicula> arrayPeliculas = gp2.extraePeliculas();
+                             response.setContentType( "text/html; charset=iso-8859-1" );
+                             PrintWriter out = response.getWriter();
+                             out.println("<h2 style='text-align: center; margin-bottom: 3%'> Películas de la Página </h2>");
+                             for (int j = 0; j < arrayPeliculas.size(); j++) {
+                                Pelicula peli = arrayPeliculas.get(j);
+                                out.println("<div class='col-xs-4'>");
+                                out.println("<div class='thumbnail'>");
+                                out.println("<img src='...' alt='...'>");
+                                out.println("<div class='caption'>");
+                                out.println("<h3>"+peli.getTitulo()+"</h3>");
+                                out.println("<p>"+peli.getGenero()+"</p>");
+                                out.println("<p><a class='btn btn-primary' role='button'>Button</a></p>");
+                                out.println("</div>");
+                                out.println("</div>");
+                                out.println("</div>");
+                            }
+                            
+                            System.out.println("extraepelis");
+                            break;
                         case "savepeli":
                             String titulo = request.getParameter("titulopf").trim();
                             String anoaux = request.getParameter("anopf").trim();

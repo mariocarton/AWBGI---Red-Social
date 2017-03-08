@@ -73,7 +73,7 @@ public class GestorPeliculas {
     public ArrayList extraePeliculas() {
         try {
             ConexionBD conexion = ConexionBD.getInstancia();
-            String consulta = "select * from peliculas";
+            String consulta = "select * from pelicula";
             ResultSet resultado = conexion.ejecutaRecuperacion(consulta);
             ArrayList<Pelicula> arrayPeliculas = new ArrayList<>();
             while (resultado.next()) {
@@ -88,12 +88,12 @@ public class GestorPeliculas {
                 String genero = resultado.getString("sinopsis");
                 Pelicula cm = new Pelicula(id,idusuario,titulo,ano,duracion,pais,director,genero,sinopsis);
                 arrayPeliculas.add(cm);
-                
+                //System.out.println(id+ " "+idusuario+ " "+titulo + " " + ano + " " + duracion +" " + director + " " + pais + " " + genero + " " + sinopsis);
             }
             return arrayPeliculas;
             
         } catch (SQLException | ClassNotFoundException ex) {
-            System.out.println("Error en gestor de Comentarios: " + ex);
+            System.out.println("Error en gestor de Películas: " + ex);
         }
         return null;
     }

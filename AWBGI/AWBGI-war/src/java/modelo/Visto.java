@@ -19,6 +19,11 @@ public class Visto {
         this.idusuario = idusuario;
         this.idpelicula = idpelicula;
     }
+    public Visto(int idusuario,int idpelicula) {
+        //this.id = id;
+        this.idusuario = idusuario;
+        this.idpelicula = idpelicula;
+    }
 
     public Integer getId() {
         return id;
