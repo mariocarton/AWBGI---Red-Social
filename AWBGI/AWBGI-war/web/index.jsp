@@ -128,7 +128,7 @@
                 <hr style="color: red" />
 
                 <div class="row" id="visto" style="display:none">
-                    
+
                 </div>
 
                 <div class="row " id="anadir" style="display:none" style="margin: 4%">
@@ -203,11 +203,11 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="row" id="pexplorar" style="display:none">
-                    
+
                 </div>
-                
+
                 <div class="modal-content" style="display:none" id="pelianadida">
                     <div class="modal-header">
                         <button type="button" class="close" id="btnpelianadida" data-dismiss="modal">&times;</button>
@@ -246,6 +246,19 @@
                     accion: "visto"
                 }, success: function (responseText) {
                     $('#visto').html(responseText);
+                      $(".accesopeli").click(function () {
+                        var ID = $(this).attr("id");
+                        $.ajax({
+                            url: 'index',
+                            data: {
+                                id: ID,
+                                accion: "verpeli"
+                            }, success: function (responseText) {
+                                $('#titulopestana').html("VerPelícula");
+                                $('#visto').html(responseText);
+                            }
+                        });
+                    });
                 }
             });
 
@@ -303,18 +316,9 @@
     </script>
 
     <script type="text/javascript">
-  
-        //$('.accesopeli').click(function (){
-        $('.accesopeli').click(function (){
-           $('#titulopestana').html("peli");
-           alert('Evento click sobre un button ');
-           //return false;
-           //event.preventDefault();
-        });
 
-        
-        
-        
+
+
         $('#explorar').click(function () {
             $('#pelianadida').hide();
             $('#anadir').hide();
@@ -330,6 +334,19 @@
                     accion: "explorar"
                 }, success: function (responseText) {
                     $('#pexplorar').html(responseText);
+                    $(".accesopeli").click(function () {
+                        var ID = $(this).attr("id");
+                        $.ajax({
+                            url: 'index',
+                            data: {
+                                id: ID,
+                                accion: "verpeli"
+                            }, success: function (responseText) {
+                                $('#titulopestana').html("VerPelícula");
+                                $('#pexplorar').html(responseText);
+                            }
+                        });
+                    });
                 }
             });
         });

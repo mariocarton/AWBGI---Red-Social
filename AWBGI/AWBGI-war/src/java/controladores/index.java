@@ -82,6 +82,30 @@ public class index extends HttpServlet {
                             response.sendRedirect("./login");
                             break;
                         */
+                        case "verpeli":
+                            response.setContentType( "text/html; charset=iso-8859-1" );
+                            PrintWriter out3 = response.getWriter();
+                            String idaux = request.getParameter("id").trim();
+                            int id = Integer.parseInt(idaux);
+                            GestorPeliculas gp4 = new GestorPeliculas();
+                            Pelicula peli2 = gp4.getPeliculaPorId(id);
+                            out3.println("<h3>"+peli2.getTitulo()+"</h3>");
+                            out3.println("<hr style='color: red' />");
+                            out3.println("<p>Título: "+peli2.getTitulo()+"</p>");
+                            out3.println("<p>Año: "+peli2.getAno()+"</p>");
+                            out3.println("<p>Duración: "+peli2.getDuracion()+" Minutos</p>");
+                            out3.println("<p>País: "+peli2.getPais()+"</p>");
+                            out3.println("<p>Director: "+peli2.getDirector()+"</p>");
+                            out3.println("<p>Género "+peli2.getGenero()+"</p>");      
+                            out3.println("<p>Sinopsis: "+peli2.getGenero()+"</p>");
+                            out3.println("<div class='btn-group' role='group' aria-label='...'>");
+                            out3.println("<button type='button' class='btn btn-default'>Visto</button>");
+                            out3.println("<button type='button' class='btn btn-default'>PorVer</button>");
+                            out3.println("<button type='button' class='btn btn-default'>NoVisto</button>");
+                            out3.println("</div>");
+                            out3.println("<hr style='color: red' />");
+                            break;
+                            
                         case "visto":
                             GestorVistas gv = new GestorVistas();
                             ArrayList<Visto> arrayVistas = gv.extraeVistas(1);
@@ -99,7 +123,7 @@ public class index extends HttpServlet {
                                 out2.println("<h3>"+peli.getTitulo()+"</h3>");
                                 out2.println("<p>"+peli.getGenero()+"</p>");
                                 out2.println("<input type='hidden' name=idpeli value="+peli.getId()+">");
-                                out2.println("<a class='btn btn-primary accesopelis' role='button'>Ver Detalles</a>");
+                                out2.println("<a  id="+ peli.getId()+" class='accesopeli btn btn-primary'>Ver Detalles</a>");
                                 out2.println("</div>");
                                 out2.println("</div>");
                                 out2.println("</div>");
@@ -120,10 +144,8 @@ public class index extends HttpServlet {
                                 out.println("<div class='caption'>");
                                 out.println("<h3>"+peli.getTitulo()+"</h3>");
                                 out.println("<p>"+peli.getGenero()+"</p>");
-                                //out.println("<form role='form' class='formpeli'>");
-                                //out.println("<input type='hidden' name=idpeli value="+peli.getId()+">");
-                                out.println("<a name=idpeli value="+ peli.getId().toString()+" class='accesopeli btn btn-primary'>Ver Detalles</a>");
-                                //out.println("</form>");
+                                out.println("<input type='hidden' name=idpeli value="+peli.getId()+" class='accesopeli'>");
+                                out.println("<a  id="+ peli.getId()+" class='accesopeli btn btn-primary'>Ver Detalles</a>");
                                 out.println("</div>");
                                 out.println("</div>");
                                 out.println("</div>");
