@@ -8,45 +8,47 @@ package datos;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import modelo.Visto;
+import modelo.PorVer;
 
 /**
  *
  * @author mariomatesanz
  */
-public class GestorVistas {
+public class GestorPorVer {
     
-    public ArrayList extraeVistas(int idusuario) {
+    
+    public ArrayList extraePorVer(int idusuario) {
         try {
             ConexionBD conexion = ConexionBD.getInstancia();
-            String consulta = "select * from visto where idusuario='" + idusuario + "'";
+            String consulta = "select * from porVer where idusuario='" + idusuario + "'";
             ResultSet resultado = conexion.ejecutaRecuperacion(consulta);
-            ArrayList<Visto> arrayVistas = new ArrayList<>();
+            ArrayList<PorVer> arrayVistas = new ArrayList<>();
             while (resultado.next()) {
                 int id = resultado.getInt("id");
                 int idpelicula = resultado.getInt("idpelicula");
-                Visto v = new Visto(idusuario,idpelicula);
+                PorVer v = new PorVer(idusuario,idpelicula);
                 arrayVistas.add(v);   
             }
             return arrayVistas;
             
         } catch (SQLException | ClassNotFoundException ex) {
-            System.out.println("Error en gestor de Vistas: " + ex);
+            System.out.println("Error en gestor de PorVer: " + ex);
         }
         return null;
     }
     
-    public void guardaVisto(Visto visto) {
+    public void guardaPorVer(PorVer porver) {
         try {
             ConexionBD conexion = ConexionBD.getInstancia();
-            String consulta = "insert into visto "
+            String consulta = "insert into porVer "
                     + "(idusuario,idpelicula) values ("
-                    + "'" + visto.getIdusuario() + "'"
-                    + "'"+visto.getIdpelicula()+"'"
+                    + "'" + porver.getIdusuario() + "'"
+                    + "'"+porver.getIdpelicula()+"'"
                     +")";
             conexion.ejecutaInserta(consulta);
         } catch (SQLException | ClassNotFoundException ex) {
-            System.out.println("Error en gestor de Vistas: " + ex);
+            System.out.println("Error en gestor de Porver: " + ex);
         }
     }
 }
+

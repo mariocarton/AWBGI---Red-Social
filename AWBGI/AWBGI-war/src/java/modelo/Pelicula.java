@@ -1,5 +1,6 @@
 package modelo;
 
+import java.sql.Blob;
 import java.util.Date;
 
 /*
@@ -7,12 +8,12 @@ import java.util.Date;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author mariomatesanz
  */
 public class Pelicula {
+
     private int id;
     private int idusuario;
     private String titulo;
@@ -22,10 +23,9 @@ public class Pelicula {
     private String director;
     private String genero;
     private String sinopsis;
-    
-    
-            
-    public Pelicula(int idusuario,String titulo,int ano,int duracion,String pais,String director,String genero,String sinopsis) {
+    private String ruta;
+
+    public Pelicula(int idusuario, String titulo, int ano, int duracion, String pais, String director, String genero, String sinopsis, String ruta) {
         //this.id = id;
         this.idusuario = idusuario;
         this.titulo = titulo;
@@ -35,8 +35,10 @@ public class Pelicula {
         this.director = director;
         this.sinopsis = sinopsis;
         this.genero = genero;
+        this.ruta = ruta;
     }
-    public Pelicula(int id,int idusuario,String titulo,int ano,int duracion,String pais,String director,String genero,String sinopsis) {
+
+    public Pelicula(int id, int idusuario, String titulo, int ano, int duracion, String pais, String director, String genero, String sinopsis, String ruta) {
         this.id = id;
         this.idusuario = idusuario;
         this.titulo = titulo;
@@ -46,9 +48,10 @@ public class Pelicula {
         this.director = director;
         this.sinopsis = sinopsis;
         this.genero = genero;
+        this.ruta = ruta;
+
     }
 
-    
     public Integer getId() {
         return id;
     }
@@ -64,14 +67,15 @@ public class Pelicula {
     public void setIdusuario(Integer idusuario) {
         this.idusuario = idusuario;
     }
-     public String getTitulo() {
+
+    public String getTitulo() {
         return titulo;
     }
 
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
-    
+
     public int getAno() {
         return ano;
     }
@@ -120,4 +124,11 @@ public class Pelicula {
         this.sinopsis = sinopsis;
     }
 
+    public String getRuta() {
+        return ruta;
+    }
+
+    public void setRuta(String ruta) {
+        this.ruta = ruta;
+    }
 }

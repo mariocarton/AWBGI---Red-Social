@@ -6,7 +6,9 @@ package controladores;
  * and open the template in the editor.
  */
 import datos.GestorPeliculas;
+import datos.GestorPorVer;
 import datos.GestorVistas;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.System.out;
@@ -18,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modelo.Pelicula;
+import modelo.PorVer;
 import modelo.Visto;
 
 /**
@@ -105,7 +108,31 @@ public class index extends HttpServlet {
                             out3.println("</div>");
                             out3.println("<hr style='color: red' />");
                             break;
-                            
+                        
+                        case "porver":
+                            GestorPorVer gpv = new GestorPorVer();
+                            ArrayList<PorVer> arrayPorVer = gpv.extraePorVer(1);
+                            GestorPeliculas gp5 = new GestorPeliculas();
+                            response.setContentType( "text/html; charset=iso-8859-1" );
+                            PrintWriter out4 = response.getWriter();
+                            out4.println("<h2 style='text-align: center; margin-bottom: 3%'> Películas Por Ver </h2>");
+                            for (int i = 0; i < arrayPorVer.size(); i++) {
+                                PorVer porver = arrayPorVer.get(i);
+                                Pelicula peli = gp5.getPeliculaPorId(porver.getIdpelicula());
+                                out4.println("<div class='col-xs-4'>");
+                                out4.println("<div class='thumbnail'>");
+                                out4.println("<img src='imagenes/"+ peli.getRuta()+"' height='600' width='200'>");
+                                out4.println("<div class='caption'>");
+                                out4.println("<h3>"+peli.getTitulo()+"</h3>");
+                                out4.println("<p>"+peli.getGenero()+"</p>");
+                                out4.println("<input type='hidden' name=idpeli value="+peli.getId()+">");
+                                out4.println("<a  id="+ peli.getId()+" class='accesopeli btn btn-primary'>Ver Detalles</a>");
+                                out4.println("</div>");
+                                out4.println("</div>");
+                                out4.println("</div>");
+                                
+                            }
+                            break;
                         case "visto":
                             GestorVistas gv = new GestorVistas();
                             ArrayList<Visto> arrayVistas = gv.extraeVistas(1);
@@ -118,7 +145,7 @@ public class index extends HttpServlet {
                                 Pelicula peli = gp3.getPeliculaPorId(vista.getIdpelicula());
                                 out2.println("<div class='col-xs-4'>");
                                 out2.println("<div class='thumbnail'>");
-                                out2.println("<img src='...' alt='...'>");
+                                out2.println("<img src='imagenes/"+ peli.getRuta()+"' height='600' width='200'>");
                                 out2.println("<div class='caption'>");
                                 out2.println("<h3>"+peli.getTitulo()+"</h3>");
                                 out2.println("<p>"+peli.getGenero()+"</p>");
@@ -140,7 +167,7 @@ public class index extends HttpServlet {
                                 Pelicula peli = arrayPeliculas.get(j);
                                 out.println("<div class='col-xs-4'>");
                                 out.println("<div class='thumbnail'>");
-                                out.println("<img src='...' alt='...'>");
+                                out.println("<img src='imagenes/"+ peli.getRuta()+"'  height='100%' width='100%'>");
                                 out.println("<div class='caption'>");
                                 out.println("<h3>"+peli.getTitulo()+"</h3>");
                                 out.println("<p>"+peli.getGenero()+"</p>");
@@ -163,21 +190,30 @@ public class index extends HttpServlet {
                             String pais = request.getParameter("paispf").trim();
                             String genero = request.getParameter("generopf").trim();
                             String sinopsis = request.getParameter("sinopsispf").trim();
+                            String ruta = request.getParameter("imagenpelipf").trim();
+                            File f = new File(ruta);
+                            
+                            //String[] partesRuta = ruta.split("\\\\");
+                            //ruta = partesRuta[2];
+                            System.out.println("Ruta: "+f.getName());
+               
                             GestorPeliculas gp = new GestorPeliculas();
                             //HttpSession session = request.getSession();
                             //session.getAttribute("id");
-                            Pelicula pe = new Pelicula(1,titulo,ano,duracion,pais,director,genero,sinopsis);
-                            String mensaje = gp.guardaPeliculas(pe);
+                            
+                            Pelicula pe = new Pelicula(1,titulo,ano,duracion,pais,director,genero,sinopsis,ruta);
+                            String mensaje = "yes";//gp.guardaPeliculas(pe);
                             System.out.println(titulo + " " + ano + " " + duracion +" " + director + " " + pais + " " + genero + " " + sinopsis);
                             if ("yes".equals(mensaje)){
-                                String r = "yes";
+                                //String r = "yes";
                                 response.setContentType("text/plain");
-                                response.getWriter().write(r);
+                                response.getWriter().write(mensaje);
                             //response.sendRedirect("./index.jsp");
                             }else{
                                 response.setContentType("text/plain");
                                 response.getWriter().write(mensaje);
                             }
+                            
                             break;
                         default:
                             System.out.println("default");

@@ -22,7 +22,7 @@ public class GestorPeliculas {
     public String guardaPeliculas(Pelicula pelicula) {
         try {
             ConexionBD conexion = ConexionBD.getInstancia();
-            String consulta = "insert into pelicula (idusuario,titulo,ano,duracion,pais,director,genero,sinopsis) values ("
+            String consulta = "insert into pelicula (idusuario,titulo,ano,duracion,pais,director,genero,sinopsis,ruta) values ("
                     + pelicula.getIdusuario()+","
                     +"'"+pelicula.getTitulo()+"',"
                     +pelicula.getAno()+","
@@ -31,6 +31,7 @@ public class GestorPeliculas {
                     +"'"+pelicula.getDirector()+"',"
                     +"'"+pelicula.getGenero()+"',"
                     +"'"+pelicula.getSinopsis()+"'"
+                    +"'"+pelicula.getRuta()+"'"
                     +")";
             conexion.ejecutaInserta(consulta);
             return "yes";
@@ -57,7 +58,8 @@ public class GestorPeliculas {
                 String director = resultado.getString("director");
                 String genero = resultado.getString("genero");
                 String sinopsis = resultado.getString("sinopsis");
-                Pelicula pelicula = new Pelicula(id,idusuario,titulo,ano,duracion,pais,director,genero,sinopsis);
+                String ruta = resultado.getString("ruta");
+                Pelicula pelicula = new Pelicula(id,idusuario,titulo,ano,duracion,pais,director,genero,sinopsis,ruta);
                 return pelicula;
                 
             } else {
@@ -86,7 +88,8 @@ public class GestorPeliculas {
                 String sinopsis = resultado.getString("genero");
                 String pais = resultado.getString("pais");
                 String genero = resultado.getString("sinopsis");
-                Pelicula cm = new Pelicula(id,idusuario,titulo,ano,duracion,pais,director,genero,sinopsis);
+                String ruta = resultado.getString("ruta");
+                Pelicula cm = new Pelicula(id,idusuario,titulo,ano,duracion,pais,director,genero,sinopsis,ruta);
                 arrayPeliculas.add(cm);
                 //System.out.println(id+ " "+idusuario+ " "+titulo + " " + ano + " " + duracion +" " + director + " " + pais + " " + genero + " " + sinopsis);
             }

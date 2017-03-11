@@ -69,7 +69,7 @@
                         <a class="glyphicon glyphicon-transfer" href="#" > Actividad </a>
                     </li>
                     <li>
-                        <a class="glyphicon glyphicon-eye-close" href="#"> Por Ver </a> 
+                        <a class="glyphicon glyphicon-eye-close" id="bporver"> Por Ver </a> 
                     </li>
                     <li>
                         <a class="glyphicon" id="bamigos"> 
@@ -128,6 +128,10 @@
                 <hr style="color: red" />
 
                 <div class="row" id="visto" style="display:none">
+
+                </div>
+                
+                <div class="row" id="porver" style="display:none">
 
                 </div>
 
@@ -233,154 +237,11 @@
     <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>-->
     <script src="recursos/bootstrap/js/bootstrap.min.js" ></script> 
 
-    <script type="text/javascript">
-        $('#bvisto').click(function () {
-            $('#anadir').hide();
-            $('#visto').show();
-            $('#amigos').hide();
-            $('#pexplorar').hide();
-            $('#titulopestana').html("Perfil");
-            $.ajax({
-                url: 'index',
-                data: {
-                    accion: "visto"
-                }, success: function (responseText) {
-                    $('#visto').html(responseText);
-                      $(".accesopeli").click(function () {
-                        var ID = $(this).attr("id");
-                        $.ajax({
-                            url: 'index',
-                            data: {
-                                id: ID,
-                                accion: "verpeli"
-                            }, success: function (responseText) {
-                                $('#titulopestana').html("VerPelícula");
-                                $('#visto').html(responseText);
-                            }
-                        });
-                    });
-                }
-            });
+    <!-- Funciones javascript que contolan la vista de la pagina -->
+        <script type="text/javascript" src="js/index.js"></script>
+    
 
-        });
-        $('#banadir').click(function () {
-            $('#anadir').show();
-            $('#visto').hide();
-            $('#amigos').hide();
-            $('#navperfil').hide();
-            $('#pexplorar').hide();
-            $('#titulopestana').html("Añadir Película");
-        });
-        $('#bamigos').click(function () {
-            $('#anadir').hide();
-            $('#visto').hide();
-            $('#amigos').show();
-            $('#navperfil').hide();
-            $('#pexplorar').hide();
-            $('#titulopestana').html("Amigos");
-        });
-        $('#bperfil').click(function () {
-            $('#anadir').hide();
-            $('#visto').hide();
-            $('#amigos').hide();
-            $('#pexplorar').hide();
-            $('#navperfil').show();
-            $('#visto').show();
-            $('#titulopestana').html("Perfil");
-
-        });
-
-        $('#btnpelianadida').click(function () {
-            $('#pelianadida').hide();
-            $('#anadir').hide();
-            $('#visto').hide();
-            $('#amigos').hide();
-            $('#pexplorar').hide();
-            $('#navperfil').show();
-            $('#visto').show();
-            $('#titulopestana').html("Perfil");
-
-        });
-        $('#btnpelianadida2').click(function () {
-            $('#pelianadida').hide();
-            $('#anadir').hide();
-            $('#visto').hide();
-            $('#amigos').hide();
-            $('#navperfil').show();
-            $('#visto').show();
-            $('#pexplorar').hide();
-            $('#titulopestana').html("Perfil");
-
-        });
-
-    </script>
-
-    <script type="text/javascript">
-
-
-
-        $('#explorar').click(function () {
-            $('#pelianadida').hide();
-            $('#anadir').hide();
-            $('#visto').hide();
-            $('#amigos').hide();
-            $('#navperfil').hide();
-            $('#visto').hide();
-            $('#pexplorar').show();
-            $('#titulopestana').html("Explorar");
-            $.ajax({
-                url: 'index',
-                data: {
-                    accion: "explorar"
-                }, success: function (responseText) {
-                    $('#pexplorar').html(responseText);
-                    $(".accesopeli").click(function () {
-                        var ID = $(this).attr("id");
-                        $.ajax({
-                            url: 'index',
-                            data: {
-                                id: ID,
-                                accion: "verpeli"
-                            }, success: function (responseText) {
-                                $('#titulopestana').html("VerPelícula");
-                                $('#pexplorar').html(responseText);
-                            }
-                        });
-                    });
-                }
-            });
-        });
-
-        $('#formpeliadd').submit(function (event) {
-            $.ajax({
-                url: 'index',
-                data: {
-                    titulopf: $('#titulopf').val(),
-                    anopf: $('#anopf').val(),
-                    directorpf: $('#directorpf').val(),
-                    paispf: $('#paispf').val(),
-                    duracionpf: $('#duracionpf').val(),
-                    generopf: $('#generopf').val(),
-                    sinopsispf: $('#sinopsispf').val(),
-                    accion: "savepeli"
-
-                }, success: function (responseText) {
-                    if (responseText === "yes") {
-                        $('#titulopestana').html("Pelicula Añadida");
-                        $('#mensajepeli').html("La pelicula fue añadida con éxito");
-                        //window.location = "index",
-                        $('#anadir').hide();
-                        $('#pelianadida').show();
-                    } else {
-                        $('#mensajepeli').html(responseText);
-                    }
-                }
-            });
-            //alert( "Handler for .submit() called." );
-            event.preventDefault();
-        });
-
-    </script>
+   
 
 </body>
 </html>

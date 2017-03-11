@@ -20,6 +20,11 @@ public class PorVer {
         this.idusuario = idusuario;
         this.idpelicula = idpelicula;
     }
+    public PorVer(int idusuario,int idpelicula) {
+        //this.id = id;
+        this.idusuario = idusuario;
+        this.idpelicula = idpelicula;
+    }
 
     public Integer getId() {
         return id;
