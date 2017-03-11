@@ -191,8 +191,9 @@ public class index extends HttpServlet {
                             String genero = request.getParameter("generopf").trim();
                             String sinopsis = request.getParameter("sinopsispf").trim();
                             String ruta = request.getParameter("imagenpelipf").trim();
+                           
+                            //Falta fuardar archivo
                             File f = new File(ruta);
-                            
                             //String[] partesRuta = ruta.split("\\\\");
                             //ruta = partesRuta[2];
                             System.out.println("Ruta: "+f.getName());
@@ -202,7 +203,7 @@ public class index extends HttpServlet {
                             //session.getAttribute("id");
                             
                             Pelicula pe = new Pelicula(1,titulo,ano,duracion,pais,director,genero,sinopsis,ruta);
-                            String mensaje = "yes";//gp.guardaPeliculas(pe);
+                            String mensaje = gp.guardaPeliculas(pe);
                             System.out.println(titulo + " " + ano + " " + duracion +" " + director + " " + pais + " " + genero + " " + sinopsis);
                             if ("yes".equals(mensaje)){
                                 //String r = "yes";
