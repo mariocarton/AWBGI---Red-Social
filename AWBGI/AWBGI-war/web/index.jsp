@@ -130,7 +130,7 @@
                 <div class="row" id="visto" style="display:none">
 
                 </div>
-                
+
                 <div class="row" id="porver" style="display:none">
 
                 </div>
@@ -176,7 +176,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="archivo_foto">Adjuntar un archivo</label>
-                                <input type="file" id="imagenpelicula">
+                                <input type="file" name="file" id="imagenpelicula">
                                 <p class="help-block">Adjunta una imagen para su película.</p>
                             </div>
                             <input hidden name="accion" value="anadirpeli"/>
@@ -212,6 +212,10 @@
 
                 </div>
 
+                <div class="row" id="infopeli" style="display:none">
+
+                </div>
+
                 <div class="modal-content" style="display:none" id="pelianadida">
                     <div class="modal-header">
                         <button type="button" class="close" id="btnpelianadida" data-dismiss="modal">&times;</button>
@@ -238,10 +242,55 @@
     <script src="recursos/bootstrap/js/bootstrap.min.js" ></script> 
 
     <!-- Funciones javascript que contolan la vista de la pagina -->
-        <script type="text/javascript" src="js/index.js"></script>
-    
+    <script type="text/javascript" src="js/index.js"></script>
 
-   
+
+    <script type="text/javascript">
+        $('#explorar').click(function () {
+            $('#pelianadida').hide();
+            $('#anadir').hide();
+            $('#visto').hide();
+            $('#amigos').hide();
+            $('#navperfil').hide();
+            $('#visto').hide();
+            $('#pexplorar').show();
+            $('#porver').hide();
+            $('#titulopestana').html("Explorar");
+            $.ajax({
+                url: 'index',
+                data: {
+                    accion: "explorar"
+                }, success: function (responseText) {
+                    $('#pexplorar').html(responseText);
+                     
+                    $(".accesopeli").click(function () {
+                        var ID = $(this).attr("id");
+                        
+                        $.ajax({
+                            url: 'index',
+                            data: {
+                                id: ID,
+                                accion: "verpeli"
+                            }, success: function (responseText) {
+                                $('#titulopestana').html("VerPelícula");
+
+                                $('#formcomentario').click(function () {
+                                    $('#titulopestana').html("Form");
+                                });
+                                $('#pexplorar').html(responseText);
+                            }
+                        });
+                        
+                    });
+                }
+
+            });
+        });
+
+
+
+
+    </script>
 
 </body>
 </html>
