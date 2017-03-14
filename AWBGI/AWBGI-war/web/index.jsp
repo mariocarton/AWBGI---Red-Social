@@ -4,6 +4,7 @@
     Author     : mario
 --%>
 
+<%@page import="modelo.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -23,7 +24,11 @@
             if (sesion != null) {
                 if (!sesion) {
                     response.sendRedirect("./login");
+                }else{
+                    Usuario u = (Usuario) session.getAttribute("usuario");
                 }
+            }else{
+                response.sendRedirect("./login");
             }
         %>
         <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: #31708f">
@@ -101,7 +106,15 @@
             <div class="col-xs-8" >
 
                 <div class="nav nav-tabs" id="navperfil" style="display:none">
-                    <h4  > Usuario 1 </h4>
+                    <h4> 
+                        <%
+                            Usuario u = (Usuario) session.getAttribute("usuario"); 
+                            u.getNombre();
+                        %> Usuario  
+                    
+                    
+                    
+                    </h4>
                     <li role="presentation" class="active">
                         <a class="active glyphicon glyphicon-eye-open" id="bvisto"> Visto</a>
                     </li>

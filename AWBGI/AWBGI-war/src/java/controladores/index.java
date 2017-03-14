@@ -71,165 +71,164 @@ public class index extends HttpServlet {
         //}
         //System.out.println("doget");
         // Mira en la session si esta autenticado el usuario
-        /*
+
         HttpSession session = request.getSession();
         Boolean sesion = (Boolean) session.getAttribute("auth");
-        
-        if (sesion != null) {
-            if (sesion) {
-         */
-        String accion = request.getParameter("accion");
-        if (accion != null) {
 
-            switch (accion) {
-                /*
- /*
+        if (sesion != null) {
+            System.out.println("Sesion: " + sesion);
+            if (sesion) {
+
+                String accion = request.getParameter("accion");
+                if (accion != null) {
+
+                    switch (accion) {
+
                         case "cierra_sesion":
                             System.out.println("cierra sesion");
                             session.setAttribute("auth", false);
+                            System.out.println("Sesion: " + sesion);
                             response.sendRedirect("./login");
                             break;
-                 */
 
-                case "verpeli":
-                    System.out.println("verpeli");
-                    response.setContentType("text/html; charset=iso-8859-1");
-                    PrintWriter out3 = response.getWriter();
-                    String idaux = request.getParameter("id").trim();
-                    int id = Integer.parseInt(idaux);
-                    GestorPeliculas gp4 = new GestorPeliculas();
-                    Pelicula peli2 = gp4.getPeliculaPorId(id);
-                    out3.println("<h3>" + peli2.getTitulo() + "</h3>");
+                        case "verpeli":
+                            System.out.println("verpeli");
+                            response.setContentType("text/html; charset=iso-8859-1");
+                            PrintWriter out3 = response.getWriter();
+                            String idaux = request.getParameter("id").trim();
+                            int id = Integer.parseInt(idaux);
+                            GestorPeliculas gp4 = new GestorPeliculas();
+                            Pelicula peli2 = gp4.getPeliculaPorId(id);
+                            out3.println("<h3>" + peli2.getTitulo() + "</h3>");
 
-                    //BOTONES
-                    out3.println("<hr style='color: red' />");
-                    out3.println("<div class='btn-group' role='group' aria-label='...'>");
-                    out3.println("<button type='button' class='btn btn-default'>Visto</button>");
-                    out3.println("<button type='button' class='btn btn-default'>PorVer</button>");
-                    out3.println("<button type='button' class='btn btn-default'>NoVisto</button>");
-                    out3.println("</div>");
-                    out3.println("<div class='btn-group' style='margin-left: 20px' role='group' aria-label='...'>");
-                    out3.println("<a class='btn btn-primary ' id='formcomentario' >Añadir Comentario</a>");
-                    out3.println("</div>");
+                            //BOTONES
+                            out3.println("<hr style='color: red' />");
+                            out3.println("<div class='btn-group' role='group' aria-label='...'>");
+                            out3.println("<button type='button' class='btn btn-default'>Visto</button>");
+                            out3.println("<button type='button' class='btn btn-default'>PorVer</button>");
+                            out3.println("<button type='button' class='btn btn-default'>NoVisto</button>");
+                            out3.println("</div>");
+                            out3.println("<div class='btn-group' style='margin-left: 20px' role='group' aria-label='...'>");
+                            out3.println("<a class='btn btn-primary ' id='formcomentario' >Añadir Comentario</a>");
+                            out3.println("</div>");
 
-                    //INFOPELI
-                    out3.println("<hr style='color: red' />");
-                    out3.println("<p>Título: " + peli2.getTitulo() + "</p>");
-                    out3.println("<p>Año: " + peli2.getAno() + "</p>");
-                    out3.println("<p>Duración: " + peli2.getDuracion() + " Minutos</p>");
-                    out3.println("<p>País: " + peli2.getPais() + "</p>");
-                    out3.println("<p>Director: " + peli2.getDirector() + "</p>");
-                    out3.println("<p>Género " + peli2.getGenero() + "</p>");
-                    out3.println("<p>Sinopsis: " + peli2.getGenero() + "</p>");
-                    out3.println("<hr style='color: red' />");
+                            //INFOPELI
+                            out3.println("<hr style='color: red' />");
+                            out3.println("<p>Título: " + peli2.getTitulo() + "</p>");
+                            out3.println("<p>Año: " + peli2.getAno() + "</p>");
+                            out3.println("<p>Duración: " + peli2.getDuracion() + " Minutos</p>");
+                            out3.println("<p>País: " + peli2.getPais() + "</p>");
+                            out3.println("<p>Director: " + peli2.getDirector() + "</p>");
+                            out3.println("<p>Género " + peli2.getGenero() + "</p>");
+                            out3.println("<p>Sinopsis: " + peli2.getGenero() + "</p>");
+                            out3.println("<hr style='color: red' />");
 
-                    //COMENTARIOS
-                    GestorComentarios gc = new GestorComentarios();
-                    ArrayList<Comentario> arrayComentarios = gc.extraeComentarios(id);
-                    out3.println("<div class='list-group'>");
-                    //list-group-item active
-                    for (int i = 0; i < arrayComentarios.size(); i++) {
-                        Comentario comentario = arrayComentarios.get(i);
-                        out3.println("<a class='list-group-item'>");
-                        out3.println("<h4 class='list-group-item-heading'>" + comentario.getTitulo() + "</h4>");
-                        out3.println("<p class='list-group-item-text'>" + comentario.getTexto() + "</p>");
-                        out3.println("</a>");
-                    }
-                    out3.println("</div>");
-                    out3.println("<hr style='color: red' />");
-                    break;
+                            //COMENTARIOS
+                            GestorComentarios gc = new GestorComentarios();
+                            ArrayList<Comentario> arrayComentarios = gc.extraeComentarios(id);
+                            out3.println("<div class='list-group'>");
+                            //list-group-item active
+                            for (int i = 0; i < arrayComentarios.size(); i++) {
+                                Comentario comentario = arrayComentarios.get(i);
+                                out3.println("<a class='list-group-item'>");
+                                out3.println("<h4 class='list-group-item-heading'>" + comentario.getTitulo() + "</h4>");
+                                out3.println("<p class='list-group-item-text'>" + comentario.getTexto() + "</p>");
+                                out3.println("</a>");
+                            }
+                            out3.println("</div>");
+                            out3.println("<hr style='color: red' />");
+                            break;
 
-                case "porver":
-                    System.out.println("porver");
-                    GestorPorVer gpv = new GestorPorVer();
-                    ArrayList<PorVer> arrayPorVer = gpv.extraePorVer(1);
-                    GestorPeliculas gp5 = new GestorPeliculas();
-                    response.setContentType("text/html; charset=iso-8859-1");
-                    PrintWriter out4 = response.getWriter();
-                    out4.println("<h2 style='text-align: center; margin-bottom: 3%'> Películas Por Ver </h2>");
-                    for (int i = 0; i < arrayPorVer.size(); i++) {
-                        PorVer porver = arrayPorVer.get(i);
-                        Pelicula peli = gp5.getPeliculaPorId(porver.getIdpelicula());
-                        out4.println("<div class='col-xs-4'>");
-                        out4.println("<div class='thumbnail'>");
-                        out4.println("<img src='imagenes/" + peli.getRuta() + "' height='600' width='200'>");
-                        out4.println("<div class='caption'>");
-                        out4.println("<h3>" + peli.getTitulo() + "</h3>");
-                        out4.println("<p>" + peli.getGenero() + "</p>");
-                        out4.println("<input type='hidden' name=idpeli value=" + peli.getId() + ">");
-                        out4.println("<a  id=" + peli.getId() + " class='accesopeli btn btn-primary'>Ver Detalles</a>");
-                        out4.println("</div>");
-                        out4.println("</div>");
-                        out4.println("</div>");
+                        case "porver":
+                            System.out.println("porver");
+                            GestorPorVer gpv = new GestorPorVer();
+                            ArrayList<PorVer> arrayPorVer = gpv.extraePorVer(1);
+                            GestorPeliculas gp5 = new GestorPeliculas();
+                            response.setContentType("text/html; charset=iso-8859-1");
+                            PrintWriter out4 = response.getWriter();
+                            out4.println("<h2 style='text-align: center; margin-bottom: 3%'> Películas Por Ver </h2>");
+                            for (int i = 0; i < arrayPorVer.size(); i++) {
+                                PorVer porver = arrayPorVer.get(i);
+                                Pelicula peli = gp5.getPeliculaPorId(porver.getIdpelicula());
+                                out4.println("<div class='col-xs-4'>");
+                                out4.println("<div class='thumbnail'>");
+                                out4.println("<img src='imagenes/" + peli.getRuta() + "' height='600' width='200'>");
+                                out4.println("<div class='caption'>");
+                                out4.println("<h3>" + peli.getTitulo() + "</h3>");
+                                out4.println("<p>" + peli.getGenero() + "</p>");
+                                out4.println("<input type='hidden' name=idpeli value=" + peli.getId() + ">");
+                                out4.println("<a  id=" + peli.getId() + " class='accesopeli btn btn-primary'>Ver Detalles</a>");
+                                out4.println("</div>");
+                                out4.println("</div>");
+                                out4.println("</div>");
 
-                    }
-                    break;
-                case "visto":
-                    System.out.println("visto");
-                    GestorVistas gv = new GestorVistas();
-                    ArrayList<Visto> arrayVistas = gv.extraeVistas(1);
-                    GestorPeliculas gp3 = new GestorPeliculas();
-                    response.setContentType("text/html; charset=iso-8859-1");
-                    PrintWriter out2 = response.getWriter();
-                    out2.println("<h2 style='text-align: center; margin-bottom: 3%'> Películas Vistas </h2>");
-                    for (int i = 0; i < arrayVistas.size(); i++) {
-                        Visto vista = arrayVistas.get(i);
-                        Pelicula peli = gp3.getPeliculaPorId(vista.getIdpelicula());
-                        out2.println("<div class='col-xs-4'>");
-                        out2.println("<div class='thumbnail'>");
-                        out2.println("<img src='imagenes/" + peli.getRuta() + "' height='600' width='200'>");
-                        out2.println("<div class='caption'>");
-                        out2.println("<h3>" + peli.getTitulo() + "</h3>");
-                        out2.println("<p>" + peli.getGenero() + "</p>");
-                        out2.println("<input type='hidden' name=idpeli value=" + peli.getId() + ">");
-                        out2.println("<a  id=" + peli.getId() + " class='accesopeli btn btn-primary'>Ver Detalles</a>");
-                        out2.println("</div>");
-                        out2.println("</div>");
-                        out2.println("</div>");
+                            }
+                            break;
+                        case "visto":
+                            System.out.println("visto");
+                            GestorVistas gv = new GestorVistas();
+                            ArrayList<Visto> arrayVistas = gv.extraeVistas(1);
+                            GestorPeliculas gp3 = new GestorPeliculas();
+                            response.setContentType("text/html; charset=iso-8859-1");
+                            PrintWriter out2 = response.getWriter();
+                            out2.println("<h2 style='text-align: center; margin-bottom: 3%'> Películas Vistas </h2>");
+                            for (int i = 0; i < arrayVistas.size(); i++) {
+                                Visto vista = arrayVistas.get(i);
+                                Pelicula peli = gp3.getPeliculaPorId(vista.getIdpelicula());
+                                out2.println("<div class='col-xs-4'>");
+                                out2.println("<div class='thumbnail'>");
+                                out2.println("<img src='imagenes/" + peli.getRuta() + "' height='600' width='200'>");
+                                out2.println("<div class='caption'>");
+                                out2.println("<h3>" + peli.getTitulo() + "</h3>");
+                                out2.println("<p>" + peli.getGenero() + "</p>");
+                                out2.println("<input type='hidden' name=idpeli value=" + peli.getId() + ">");
+                                out2.println("<a  id=" + peli.getId() + " class='accesopeli btn btn-primary'>Ver Detalles</a>");
+                                out2.println("</div>");
+                                out2.println("</div>");
+                                out2.println("</div>");
 
-                    }
-                    break;
-                case "explorar":
-                    System.out.println("explorar");
-                    GestorPeliculas gp2 = new GestorPeliculas();
-                    ArrayList<Pelicula> arrayPeliculas = gp2.extraePeliculas();
-                    response.setContentType("text/html; charset=iso-8859-1");
-                    PrintWriter out = response.getWriter();
-                    out.println("<h2 style='text-align: center; margin-bottom: 3%'> Películas de la Página </h2>");
-                    for (int j = 0; j < arrayPeliculas.size(); j++) {
-                        Pelicula peli = arrayPeliculas.get(j);
-                        out.println("<div class='col-xs-4'>");
-                        out.println("<div class='thumbnail'>");
-                        out.println("<img src='imagenes/" + peli.getRuta() + "'  height='100%' width='100%'>");
-                        out.println("<div class='caption'>");
-                        out.println("<h3>" + peli.getTitulo() + "</h3>");
-                        out.println("<p>" + peli.getGenero() + "</p>");
-                        out.println("<input type='hidden' name=idpeli value=" + peli.getId() + " class='accesopeli'>");
-                        out.println("<a  id=" + peli.getId() + " class='accesopeli btn btn-primary'>Ver Detalles</a>");
-                        out.println("</div>");
-                        out.println("</div>");
-                        out.println("</div>");
-                    }
+                            }
+                            break;
+                        case "explorar":
+                            System.out.println("explorar");
+                            GestorPeliculas gp2 = new GestorPeliculas();
+                            ArrayList<Pelicula> arrayPeliculas = gp2.extraePeliculas();
+                            response.setContentType("text/html; charset=iso-8859-1");
+                            PrintWriter out = response.getWriter();
+                            out.println("<h2 style='text-align: center; margin-bottom: 3%'> Películas de la Página </h2>");
+                            for (int j = 0; j < arrayPeliculas.size(); j++) {
+                                Pelicula peli = arrayPeliculas.get(j);
+                                out.println("<div class='col-xs-4'>");
+                                out.println("<div class='thumbnail'>");
+                                out.println("<img src='imagenes/" + peli.getRuta() + "'  height='100%' width='100%'>");
+                                out.println("<div class='caption'>");
+                                out.println("<h3>" + peli.getTitulo() + "</h3>");
+                                out.println("<p>" + peli.getGenero() + "</p>");
+                                out.println("<input type='hidden' name=idpeli value=" + peli.getId() + " class='accesopeli'>");
+                                out.println("<a  id=" + peli.getId() + " class='accesopeli btn btn-primary'>Ver Detalles</a>");
+                                out.println("</div>");
+                                out.println("</div>");
+                                out.println("</div>");
+                            }
 
-                    //System.out.println("extraepelis");
-                    break;
-                case "savepeli":
-                    System.out.println("savepeli");
-                    String titulo = request.getParameter("titulopf").trim();
-                    String anoaux = request.getParameter("anopf").trim();
-                    int ano = Integer.parseInt(anoaux);
-                    String duracionaux = request.getParameter("duracionpf").trim();
-                    int duracion = Integer.parseInt(duracionaux);
-                    String director = request.getParameter("directorpf").trim();
-                    String pais = request.getParameter("paispf").trim();
-                    String genero = request.getParameter("generopf").trim();
-                    String sinopsis = request.getParameter("sinopsispf").trim();
+                            //System.out.println("extraepelis");
+                            break;
+                        case "savepeli":
+                            System.out.println("savepeli");
+                            String titulo = request.getParameter("titulopf").trim();
+                            String anoaux = request.getParameter("anopf").trim();
+                            int ano = Integer.parseInt(anoaux);
+                            String duracionaux = request.getParameter("duracionpf").trim();
+                            int duracion = Integer.parseInt(duracionaux);
+                            String director = request.getParameter("directorpf").trim();
+                            String pais = request.getParameter("paispf").trim();
+                            String genero = request.getParameter("generopf").trim();
+                            String sinopsis = request.getParameter("sinopsispf").trim();
 
-                    //ruta
-                    String ruta = request.getParameter("imagenpelipf").trim();
-                    
-                    
-                    /*
+                            //ruta
+                            String ruta = request.getParameter("imagenpelipf").trim();
+
+                            /*
                     Path from = Paths.get(ruta);
                     String[] partesRuta = ruta.split("\\\\");
                     String archivo = partesRuta[2];
@@ -241,45 +240,45 @@ public class index extends HttpServlet {
                         StandardCopyOption.COPY_ATTRIBUTES
                     };
                     Files.copy(from, to, options);
-                    */
-                   
+                             */
+                            GestorPeliculas gp = new GestorPeliculas();
+                            //HttpSession session = request.getSession();
+                            //session.getAttribute("id");
 
-                    GestorPeliculas gp = new GestorPeliculas();
-                    //HttpSession session = request.getSession();
-                    //session.getAttribute("id");
+                            Pelicula pe = new Pelicula(1, titulo, ano, duracion, pais, director, genero, sinopsis, ruta);
+                            String mensaje = gp.guardaPeliculas(pe);
+                            System.out.println(titulo + " " + ano + " " + duracion + " " + director + " " + pais + " " + genero + " " + sinopsis);
+                            if ("yes".equals(mensaje)) {
+                                //String r = "yes";
+                                response.setContentType("text/plain");
+                                response.getWriter().write(mensaje);
+                                //response.sendRedirect("./index.jsp");
+                            } else {
+                                response.setContentType("text/plain");
+                                response.getWriter().write(mensaje);
+                            }
 
-                    Pelicula pe = new Pelicula(1, titulo, ano, duracion, pais, director, genero, sinopsis, ruta);
-                    String mensaje = gp.guardaPeliculas(pe);
-                    System.out.println(titulo + " " + ano + " " + duracion + " " + director + " " + pais + " " + genero + " " + sinopsis);
-                    if ("yes".equals(mensaje)) {
-                        //String r = "yes";
-                        response.setContentType("text/plain");
-                        response.getWriter().write(mensaje);
-                        //response.sendRedirect("./index.jsp");
-                    } else {
-                        response.setContentType("text/plain");
-                        response.getWriter().write(mensaje);
+                            break;
+                        default:
+                            System.out.println("default");
+                            response.sendRedirect("./index.jsp");
                     }
 
-                    break;
-                default:
-                    System.out.println("default");
-                    response.sendRedirect("./index.jsp");
-            }
+                } else {
+                    System.out.println("No action");
 
-        } else {
-            System.out.println("aqui");
-           
-            response.sendRedirect("./index.jsp");
-        }
-        /*
+                    response.sendRedirect("./index.jsp");
+                }
+
             } else {
+                System.out.println("Sesion: " + sesion);
                 response.sendRedirect("./login");
             }
         } else {
+            System.out.println("Sesion: " + sesion);
             response.sendRedirect("./login");
         }
-         */
+
     }
 
     /**
@@ -295,31 +294,7 @@ public class index extends HttpServlet {
             throws ServletException, IOException {
         //processRequest(request, response);
         System.out.println("dopost");
-        /*
-        String accion = request.getParameter("accion").trim();
-        switch (accion) {
-            case "anadirpeli":
-                String titulo = request.getParameter("titulopf").trim();
-                String ano = request.getParameter("anopf").trim();
-                String director = request.getParameter("directorpf").trim();
-                String pais = request.getParameter("paispf").trim();
-                String genero = request.getParameter("generopf").trim();
-                String sinopsis = request.getParameter("sinopsispf").trim();
-                GestorPeliculas gp = new GestorPeliculas();
-                HttpSession session = request.getSession();
-                //session.getAttribute("id");
-                //Pelicula pe = new Pelicula();
-                System.out.println(titulo+" "+ano+" "+director+" "+pais+" "+genero+" "+sinopsis);
-                String r = "yes";
-                response.setContentType("text/plain");
-                response.getWriter().write(r); 
-                //response.sendRedirect("./index.jsp");
-                break;
-             
-            default:
-                 System.out.println("aqui4");
-                response.sendRedirect("./index.jsp");
-        }*/
+
     }
 
     /**
