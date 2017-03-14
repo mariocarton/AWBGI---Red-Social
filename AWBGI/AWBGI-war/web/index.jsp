@@ -24,13 +24,14 @@
             if (sesion != null) {
                 if (!sesion) {
                     response.sendRedirect("./login");
-                }else{
-                    Usuario u = (Usuario) session.getAttribute("usuario");
                 }
             }else{
                 response.sendRedirect("./login");
             }
         %>
+        <%
+            Usuario u = (Usuario) session.getAttribute("usuario");                    
+        %> 
         <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: #31708f">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -86,7 +87,11 @@
                 <hr style="color: red" />
                 <ul class="nav nav-sidebar">
                     <li> 
-                    <h7 style="text-align: center"> Usuario 1 </h7>
+                    <h7 style="text-align: center"> 
+                        <%= 
+                            u.getNombre() + " " +u.getApellidos()
+                        %> 
+                    </h7>
                     </li>
                     <li>
                         <a class="glyphicon glyphicon-cog" href="#"> Ajustes </a> 
@@ -106,14 +111,10 @@
             <div class="col-xs-8" >
 
                 <div class="nav nav-tabs" id="navperfil" style="display:none">
-                    <h4> 
-                        <%
-                            Usuario u = (Usuario) session.getAttribute("usuario"); 
-                            u.getNombre();
-                        %> Usuario  
-                    
-                    
-                    
+                    <h4>                     
+                        <%= 
+                            u.getNombre() + " " +u.getApellidos()
+                        %>
                     </h4>
                     <li role="presentation" class="active">
                         <a class="active glyphicon glyphicon-eye-open" id="bvisto"> Visto</a>
@@ -242,9 +243,11 @@
                     </div>
                 </div>
             </div>
+            <!--
             <div class="col-xs-2 panel panel-primary">
                 <a href="#"> saf </a>
             </div>
+            -->
 
         </div>
 
