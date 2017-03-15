@@ -18,14 +18,27 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <body>
+        <script type="text/javascript">
+            if (typeof session === 'undefined') {
+                response.sendRedirect("./login");
+            }
+        </script>
         <%
             // Si no esta iniciada la sesion se reenvia al formulario de registro
+            //HttpSession session = request.getSession();
+            System.out.println("fallo1");
+            
             Boolean sesion = (Boolean) session.getAttribute("auth");
+            System.out.println("La desion es:" + sesion.toString());
             if (sesion != null) {
                 if (!sesion) {
+                    System.out.println("Sesión False index.jsp");
                     response.sendRedirect("./login");
+                }else{
+                    System.out.println("Sesión True index.jsp");
                 }
             } else {
+                System.out.println("Sesión null index.jsp");
                 response.sendRedirect("./login");
             }
         %>
@@ -279,6 +292,19 @@
 
 
     <script type="text/javascript">
+            Pelicula peli = (Pelicula) session.getAttribute("infopeli");
+            if (peli != null) {
+               $('#infopeli').html("peli");
+               $('#infopeli').show();
+               session.setAttribute("infopeli", null);
+               
+            } 
+        
+           
+        
+    </script>
+    <script type="text/javascript">
+        
         $('#explorar').click(function () {
             $('#pelianadida').hide();
             $('#anadir').hide();
@@ -299,8 +325,8 @@
                     $(".accesopeli").click(function () {
 
                         var ID = $(this).attr("id");
-                        //window.location.href = "index?accion=verpeli&id="+ID+"";
-
+                        window.location.href = "index?accion=verpeli&id="+ID+"";
+                        /*
                         $.ajax({
                             url: 'index',
                             data: {
@@ -316,7 +342,7 @@
                                 $('#pexplorar').html(responseText);
                             }
                         });
-
+                        */
                     });
                 }
 

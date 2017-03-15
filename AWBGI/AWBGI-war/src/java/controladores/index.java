@@ -89,18 +89,19 @@ public class index extends HttpServlet {
                         case "cierra_sesion":
                             System.out.println("cierra sesion");
                             session.setAttribute("auth", false);
-                            System.out.println("Sesion: " + sesion);
+                            System.out.println("Sesion cerrada: " + session.getAttribute("auth"));
                             response.sendRedirect("./login");
                             break;
 
                         case "verpeli":
                             System.out.println("verpeli");
                             response.setContentType("text/html; charset=iso-8859-1");
-                            PrintWriter out3 = response.getWriter();
+                            //PrintWriter out3 = response.getWriter();
                             String idaux = request.getParameter("id").trim();
                             int id = Integer.parseInt(idaux);
                             GestorPeliculas gp4 = new GestorPeliculas();
                             Pelicula peli2 = gp4.getPeliculaPorId(id);
+                            /*
                             out3.println("<h3>" + peli2.getTitulo() + "</h3>");
 
                             //BOTONES
@@ -139,13 +140,13 @@ public class index extends HttpServlet {
                             }
                             out3.println("</div>");
                             out3.println("<hr style='color: red' />");
-                            
-                            ///Guardar info peli en sessión
-                            /*
-                            session.setAttribute("infopeli", out);
-                            System.out.println(out);
-                            response.sendRedirect("./index.jsp");
                             */
+                            ///Guardar info peli en sessión
+                            
+                            session.setAttribute("infopeli", peli2);
+                            
+                            response.sendRedirect("./index.jsp");
+                            
                             break;
 
                         case "porver":
