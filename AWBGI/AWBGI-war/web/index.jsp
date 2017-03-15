@@ -326,6 +326,7 @@
 
                         var ID = $(this).attr("id");
                         window.location.href = "index?accion=verpeli&id="+ID+"";
+                        //descomentar para ver peli antigua aqui y en index
                         /*
                         $.ajax({
                             url: 'index',

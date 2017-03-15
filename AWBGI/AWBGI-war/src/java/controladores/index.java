@@ -101,6 +101,8 @@ public class index extends HttpServlet {
                             int id = Integer.parseInt(idaux);
                             GestorPeliculas gp4 = new GestorPeliculas();
                             Pelicula peli2 = gp4.getPeliculaPorId(id);
+                            
+                            //Descomentar para verpeli antigua aqui y en idex.jsp segundo ajax
                             /*
                             out3.println("<h3>" + peli2.getTitulo() + "</h3>");
 
@@ -141,6 +143,7 @@ public class index extends HttpServlet {
                             out3.println("</div>");
                             out3.println("<hr style='color: red' />");
                             */
+                            
                             ///Guardar info peli en sessión
                             
                             session.setAttribute("infopeli", peli2);
