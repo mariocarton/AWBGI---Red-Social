@@ -14,8 +14,7 @@ $(document).ready(function () {
             data: {
                 accion: "visto"
             }, success: function (responseText) {
-                $('#visto').html(responseText);
-                
+                $('#visto').html(responseText);   
                 $(".accesopeli").click(function () {
                     var ID = $(this).attr("id");
                     $.ajax({
@@ -24,8 +23,10 @@ $(document).ready(function () {
                             id: ID,
                             accion: "verpeli"
                         }, success: function (responseText) {
+                            $('#navperfil').hide();
                             $('#titulopestana').html("VerPelícula");
                             $('#visto').html(responseText);
+                            
                         }
                     });
                 });

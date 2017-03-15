@@ -28,6 +28,7 @@ import javax.servlet.http.HttpSession;
 import modelo.Comentario;
 import modelo.Pelicula;
 import modelo.PorVer;
+import modelo.Usuario;
 import modelo.Visto;
 
 /**
@@ -78,10 +79,11 @@ public class index extends HttpServlet {
         if (sesion != null) {
             System.out.println("Sesion: " + sesion);
             if (sesion) {
-
+                
                 String accion = request.getParameter("accion");
                 if (accion != null) {
-
+                Usuario us = (Usuario) session.getAttribute("usuario");  
+                System.out.println("Id: "+us.getId());
                     switch (accion) {
 
                         case "cierra_sesion":
@@ -109,7 +111,7 @@ public class index extends HttpServlet {
                             out3.println("<button type='button' class='btn btn-default'>NoVisto</button>");
                             out3.println("</div>");
                             out3.println("<div class='btn-group' style='margin-left: 20px' role='group' aria-label='...'>");
-                            out3.println("<a class='btn btn-primary ' id='formcomentario' >Añadir Comentario</a>");
+                            out3.println("<a class='btn btn-primary ' id='bformcomentario' >Añadir Comentario</a>");
                             out3.println("</div>");
 
                             //INFOPELI
@@ -137,12 +139,20 @@ public class index extends HttpServlet {
                             }
                             out3.println("</div>");
                             out3.println("<hr style='color: red' />");
+                            
+                            ///Guardar info peli en sessión
+                            /*
+                            session.setAttribute("infopeli", out);
+                            System.out.println(out);
+                            response.sendRedirect("./index.jsp");
+                            */
                             break;
 
                         case "porver":
                             System.out.println("porver");
                             GestorPorVer gpv = new GestorPorVer();
-                            ArrayList<PorVer> arrayPorVer = gpv.extraePorVer(1);
+                            Usuario u = (Usuario) session.getAttribute("usuario");  
+                            ArrayList<PorVer> arrayPorVer = gpv.extraePorVer(u.getId());
                             GestorPeliculas gp5 = new GestorPeliculas();
                             response.setContentType("text/html; charset=iso-8859-1");
                             PrintWriter out4 = response.getWriter();
@@ -167,7 +177,8 @@ public class index extends HttpServlet {
                         case "visto":
                             System.out.println("visto");
                             GestorVistas gv = new GestorVistas();
-                            ArrayList<Visto> arrayVistas = gv.extraeVistas(1);
+                            Usuario u2 = (Usuario) session.getAttribute("usuario");
+                            ArrayList<Visto> arrayVistas = gv.extraeVistas(u2.getId());
                             GestorPeliculas gp3 = new GestorPeliculas();
                             response.setContentType("text/html; charset=iso-8859-1");
                             PrintWriter out2 = response.getWriter();
@@ -215,6 +226,7 @@ public class index extends HttpServlet {
                             break;
                         case "savepeli":
                             System.out.println("savepeli");
+                            Usuario u3 = (Usuario) session.getAttribute("usuario");
                             String titulo = request.getParameter("titulopf").trim();
                             String anoaux = request.getParameter("anopf").trim();
                             int ano = Integer.parseInt(anoaux);
@@ -225,9 +237,12 @@ public class index extends HttpServlet {
                             String genero = request.getParameter("generopf").trim();
                             String sinopsis = request.getParameter("sinopsispf").trim();
 
-                            //ruta
+                            //ruta falta-ahora cojo el nombre solo de la ruta
+                            //hay fakepath no deja coger la ruta para trasladar imagen a
+                            //web-pages imagenes
                             String ruta = request.getParameter("imagenpelipf").trim();
-
+                            String[] partesRuta = ruta.split("\\\\");
+                            String archivo = partesRuta[2];
                             /*
                     Path from = Paths.get(ruta);
                     String[] partesRuta = ruta.split("\\\\");
@@ -245,9 +260,9 @@ public class index extends HttpServlet {
                             //HttpSession session = request.getSession();
                             //session.getAttribute("id");
 
-                            Pelicula pe = new Pelicula(1, titulo, ano, duracion, pais, director, genero, sinopsis, ruta);
+                            Pelicula pe = new Pelicula(u3.getId(), titulo, ano, duracion, pais, director, genero, sinopsis, archivo);
                             String mensaje = gp.guardaPeliculas(pe);
-                            System.out.println(titulo + " " + ano + " " + duracion + " " + director + " " + pais + " " + genero + " " + sinopsis);
+                            System.out.println(u3.getId()+ " "+titulo + " " + ano + " " + duracion + " " + director + " " + pais + " " + genero + " " + sinopsis);
                             if ("yes".equals(mensaje)) {
                                 //String r = "yes";
                                 response.setContentType("text/plain");

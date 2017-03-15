@@ -1,7 +1,7 @@
 <%-- 
-    Document   : index
-    Created on : 09-feb-2017, 17:16:22
-    Author     : mario
+    Document   : pelicula
+    Created on : 15-mar-2017, 11:40:11
+    Author     : mariomatesanz
 --%>
 
 <%@page import="modelo.Usuario"%>
@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title id="titulopestana">MuchaPeli</title>
+        <title id="titulopestana">VerPelícula</title>
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="recursos/bootstrap/css/bootstrap.min.css" >
         <!-- Optional theme -->
@@ -60,7 +60,7 @@
                 <h1>MuchaPeli <small></small></h1>
             </div>
 
-            <div class="col-xs-2 sidebar" style="height: 100%" >
+            <div class="col-xs-2 sidebar" style="height: 100%">
                 <ul class="nav nav-sidebar">
                     <li>
                         <input type="text" class="form-control" placeholder="Buscar...">
@@ -226,7 +226,6 @@
 
                 </div>
 
-
                 <div class="modal-content" style="display:none" id="pelianadida">
                     <div class="modal-header">
                         <button type="button" class="close" id="btnpelianadida" data-dismiss="modal">&times;</button>
@@ -246,26 +245,6 @@
             </div>
             -->
 
-
-            <div class="row " id="formcomentario" style="display:none" style="margin: 4%">
-                <div class="container-fluid" style="margin: 4%">
-                    <h2 style="text-align: center"> Añadir Comentario </h2>
-                    <form role="form" id="formpeliadd">
-                        <div class="form-group">
-                            <label for="titulo">Título</label>
-                            <input type="text" class="form-control" id="titulocf" name="titulocf"
-                                   placeholder="Introduce el Título" required="">
-                        </div>
-                        <div class="form-group">
-                            <label for="texto">Text</label>
-                            <input type="text" class="form-control" id="anocf" name="anocf"
-                                   placeholder="Introduce el Comentario" required="">
-                        </div>
-                        <input hidden name="accion" value="enviacomentario"/>
-                        <button id="enviacomentario" type="submit" class="btn btn-primary" >Enviar</button>
-                    </form>
-                </div>
-            </div>
         </div>
 
 
@@ -273,12 +252,14 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>-->
     <script src="recursos/bootstrap/js/bootstrap.min.js" ></script> 
-
-    <!-- Funciones javascript que contolan la vista de la pagina -->
     <script type="text/javascript" src="js/index.js"></script>
 
-
     <script type="text/javascript">
+        
+        PrintWriter peli =  session.getAttribute("infopeli");
+        $('#infopeli').html(peli);
+        $('#infopeli').show();
+        /*
         $('#explorar').click(function () {
             $('#pelianadida').hide();
             $('#anadir').hide();
@@ -297,9 +278,7 @@
                     $('#pexplorar').html(responseText);
 
                     $(".accesopeli").click(function () {
-
                         var ID = $(this).attr("id");
-                        //window.location.href = "index?accion=verpeli&id="+ID+"";
 
                         $.ajax({
                             url: 'index',
@@ -309,9 +288,8 @@
                             }, success: function (responseText) {
                                 $('#titulopestana').html("VerPelícula");
 
-                                $('#bformcomentario').click(function () {
-
-                                    $('#formcomentario').slideDown('slow');
+                                $('#formcomentario').click(function () {
+                                    $('#titulopestana').html("Form");
                                 });
                                 $('#pexplorar').html(responseText);
                             }
@@ -323,10 +301,9 @@
             });
         });
 
-
+*/
 
 
     </script>
-
 </body>
 </html>

@@ -30,9 +30,10 @@ public class GestorPeliculas {
                     +"'"+pelicula.getPais()+"',"
                     +"'"+pelicula.getDirector()+"',"
                     +"'"+pelicula.getGenero()+"',"
-                    +"'"+pelicula.getSinopsis()+"'"
+                    +"'"+pelicula.getSinopsis()+"',"
                     +"'"+pelicula.getRuta()+"'"
                     +")";
+            //System.out.println(consulta);
             conexion.ejecutaInserta(consulta);
             return "yes";
         } catch (SQLException | ClassNotFoundException ex) {
