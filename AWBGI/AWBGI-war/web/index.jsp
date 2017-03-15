@@ -15,70 +15,61 @@
         <link rel="stylesheet" href="recursos/bootstrap/css/bootstrap.min.css" >
         <!-- Optional theme -->
         <link rel="stylesheet" href="recursos/bootstrap/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="css/estilo.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <body>
-        <script type="text/javascript">
-            if (typeof session === 'undefined') {
-                response.sendRedirect("./login");
-            }
-        </script>
-        <%
-            // Si no esta iniciada la sesion se reenvia al formulario de registro
-            //HttpSession session = request.getSession();
-            System.out.println("fallo1");
-            
-            Boolean sesion = (Boolean) session.getAttribute("auth");
-            System.out.println("La desion es:" + sesion.toString());
-            if (sesion != null) {
-                if (!sesion) {
-                    System.out.println("Sesión False index.jsp");
-                    response.sendRedirect("./login");
-                }else{
-                    System.out.println("Sesión True index.jsp");
-                }
-            } else {
-                System.out.println("Sesión null index.jsp");
-                response.sendRedirect("./login");
-            }
-        %>
         <%
             Usuario u = (Usuario) session.getAttribute("usuario");
         %> 
         <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: #31708f">
             <div class="container-fluid">
+
                 <div class="navbar-header">
-                    <a class="navbar-brand" id="iconmuchapeli" style="color: white"> MuchaPeli </a>
-                </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav navbar-right">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                        <span class="sr-only">Desplegar navegación</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" id="iconmuchapeli" style="color: white; float: none; position: absolute; left: 50%; margin-left: -50px !important; display: block"> 
+                        MuchaPeli 
+                    </a>
+                </div>              
+                <div class="navbar-collapse collapse navbar-ex1-collapse">
+                    <ul class="nav navbar-nav ">
                         <li>
-                            <a class="glyphicon" id="explorar"> 
-                                <i class="fa fa-wpexplorer" aria-hidden="true"></i>
-                                Explorar </a>
+                            <a><span class="glyphicon glyphicon-search"></span></a>                            
+                        </li>
+                        <li>
+                            <form class="navbar-form navbar-nav" role="search" >
+                                <input id="cuadrobusqueda" type="text" class="form-control" placeholder="Buscar..." >
+                            </form>
+                            <div class="resultadoBusqueda">
+                                <div id="contenidoBusqueda" style="height: 302px"></div>
+                            </div>
+                        </li>
+                    </ul>  
+                    <ul class="nav navbar-nav navbar-right" style="margin-right: 10px">                        
+                        <li>
+                            <a id="explorar">
+                                <span class="fa fa-wpexplorer" aria-hidden="true" style="margin-right: 5px" ></span> Explorar 
+                            </a>
                         </li>
                     </ul>
-
-                    <form class="navbar-form navbar-nav" role="search">
-                        <input type="text" class="form-control" placeholder="Buscar...">
-                    </form>
-
                 </div>
             </div>
         </nav>
 
 
-        <div class="container-fluid" style="padding-top: 3%">
-            <div class="page-header" style="text-align: center" >
+        <div class="container-fluid" style="margin-top: 55px">
+            <!--<div class="page-header" style="text-align: center" >
                 <h1>MuchaPeli <small></small></h1>
-            </div>
-
-            <div class="col-xs-2 sidebar" style="height: 100%" >
+            </div>-->
+            <div class="row">
+            <div class="col-sm-2 sidebar menu-lateral"  > <!--media query para quitarlo -->
                 <ul class="nav nav-sidebar">
-                    <li>
-                        <input type="text" class="form-control" placeholder="Buscar...">
-                    </li>
-                    <li>
+                   <li>
                         <a id="banadir" class="glyphicon glyphicon-plus-sign"> Añadir </a> 
                     </li>
                     <li class="active">
@@ -119,7 +110,7 @@
                 </ul>
             </div>
 
-            <div class="col-xs-8" >
+                    <div class="col-sm-10 contenido" style="float:right" ><!--media query para quitarlo -->
 
                 <div class="nav nav-tabs" id="navperfil" style="display:none">
                     <h4>                     
@@ -148,7 +139,7 @@
                     </div>
                 </div>
                 -->
-                <hr style="color: red" />
+                
 
                 <div class="row" id="visto" style="display:none">
 
@@ -280,6 +271,7 @@
                 </div>
             </div>
         </div>
+        </div>
 
 
     </div>
@@ -290,19 +282,6 @@
     <!-- Funciones javascript que contolan la vista de la pagina -->
     <script type="text/javascript" src="js/index.js"></script>
 
-
-    <script type="text/javascript">
-            Pelicula peli = (Pelicula) session.getAttribute("infopeli");
-            if (peli != null) {
-               $('#infopeli').html("peli");
-               $('#infopeli').show();
-               session.setAttribute("infopeli", null);
-               
-            } 
-        
-           
-        
-    </script>
     <script type="text/javascript">
         
         $('#explorar').click(function () {
@@ -315,41 +294,63 @@
             $('#pexplorar').show();
             $('#porver').hide();
             $('#titulopestana').html("Explorar");
-            $.ajax({
+            
+            $.ajax({                
                 url: 'index',
-                data: {
-                    accion: "explorar"
-                }, success: function (responseText) {
-                    $('#pexplorar').html(responseText);
-
+                data: { accion: "explorar" }                
+            }).done(function (responseText) {
+                    //Redibuja la pantalla de explorar
+                    $('#pexplorar').html(responseText);                    
+                    //Controladores de la vista explorar
                     $(".accesopeli").click(function () {
-
-                        var ID = $(this).attr("id");
-                        window.location.href = "index?accion=verpeli&id="+ID+"";
-                        //descomentar para ver peli antigua aqui y en index
-                        /*
+                        //ID de la pelicula qu ese ha seleccionado
+                        var ID = $(this).attr("id");     
+                        //Se pasa a la vista de detalles de pelicula
                         $.ajax({
                             url: 'index',
                             data: {
                                 id: ID,
                                 accion: "verpeli"
-                            }, success: function (responseText) {
+                            }
+                        }).done(function (responseText) {
+                                //Titulo de la pestaña
                                 $('#titulopestana').html("VerPelícula");
-
+                                //Controlador del boton añadir comentario
                                 $('#bformcomentario').click(function () {
-
                                     $('#formcomentario').slideDown('slow');
                                 });
                                 $('#pexplorar').html(responseText);
-                            }
-                        });
-                        */
+                         });
+                        
                     });
-                }
-
-            });
+                });
         });
+        
+        $('#cuadrobusqueda').keyup(function (){
+            var contenido = $('#cuadrobusqueda').val();
+            if(contenido.length>2){
+                $.ajax({                
+                    url: 'busqueda',
+                    data: { accion: "busqueda" }                
+                }).done(function (responseText) {
+                    $('#contenidoBusqueda').html(responseText);
+                    $('.resultadoBusqueda').css("display","block");
+                });
+            }else{
+                $('.resultadoBusqueda').css("display","none");
+            }
+            
+        });
+        $(window).click(function(e) {
+            //if(e.target.id==='cuadrobusqueda'){
+            //    $('.resultadoBusqueda').css("display","block");
+            //}else{
+                $('.resultadoBusqueda').css("display","none");
+            //}
+        });
+            
 
+        
 
 
 

@@ -1,0 +1,22 @@
+@media (min-width: 768px) {
+  .menu-lateral {
+    position: fixed
+  }
+  .contenido{
+      float:right
+  }
+}
+.menu-lateral{
+    height: 100%
+}
+
+.resultadoBusqueda{
+    margin-top: 46px;
+    margin-left: 15px;    
+    overflow: hidden;
+    overflow-y: auto;
+    position: absolute;
+    width: 302px;
+    display: none;
+   
+}
