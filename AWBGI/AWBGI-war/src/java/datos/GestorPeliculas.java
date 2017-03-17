@@ -101,4 +101,33 @@ public class GestorPeliculas {
         }
         return null;
     }
+    
+    public ArrayList extraePeliculasLike(String palabra){
+        try {
+            ConexionBD conexion = ConexionBD.getInstancia();
+            String consulta = "SELECT * FROM pelicula WHERE titulo LIKE '%"+palabra+"%'";
+            ResultSet resultado = conexion.ejecutaRecuperacion(consulta);
+            ArrayList<Pelicula> arrayPeliculas = new ArrayList<>();
+            while (resultado.next()) {
+                int id = resultado.getInt("id");
+                int idusuario = resultado.getInt("idusuario");
+                String titulo = resultado.getString("titulo");
+                int ano = resultado.getInt("ano");
+                int duracion = resultado.getInt("duracion");
+                String director = resultado.getString("director");
+                String sinopsis = resultado.getString("genero");
+                String pais = resultado.getString("pais");
+                String genero = resultado.getString("sinopsis");
+                String ruta = resultado.getString("ruta");
+                Pelicula cm = new Pelicula(id,idusuario,titulo,ano,duracion,pais,director,genero,sinopsis,ruta);
+                arrayPeliculas.add(cm);
+                //System.out.println(id+ " "+idusuario+ " "+titulo + " " + ano + " " + duracion +" " + director + " " + pais + " " + genero + " " + sinopsis);
+            }
+            return arrayPeliculas;
+            
+        } catch (SQLException | ClassNotFoundException ex) {
+            System.out.println("Error en gestor de Películas: " + ex);
+        }
+        return null;
+    }
 }

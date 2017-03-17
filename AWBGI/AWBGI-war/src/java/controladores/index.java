@@ -211,11 +211,13 @@ public class index extends HttpServlet {
                             response.setContentType("text/html; charset=iso-8859-1");
                             PrintWriter out = response.getWriter();
                             out.println("<h2 style='text-align: center; margin-bottom: 3%'> Películas de la Página </h2>");
+                            out.println("<div class='container-fluid'>");
                             for (int j = 0; j < arrayPeliculas.size(); j++) {
                                 Pelicula peli = arrayPeliculas.get(j);
-                                out.println("<div class='col-xs-4'>");
+                                if(j%3==0) out.println("<div class='row'>");
+                                out.println("<div class='col-sm-4'>");
                                 out.println("<div class='thumbnail'>");
-                                out.println("<img src='imagenes/" + peli.getRuta() + "'  height='100%' width='100%'>");
+                                out.println("<img src='imagenes/" + peli.getRuta() + "'  class='img-responsive'>");
                                 out.println("<div class='caption'>");
                                 out.println("<h3>" + peli.getTitulo() + "</h3>");
                                 out.println("<p>" + peli.getGenero() + "</p>");
@@ -224,7 +226,9 @@ public class index extends HttpServlet {
                                 out.println("</div>");
                                 out.println("</div>");
                                 out.println("</div>");
+                                if(j%3==2) out.println("</div>");
                             }
+                            out.println("</div>");
 
                             //System.out.println("extraepelis");
                             break;

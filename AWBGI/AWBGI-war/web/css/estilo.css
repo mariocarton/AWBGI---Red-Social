@@ -2,12 +2,11 @@
   .menu-lateral {
     position: fixed
   }
-  .contenido{
-      float:right
-  }
+
 }
 .menu-lateral{
-    height: 100%
+    height: 100%;
+    padding-top: 25px;        
 }
 
 .resultadoBusqueda{

@@ -5,13 +5,16 @@
  */
 package controladores;
 
+import datos.GestorPeliculas;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modelo.Pelicula;
 
 /**
  *
@@ -60,25 +63,24 @@ public class busqueda extends HttpServlet {
             throws ServletException, IOException {
         //processRequest(request, response);
         String accion = request.getParameter("accion");
+        GestorPeliculas gp = new GestorPeliculas();
         if (accion != null) {
             switch (accion) {
                 case "busqueda":
+                    String palabra = request.getParameter("palabra");
+                    ArrayList<Pelicula> arrayPeliculas = gp.extraePeliculasLike(palabra);
+                    
                     response.setContentType("text/html; charset=iso-8859-1");
                     PrintWriter out = response.getWriter();
-                    out.println("<ul class=\"list-group\" style=\"margin-bottom : 0\">\n" +
-                            "  <a class=\"list-group-item\">First item</a>\n" +
-                            "  <a class=\"list-group-item\">First item</a>\n" +
-                            "  <a class=\"list-group-item\">First item</a>\n" +
-                            "  <a class=\"list-group-item\">First item</a>\n" +
-                            "  <a class=\"list-group-item\">First item</a>\n" +
-                            "  <a class=\"list-group-item\">First item</a>\n" +
-                            "  <a class=\"list-group-item\">First item</a>\n" +
-                            "  <a class=\"list-group-item\">First item</a>\n" +
-                            "  <a class=\"list-group-item\">First item</a>\n" +
-                            "  <a class=\"list-group-item\">First item</a>\n" +
-                            "  <a class=\"list-group-item\">First item</a>\n" +
-                            "  <a class=\"list-group-item\">First item</a>\n" +
-                            "</ul>");
+                    
+                    out.println("<ul class=\"list-group\" style=\"margin-bottom : 0\">\n");
+                    if(arrayPeliculas.isEmpty()){
+                        out.println("<li class=\"list-group-item\">No hay peliculas relacionadas...</li>\n");
+                    }
+                    for (int j = 0; j < arrayPeliculas.size(); j++) {                        
+                         out.println("<a id='" + arrayPeliculas.get(j).getId() + "' class='accesopeli list-group-item'>"+arrayPeliculas.get(j).getTitulo()+"</a>\n");
+                    }
+                    out.println("</ul>");
                     
                     break;
                 default:

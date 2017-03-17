@@ -20,7 +20,9 @@
     </head>
     <body>
         <%
+            
             Usuario u = (Usuario) session.getAttribute("usuario");
+                        
         %> 
         <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: #31708f">
             <div class="container-fluid">
@@ -70,20 +72,20 @@
             <div class="col-sm-2 sidebar menu-lateral"  > <!--media query para quitarlo -->
                 <ul class="nav nav-sidebar">
                    <li>
-                        <a id="banadir" class="glyphicon glyphicon-plus-sign"> Añadir </a> 
+                        <a id="banadir"><span class="glyphicon glyphicon-plus-sign"></span> Añadir </a> 
                     </li>
                     <li class="active">
-                        <a class="glyphicon glyphicon-user" id="bperfil"> Perfil </a>
+                        <a id="bperfil"><span class="glyphicon glyphicon-user"></span> Perfil </a>
                     </li>
                     <li>
-                        <a class="glyphicon glyphicon-transfer" href="#" > Actividad </a>
+                        <a href="#" ><span class="glyphicon glyphicon-transfer"></span> Actividad </a>
                     </li>
                     <li>
-                        <a class="glyphicon glyphicon-eye-close" id="bporver"> Por Ver </a> 
+                        <a id="bporver"><span class="glyphicon glyphicon-eye-close"></span> Por Ver </a> 
                     </li>
                     <li>
-                        <a class="glyphicon" id="bamigos"> 
-                            <i class="fa fa-users" aria-hidden="true"></i> Amigos 
+                        <a id="bamigos"> 
+                            <span class="fa fa-users" aria-hidden="true"></span> Amigos 
                         </a> 
 
                     </li>
@@ -96,10 +98,10 @@
                     </h7>
                     </li>
                     <li>
-                        <a class="glyphicon glyphicon-cog" href="#"> Ajustes </a> 
+                        <a href="#"><span class="glyphicon glyphicon-cog"></span> Ajustes </a> 
                     </li>
                     <li>
-                        <a class="glyphicon glyphicon-question-sign" href="#"> Ayuda </a> 
+                        <a><span class="glyphicon glyphicon-question-sign" href="#"></span> Ayuda </a> 
                     </li>
                 </ul>
                 <hr style="color: red" />
@@ -140,9 +142,8 @@
                 </div>
                 -->
                 
-
+                <div class="row" id="contenido"> </div>
                 <div class="row" id="visto" style="display:none">
-
                 </div>
 
                 <div class="row" id="porver" style="display:none">
@@ -283,7 +284,7 @@
     <script type="text/javascript" src="js/index.js"></script>
 
     <script type="text/javascript">
-        
+        $( document ).ready(function() {
         $('#explorar').click(function () {
             $('#pelianadida').hide();
             $('#anadir').hide();
@@ -294,13 +295,38 @@
             $('#pexplorar').show();
             $('#porver').hide();
             $('#titulopestana').html("Explorar");
+            $('#contenido').html("");            
             
             $.ajax({                
                 url: 'index',
                 data: { accion: "explorar" }                
             }).done(function (responseText) {
                     //Redibuja la pantalla de explorar
-                    $('#pexplorar').html(responseText);                    
+                    $('#pexplorar').html(responseText).ready(function() {
+                    //Pone a todas las imagenes el mismo tamaño
+                    var alto = $('.img-responsive').val();                    
+                    $('.img-responsive').each(function(){
+                        if($(this).height()>alto) alto=$(this).height();
+                    });
+                     $('.img-responsive').each(function(){
+                        $(this).height(alto);
+                    });
+                    //Si cambia el tamaño de la pantalla las reescala
+                    $(window).resize(function() {
+                        alto=$('.img-responsive').val();  
+                        $('.img-responsive').each(function(){
+                            $(this).height('auto');
+                        });
+                        $('.img-responsive').each(function(){
+                            if($(this).height()>alto) alto=$(this).height();
+                        });
+                        $('.img-responsive').each(function(){
+                            $(this).height(alto);
+                        });
+                        });
+                    });                    
+                    
+                    
                     //Controladores de la vista explorar
                     $(".accesopeli").click(function () {
                         //ID de la pelicula qu ese ha seleccionado
@@ -319,6 +345,7 @@
                                 $('#bformcomentario').click(function () {
                                     $('#formcomentario').slideDown('slow');
                                 });
+                                
                                 $('#pexplorar').html(responseText);
                          });
                         
@@ -328,18 +355,50 @@
         
         $('#cuadrobusqueda').keyup(function (){
             var contenido = $('#cuadrobusqueda').val();
-            if(contenido.length>2){
+            if(contenido.length>1){
                 $.ajax({                
                     url: 'busqueda',
-                    data: { accion: "busqueda" }                
+                    data: { accion: "busqueda",
+                            palabra: contenido }                
                 }).done(function (responseText) {
                     $('#contenidoBusqueda').html(responseText);
                     $('.resultadoBusqueda').css("display","block");
+                    
+                    $(".accesopeli").click(function () {
+                        //Hay que recargar todo en el mismo div
+                        $('#pelianadida').hide();
+                        $('#anadir').hide();
+                        $('#visto').hide();
+                        $('#amigos').hide();
+                        $('#navperfil').hide();
+                        $('#visto').hide();
+                        $('#pexplorar').hide();
+                        $('#porver').hide();
+                        //ID de la pelicula qu ese ha seleccionado
+                        var ID = $(this).attr("id");     
+                        //Se pasa a la vista de detalles de pelicula
+                        $.ajax({
+                            url: 'index',
+                            data: {
+                                id: ID,
+                                accion: "verpeli"
+                            }
+                        }).done(function (responseText) {
+                                //Titulo de la pestaña
+                                $('#titulopestana').html("VerPelícula");
+                                //Controlador del boton añadir comentario
+                                $('#bformcomentario').click(function () {
+                                    $('#formcomentario').slideDown('slow');
+                                });
+                                $('#contenido').html(responseText);
+                         });
+                        
+                    });
+                    
                 });
             }else{
                 $('.resultadoBusqueda').css("display","none");
-            }
-            
+            }            
         });
         $(window).click(function(e) {
             //if(e.target.id==='cuadrobusqueda'){
@@ -350,7 +409,7 @@
         });
             
 
-        
+        });
 
 
 
