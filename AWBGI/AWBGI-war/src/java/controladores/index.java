@@ -21,10 +21,12 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import static javax.management.Query.div;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 import modelo.Comentario;
 import modelo.Pelicula;
 import modelo.PorVer;
@@ -35,6 +37,7 @@ import modelo.Visto;
  *
  * @author mario
  */
+@MultipartConfig
 public class index extends HttpServlet {
 
     /**
@@ -164,9 +167,10 @@ public class index extends HttpServlet {
                             for (int i = 0; i < arrayPorVer.size(); i++) {
                                 PorVer porver = arrayPorVer.get(i);
                                 Pelicula peli = gp5.getPeliculaPorId(porver.getIdpelicula());
-                                out4.println("<div class='col-xs-4'>");
+                                if(i%4==0) out.println("<div class='row'>");
+                                out4.println("<div class='col-xs-3'>");
                                 out4.println("<div class='thumbnail'>");
-                                out4.println("<img src='imagenes/" + peli.getRuta() + "' height='600' width='200'>");
+                                out4.println("<img src='imagenes/" + peli.getRuta() + "' style='img-responsive' >");
                                 out4.println("<div class='caption'>");
                                 out4.println("<h3>" + peli.getTitulo() + "</h3>");
                                 out4.println("<p>" + peli.getGenero() + "</p>");
@@ -175,7 +179,7 @@ public class index extends HttpServlet {
                                 out4.println("</div>");
                                 out4.println("</div>");
                                 out4.println("</div>");
-
+                                if(i%4==3) out.println("</div>");
                             }
                             break;
                         case "visto":
@@ -214,8 +218,8 @@ public class index extends HttpServlet {
                             out.println("<div class='container-fluid'>");
                             for (int j = 0; j < arrayPeliculas.size(); j++) {
                                 Pelicula peli = arrayPeliculas.get(j);
-                                if(j%3==0) out.println("<div class='row'>");
-                                out.println("<div class='col-sm-4'>");
+                                if(j%4==0) out.println("<div class='row'>");
+                                out.println("<div class='col-sm-3'>");
                                 out.println("<div class='thumbnail'>");
                                 out.println("<img src='imagenes/" + peli.getRuta() + "'  class='img-responsive'>");
                                 out.println("<div class='caption'>");
@@ -226,7 +230,7 @@ public class index extends HttpServlet {
                                 out.println("</div>");
                                 out.println("</div>");
                                 out.println("</div>");
-                                if(j%3==2) out.println("</div>");
+                                if(j%4==3) out.println("</div>");
                             }
                             out.println("</div>");
 
@@ -235,22 +239,24 @@ public class index extends HttpServlet {
                         case "savepeli":
                             System.out.println("savepeli");
                             Usuario u3 = (Usuario) session.getAttribute("usuario");
-                            String titulo = request.getParameter("titulopf").trim();
-                            String anoaux = request.getParameter("anopf").trim();
+                            String titulo = request.getParameter("titulopf");
+                            String anoaux = request.getParameter("anopf");
                             int ano = Integer.parseInt(anoaux);
-                            String duracionaux = request.getParameter("duracionpf").trim();
+                            String duracionaux = request.getParameter("duracionpf");
                             int duracion = Integer.parseInt(duracionaux);
-                            String director = request.getParameter("directorpf").trim();
-                            String pais = request.getParameter("paispf").trim();
-                            String genero = request.getParameter("generopf").trim();
-                            String sinopsis = request.getParameter("sinopsispf").trim();
+                            String director = request.getParameter("directorpf");
+                            String pais = request.getParameter("paispf");
+                            String genero = request.getParameter("generopf");
+                            String sinopsis = request.getParameter("sinopsispf");
 
                             //ruta falta-ahora cojo el nombre solo de la ruta
                             //hay fakepath no deja coger la ruta para trasladar imagen a
                             //web-pages imagenes
-                            String ruta = request.getParameter("imagenpelipf").trim();
-                            String[] partesRuta = ruta.split("\\\\");
-                            String archivo = partesRuta[2];
+                            Part imgPart = request.getPart("file");
+                            String fileName = Paths.get(imgPart.getSubmittedFileName()).getFileName().toString(); 
+                            System.out.println(fileName);
+                            //String[] partesRuta = ruta.split("\\\\");
+                            //String archivo = partesRuta[2];
                             /*
                     Path from = Paths.get(ruta);
                     String[] partesRuta = ruta.split("\\\\");
@@ -268,7 +274,7 @@ public class index extends HttpServlet {
                             //HttpSession session = request.getSession();
                             //session.getAttribute("id");
 
-                            Pelicula pe = new Pelicula(u3.getId(), titulo, ano, duracion, pais, director, genero, sinopsis, archivo);
+                            Pelicula pe = new Pelicula(u3.getId(), titulo, ano, duracion, pais, director, genero, sinopsis, " ");
                             String mensaje = gp.guardaPeliculas(pe);
                             System.out.println(u3.getId()+ " "+titulo + " " + ano + " " + duracion + " " + director + " " + pais + " " + genero + " " + sinopsis);
                             if ("yes".equals(mensaje)) {
@@ -286,13 +292,10 @@ public class index extends HttpServlet {
                             System.out.println("default");
                             response.sendRedirect("./index.jsp");
                     }
-
                 } else {
-                    System.out.println("No action");
-
+                    System.out.println("No action");                   
                     response.sendRedirect("./index.jsp");
                 }
-
             } else {
                 System.out.println("Sesion: " + sesion);
                 response.sendRedirect("./login");

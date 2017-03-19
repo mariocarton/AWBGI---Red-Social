@@ -1,0 +1,47 @@
+    <div class="container-fluid" style="margin: 4%; margin-left: 10%; margin-right: 10%">
+    <h2 style="text-align: center"> Añadir película </h2>
+    <form id="formpeliadd">
+        <div class="form-group">
+            <label for="titulo">Título</label>
+            <input type="text" class="form-control" id="titulopf" name="titulopf"
+                   placeholder="Introduce el Título" required="">
+        </div>
+        <div class="form-group">
+            <label for="ano">Año</label>
+            <input type="text" class="form-control" id="anopf" name="anopf"
+                   placeholder="Introduce el año" required="">
+        </div>
+        <div class="form-group">
+            <label for="director">Director</label>
+            <input type="text" class="form-control" id="directorpf" name="directorpf"
+                   placeholder="Introduce el Director" required="">
+        </div>
+        <div class="form-group">
+            <label for="pais">País</label>
+            <input type="text" class="form-control" id="paispf" name="paispf"
+                   placeholder="Introduce el País de origen" required="">
+        </div>
+        <div class="form-group">
+            <label for="duracion">Duración</label>
+            <input type="text" class="form-control" id="duracionpf" name="duracionpf"
+                   placeholder="Introduce la duración de la película" required="">
+        </div>
+        <div class="form-group">
+            <label for="pais">Género</label>
+            <input type="text" class="form-control" id="generopf" name="generopf"
+                   placeholder="Introduce el genero de la película" required="">
+        </div>
+        <div class="form-group">
+            <label for="sinopsis">Sinopsis</label>
+            <input type="text" class="form-control" id="sinopsispf" name="sinopsispf"
+                   placeholder="Introduce una breve descripción" required="">
+        </div>
+        <div class="form-group">
+            <label for="archivo_foto">Adjuntar un archivo</label>
+            <input type="file" name="file" id="imagenpelicula">
+            <p class="help-block">Adjunta una imagen para su película.</p>
+        </div>
+        <input hidden name="accion" value="anadirpeli"/>
+        <button id="enviapeli" type="submit" class="btn btn-primary" >Enviar</button>
+    </form>
+</div>

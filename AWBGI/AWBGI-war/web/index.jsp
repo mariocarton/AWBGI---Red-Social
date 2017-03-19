@@ -19,11 +19,6 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <body>
-        <%
-            
-            Usuario u = (Usuario) session.getAttribute("usuario");
-                        
-        %> 
         <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: #31708f">
             <div class="container-fluid">
 
@@ -37,7 +32,8 @@
                     <a class="navbar-brand" id="iconmuchapeli" style="color: white; float: none; position: absolute; left: 50%; margin-left: -50px !important; display: block"> 
                         MuchaPeli 
                     </a>
-                </div>              
+                </div>  
+                
                 <div class="navbar-collapse collapse navbar-ex1-collapse">
                     <ul class="nav navbar-nav ">
                         <li>
@@ -60,218 +56,115 @@
                         </li>
                     </ul>
                 </div>
+                
             </div>
         </nav>
 
 
         <div class="container-fluid" style="margin-top: 55px">
-            <!--<div class="page-header" style="text-align: center" >
-                <h1>MuchaPeli <small></small></h1>
-            </div>-->
+            
             <div class="row">
-            <div class="col-sm-2 sidebar menu-lateral"  > <!--media query para quitarlo -->
-                <ul class="nav nav-sidebar">
-                   <li>
-                        <a id="banadir"><span class="glyphicon glyphicon-plus-sign"></span> Añadir </a> 
-                    </li>
-                    <li class="active">
-                        <a id="bperfil"><span class="glyphicon glyphicon-user"></span> Perfil </a>
-                    </li>
-                    <li>
-                        <a href="#" ><span class="glyphicon glyphicon-transfer"></span> Actividad </a>
-                    </li>
-                    <li>
-                        <a id="bporver"><span class="glyphicon glyphicon-eye-close"></span> Por Ver </a> 
-                    </li>
-                    <li>
-                        <a id="bamigos"> 
-                            <span class="fa fa-users" aria-hidden="true"></span> Amigos 
-                        </a> 
+                <div class="col-sm-2 sidebar menu-lateral"  > <!--media query para quitarlo -->
+                    
+                    <ul class="nav nav-sidebar">
+                        <li>
+                            <a id="banadir"><span class="glyphicon glyphicon-plus-sign"></span> Añadir </a> 
+                        </li>
+                        <li class="active">
+                            <a id="bperfil"><span class="glyphicon glyphicon-user"></span> Perfil </a>
+                        </li>
+                        <li>
+                            <a href="#" ><span class="glyphicon glyphicon-transfer"></span> Actividad </a>
+                        </li>
+                        <li>
+                            <a id="bporver"><span class="glyphicon glyphicon-eye-close"></span> Por Ver </a> 
+                        </li>
+                        <li>
+                            <a id="bamigos"> 
+                                <span class="fa fa-users" aria-hidden="true"></span> Amigos 
+                            </a> 
 
-                    </li>
-                </ul>
-                <hr style="color: red" />
-                <ul class="nav nav-sidebar">
-                    <li> 
-                    <h7 style="text-align: center"> 
-                        <%=u.getNombre() + " " + u.getApellidos()%> 
-                    </h7>
-                    </li>
-                    <li>
-                        <a href="#"><span class="glyphicon glyphicon-cog"></span> Ajustes </a> 
-                    </li>
-                    <li>
-                        <a><span class="glyphicon glyphicon-question-sign" href="#"></span> Ayuda </a> 
-                    </li>
-                </ul>
-                <hr style="color: red" />
-                <ul class="nav nav-sidebar">
-                    <li>
-                        <a class="glyphicon glyphicon-log-out" href="index?accion=cierra_sesion"> Salir </a> 
-                    </li>
-                </ul>
-            </div>
-
-                    <div class="col-sm-10 contenido" style="float:right" ><!--media query para quitarlo -->
-
-                <div class="nav nav-tabs" id="navperfil" style="display:none">
-                    <h4>                     
-                        <%=u.getNombre() + " " + u.getApellidos()%>
-                    </h4>
-                    <li role="presentation" class="active">
-                        <a class="active glyphicon glyphicon-eye-open" id="bvisto"> Visto</a>
-                    </li>
-                    <li role="presentation">
-                        <a id="bmiactividad" class="active glyphicon glyphicon-adjust"> Mi Actividad</a>
-                    </li>
-                    <li role="presentation">
-                        <a class="active glyphicon glyphicon-alert"> Alertas</a>
-                    </li>
+                        </li>
+                    </ul>
+                    
+                    <hr style="color: red"/>
+                    
+                    <ul class="nav nav-sidebar">
+                        <li> 
+                        <h7 style="text-align: center"> 
+                            <p id="nombre"></p>
+                        </h7>
+                        </li>
+                        <li>
+                            <a href="#"><span class="glyphicon glyphicon-cog"></span> Ajustes </a> 
+                        </li>
+                        <li>
+                            <a><span class="glyphicon glyphicon-question-sign" href="#"></span> Ayuda </a> 
+                        </li>
+                    </ul>
+                    <hr style="color: red" />
+                    <ul class="nav nav-sidebar">
+                        <li>
+                            <a class="glyphicon glyphicon-log-out" href="index?accion=cierra_sesion"> Salir </a> 
+                        </li>
+                    </ul>
                 </div>
-                <!--
-                <div class="btn-group btn-group-justified" role="group" aria-label="...">
-                    <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-default glyphicon glyphicon-eye-open"> Visto</button>
+
+                <div class="col-sm-10 contenido" style="float:right" ><!--media query para quitarlo -->
+
+                    <div class="row" id="contenido"></div>
+                    
+                    <div class="row" id="visto" style="display:none">
                     </div>
-                    <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-default glyphicon glyphicon-adjust"> Mi Actividad</button>
+
+                    <div class="row" id="porver" style="display:none">
+
                     </div>
-                    <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-default glyphicon glyphicon-alert"> Alertas</button>
+
+
+                    <div class="row" id="pexplorar" style="display:none">
+
+                    </div>
+
+                    <div class="row" id="infopeli" style="display:none">
+
+                    </div>
+
+
+                    <div class="modal-content" style="display:none" id="pelianadida">
+                        <div class="modal-header">
+                            <button type="button" class="close" id="btnpelianadida" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Insercción ejecutada</h4>
+                        </div>
+                        <div class="modal-body" id="mensajepeli">
+                            <!--<p>La pelicula fue añadida con éxito</p>-->
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" id="btnpelianadida2">Close</button>
+                        </div>
                     </div>
                 </div>
-                -->
-                
-                <div class="row" id="contenido"> </div>
-                <div class="row" id="visto" style="display:none">
-                </div>
 
-                <div class="row" id="porver" style="display:none">
-
-                </div>
-
-                <div class="row " id="anadir" style="display:none" style="margin: 4%">
+                <div class="row " id="formcomentario" style="display:none" style="margin: 4%">
                     <div class="container-fluid" style="margin: 4%">
-                        <h2 style="text-align: center"> Añadir película </h2>
+                        <h2 style="text-align: center"> Añadir Comentario </h2>
                         <form role="form" id="formpeliadd">
                             <div class="form-group">
                                 <label for="titulo">Título</label>
-                                <input type="text" class="form-control" id="titulopf" name="titulopf"
+                                <input type="text" class="form-control" id="titulocf" name="titulocf"
                                        placeholder="Introduce el Título" required="">
                             </div>
                             <div class="form-group">
-                                <label for="ano">Año</label>
-                                <input type="text" class="form-control" id="anopf" name="anopf"
-                                       placeholder="Introduce el año" required="">
+                                <label for="texto">Text</label>
+                                <input type="text" class="form-control" id="anocf" name="anocf"
+                                       placeholder="Introduce el Comentario" required="">
                             </div>
-                            <div class="form-group">
-                                <label for="director">Director</label>
-                                <input type="text" class="form-control" id="directorpf" name="directorpf"
-                                       placeholder="Introduce el Director" required="">
-                            </div>
-                            <div class="form-group">
-                                <label for="pais">País</label>
-                                <input type="text" class="form-control" id="paispf" name="paispf"
-                                       placeholder="Introduce el País de origen" required="">
-                            </div>
-                            <div class="form-group">
-                                <label for="duracion">Duración</label>
-                                <input type="text" class="form-control" id="duracionpf" name="duracionpf"
-                                       placeholder="Introduce la duración de la película" required="">
-                            </div>
-                            <div class="form-group">
-                                <label for="pais">Género</label>
-                                <input type="text" class="form-control" id="generopf" name="generopf"
-                                       placeholder="Introduce el genero de la película" required="">
-                            </div>
-                            <div class="form-group">
-                                <label for="sinopsis">Sinopsis</label>
-                                <input type="text" class="form-control" id="sinopsispf" name="sinopsispf"
-                                       placeholder="Introduce una breve descripción" required="">
-                            </div>
-                            <div class="form-group">
-                                <label for="archivo_foto">Adjuntar un archivo</label>
-                                <input type="file" name="file" id="imagenpelicula">
-                                <p class="help-block">Adjunta una imagen para su película.</p>
-                            </div>
-                            <input hidden name="accion" value="anadirpeli"/>
-                            <button id="enviapeli" type="submit" class="btn btn-primary" >Enviar</button>
+                            <input hidden name="accion" value="enviacomentario"/>
+                            <button id="enviacomentario" type="submit" class="btn btn-primary" >Enviar</button>
                         </form>
                     </div>
-
-                </div>
-                <div class="row" id="amigos" style="display:none">
-                    <div class="container-fluid">
-                        <div class="jumbotron col-xs-4" style="margin: 1%">
-                            <h3 style="text-height: auto">Mario Cartón</h3>
-                            <p>Vistas 17</p>
-                            <p>Por Ver 17</p>
-                            <p><a class="btn btn-primary btn-lg" href="#" role="button">Añadir</a></p>
-                        </div>
-                        <div class="jumbotron col-xs-4" style="margin: 1%">
-                            <h3 style="text-height: auto">Mario</h3>
-                            <p>Vistas 17</p>
-                            <p>Por Ver 17</p>
-                            <p><a class="btn btn-primary btn-lg" href="#" role="button">Añadir</a></p>
-                        </div>
-                        <div class="jumbotron col-xs-4" style="margin: 1%">
-                            <h3 style="text-height: auto">Mario González</h3>
-                            <p>Vistas 17</p>
-                            <p>Por Ver 17</p>
-                            <p><a class="btn btn-primary btn-lg" href="#" role="button">Añadir</a></p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row" id="pexplorar" style="display:none">
-
-                </div>
-
-                <div class="row" id="infopeli" style="display:none">
-
-                </div>
-
-
-                <div class="modal-content" style="display:none" id="pelianadida">
-                    <div class="modal-header">
-                        <button type="button" class="close" id="btnpelianadida" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Insercción ejecutada</h4>
-                    </div>
-                    <div class="modal-body" id="mensajepeli">
-                        <!--<p>La pelicula fue añadida con éxito</p>-->
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" id="btnpelianadida2">Close</button>
-                    </div>
                 </div>
             </div>
-            <!--
-            <div class="col-xs-2 panel panel-primary">
-                <a href="#"> saf </a>
-            </div>
-            -->
-
-
-            <div class="row " id="formcomentario" style="display:none" style="margin: 4%">
-                <div class="container-fluid" style="margin: 4%">
-                    <h2 style="text-align: center"> Añadir Comentario </h2>
-                    <form role="form" id="formpeliadd">
-                        <div class="form-group">
-                            <label for="titulo">Título</label>
-                            <input type="text" class="form-control" id="titulocf" name="titulocf"
-                                   placeholder="Introduce el Título" required="">
-                        </div>
-                        <div class="form-group">
-                            <label for="texto">Text</label>
-                            <input type="text" class="form-control" id="anocf" name="anocf"
-                                   placeholder="Introduce el Comentario" required="">
-                        </div>
-                        <input hidden name="accion" value="enviacomentario"/>
-                        <button id="enviacomentario" type="submit" class="btn btn-primary" >Enviar</button>
-                    </form>
-                </div>
-            </div>
-        </div>
         </div>
 
 
@@ -284,7 +177,44 @@
     <script type="text/javascript" src="js/index.js"></script>
 
     <script type="text/javascript">
+        
+        $.ajax({
+            url: 'api/user',
+            data:{
+                accion:'nombre'
+            }
+        }).done(function (responseText){
+            $('#nombre').html(responseText);
+        });
+        
+        function mostarDetallesPelicula(){
+            //Controladores de la vista explorar
+            $(".accesopeli").click(function () {
+                //ID de la pelicula qu ese ha seleccionado
+                var ID = $(this).attr("id");     
+                //Se pasa a la vista de detalles de pelicula
+                $.ajax({
+                    url: 'index',
+                    data: {
+                        id: ID,
+                        accion: "verpeli"
+                        }
+                    }).done(function (responseText) {
+                        //Titulo de la pestaña
+                        $('#titulopestana').html("VerPelícula");
+                        //Controlador del boton añadir comentario
+                        $('#bformcomentario').click(function () {
+                            $('#formcomentario').slideDown('slow');
+                        });
+                        $('#contenido').html(responseText);
+                    });
+                        
+            });
+        }
+        
         $( document ).ready(function() {
+            
+            
         $('#explorar').click(function () {
             $('#pelianadida').hide();
             $('#anadir').hide();
@@ -302,7 +232,7 @@
                 data: { accion: "explorar" }                
             }).done(function (responseText) {
                     //Redibuja la pantalla de explorar
-                    $('#pexplorar').html(responseText).ready(function() {
+                    $('#contenido').html(responseText).ready(function() {
                     //Pone a todas las imagenes el mismo tamaño
                     var alto = $('.img-responsive').val();                    
                     $('.img-responsive').each(function(){
@@ -324,32 +254,8 @@
                             $(this).height(alto);
                         });
                         });
-                    });                    
-                    
-                    
-                    //Controladores de la vista explorar
-                    $(".accesopeli").click(function () {
-                        //ID de la pelicula qu ese ha seleccionado
-                        var ID = $(this).attr("id");     
-                        //Se pasa a la vista de detalles de pelicula
-                        $.ajax({
-                            url: 'index',
-                            data: {
-                                id: ID,
-                                accion: "verpeli"
-                            }
-                        }).done(function (responseText) {
-                                //Titulo de la pestaña
-                                $('#titulopestana').html("VerPelícula");
-                                //Controlador del boton añadir comentario
-                                $('#bformcomentario').click(function () {
-                                    $('#formcomentario').slideDown('slow');
-                                });
-                                
-                                $('#pexplorar').html(responseText);
-                         });
-                        
-                    });
+                    });                               
+                    mostarDetallesPelicula();
                 });
         });
         
@@ -362,38 +268,8 @@
                             palabra: contenido }                
                 }).done(function (responseText) {
                     $('#contenidoBusqueda').html(responseText);
-                    $('.resultadoBusqueda').css("display","block");
-                    
-                    $(".accesopeli").click(function () {
-                        //Hay que recargar todo en el mismo div
-                        $('#pelianadida').hide();
-                        $('#anadir').hide();
-                        $('#visto').hide();
-                        $('#amigos').hide();
-                        $('#navperfil').hide();
-                        $('#visto').hide();
-                        $('#pexplorar').hide();
-                        $('#porver').hide();
-                        //ID de la pelicula qu ese ha seleccionado
-                        var ID = $(this).attr("id");     
-                        //Se pasa a la vista de detalles de pelicula
-                        $.ajax({
-                            url: 'index',
-                            data: {
-                                id: ID,
-                                accion: "verpeli"
-                            }
-                        }).done(function (responseText) {
-                                //Titulo de la pestaña
-                                $('#titulopestana').html("VerPelícula");
-                                //Controlador del boton añadir comentario
-                                $('#bformcomentario').click(function () {
-                                    $('#formcomentario').slideDown('slow');
-                                });
-                                $('#contenido').html(responseText);
-                         });
-                        
-                    });
+                    $('.resultadoBusqueda').css("display","block");                    
+                    mostarDetallesPelicula();
                     
                 });
             }else{

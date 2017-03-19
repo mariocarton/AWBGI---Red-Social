@@ -35,50 +35,57 @@ $(document).ready(function () {
 
     });
     $('#banadir').click(function () {
-        $('#anadir').show();
-        $('#visto').hide();
-        $('#amigos').hide();
-        $('#navperfil').hide();
-        $('#pexplorar').hide();
-        $('#porver').hide();
         $('#titulopestana').html("Añadir Película");
+        $('#contenido').load('html/anadirpelicula.html', function () {
+            $('#formpeliadd').submit(function (event) {
+                $.ajax({
+                    url: 'index',
+                    data: {
+                        titulopf: $('#titulopf').val(),
+                        anopf: $('#anopf').val(),
+                        directorpf: $('#directorpf').val(),
+                        paispf: $('#paispf').val(),
+                        duracionpf: $('#duracionpf').val(),
+                        generopf: $('#generopf').val(),
+                        sinopsispf: $('#sinopsispf').val(),
+                        imagenpelipf: $('#imagenpelicula').val(),
+                        accion: "savepeli"
+
+                    }
+                }).done(function (responseText) {
+                    if (responseText === "yes") {
+                        $('#titulopestana').html("Pelicula Añadida");
+                        $('#mensajepeli').html("La pelicula fue añadida con éxito");
+                        //window.location = "index",
+                        $('#anadir').hide();
+                        $('#pelianadida').show();
+                    } else {
+                        $('#mensajepeli').html(responseText);
+                    }
+                });
+                //alert( "Handler for .submit() called." );
+                event.preventDefault();
+            });
+        });
     });
     $('#bamigos').click(function () {
-        $('#anadir').hide();
-        $('#visto').hide();
-        $('#amigos').show();
-        $('#navperfil').hide();
-        $('#pexplorar').hide();
-        $('#porver').hide();
         $('#titulopestana').html("Amigos");
+        $('#contenido').load('html/amigos.html');
     });
     $('#bperfil').click(function () {
-        $('#anadir').hide();
-        $('#visto').hide();
-        $('#amigos').hide();
-        $('#pexplorar').hide();
-        $('#navperfil').show();
-        $('#visto').show();
-        $('#porver').hide();
         $('#titulopestana').html("Perfil");
+        $('#contenido').load('html/perfil.html');
 
     });
 
     $('#bporver').click(function () {
-        $('#anadir').hide();
-        $('#visto').hide();
-        $('#amigos').hide();
-        $('#pexplorar').hide();
-        $('#navperfil').hide();
-        $('#visto').hide();
-        $('#porver').show();
         $('#titulopestana').html("PorVer");
         $.ajax({
             url: 'index',
             data: {
                 accion: "porver"
             }, success: function (responseText) {
-                $('#porver').html(responseText);
+                $('#contenido').html(responseText);
                 
                 $(".accesopeli").click(function () {
                     var ID = $(this).attr("id");
@@ -89,7 +96,7 @@ $(document).ready(function () {
                             accion: "verpeli"
                         }, success: function (responseText) {
                             $('#titulopestana').html("VerPelícula");
-                            $('#porver').html(responseText);
+                            $('#contenido').html(responseText);
                         }
                     });
                 });
@@ -121,41 +128,7 @@ $(document).ready(function () {
         $('#porver').hide();
         $('#titulopestana').html("Perfil");
 
-    });
+    });   
 
-
-
-
-
-    
-
-    $('#formpeliadd').submit(function (event) {
-        $.ajax({
-            url: 'index',
-            data: {
-                titulopf: $('#titulopf').val(),
-                anopf: $('#anopf').val(),
-                directorpf: $('#directorpf').val(),
-                paispf: $('#paispf').val(),
-                duracionpf: $('#duracionpf').val(),
-                generopf: $('#generopf').val(),
-                sinopsispf: $('#sinopsispf').val(),
-                imagenpelipf: $('#imagenpelicula').val(),
-                accion: "savepeli"
-
-            }, success: function (responseText) {
-                if (responseText === "yes") {
-                    $('#titulopestana').html("Pelicula Añadida");
-                    $('#mensajepeli').html("La pelicula fue añadida con éxito");
-                    //window.location = "index",
-                    $('#anadir').hide();
-                    $('#pelianadida').show();
-                } else {
-                    $('#mensajepeli').html(responseText);
-                }
-            }
-        });
-        //alert( "Handler for .submit() called." );
-        event.preventDefault();
-    });
+   
 });
