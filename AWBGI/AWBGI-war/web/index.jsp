@@ -129,20 +129,6 @@
                     <div class="row" id="infopeli" style="display:none">
 
                     </div>
-
-
-                    <div class="modal-content" style="display:none" id="pelianadida">
-                        <div class="modal-header">
-                            <button type="button" class="close" id="btnpelianadida" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Insercción ejecutada</h4>
-                        </div>
-                        <div class="modal-body" id="mensajepeli">
-                            <!--<p>La pelicula fue añadida con éxito</p>-->
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" id="btnpelianadida2">Close</button>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="row " id="formcomentario" style="display:none" style="margin: 4%">

@@ -1,4 +1,4 @@
-    <div class="container-fluid" style="margin: 4%; margin-left: 10%; margin-right: 10%">
+<div class="container-fluid" style="margin: 4%; margin-left: 10%; margin-right: 10%">
     <h2 style="text-align: center"> Añadir película </h2>
     <form id="formpeliadd">
         <div class="form-group">
@@ -37,11 +37,34 @@
                    placeholder="Introduce una breve descripción" required="">
         </div>
         <div class="form-group">
-            <label for="archivo_foto">Adjuntar un archivo</label>
-            <input type="file" name="file" id="imagenpelicula">
-            <p class="help-block">Adjunta una imagen para su película.</p>
+            <label for="url">Url de la imagen:</label>
+            <input type="text" class="form-control" id="imagenpf" name="imagenpf"
+                   placeholder="Introduce la url de la imagen" required="">
         </div>
+        <!--<div class="form-group">
+            <label for="archivo_foto">Adjuntar un archivo</label>
+            <input type="file" name="file" id="file">
+            <p class="help-block">Adjunta una imagen para su película.</p>
+        </div>-->
         <input hidden name="accion" value="anadirpeli"/>
         <button id="enviapeli" type="submit" class="btn btn-primary" >Enviar</button>
     </form>
+    <div class="modal fade" id="modal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" id="pelianadida">
+        <div class="modal-header">
+            <button type="button" class="close" id="btnpelianadida" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Insercción ejecutada</h4>
+        </div>
+        <div class="modal-body" id="mensajepeli">
+            <!--<p>La pelicula fue añadida con éxito</p>-->
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" id="btnpelianadida2">Close</button>
+        </div>
+    </div>
+      </div>
 </div>
+</div>
+
+

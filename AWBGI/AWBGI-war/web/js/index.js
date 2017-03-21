@@ -48,17 +48,16 @@ $(document).ready(function () {
                         duracionpf: $('#duracionpf').val(),
                         generopf: $('#generopf').val(),
                         sinopsispf: $('#sinopsispf').val(),
-                        imagenpelipf: $('#imagenpelicula').val(),
+                        imagenpelipf: $('#imagenpf').val(),
                         accion: "savepeli"
-
                     }
                 }).done(function (responseText) {
                     if (responseText === "yes") {
                         $('#titulopestana').html("Pelicula Añadida");
                         $('#mensajepeli').html("La pelicula fue añadida con éxito");
-                        //window.location = "index",
-                        $('#anadir').hide();
-                        $('#pelianadida').show();
+                        //$('#anadir').hide();
+                        $('#modal').modal('show');
+                        //Terminar con esto
                     } else {
                         $('#mensajepeli').html(responseText);
                     }

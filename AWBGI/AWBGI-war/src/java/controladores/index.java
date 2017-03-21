@@ -5,21 +5,16 @@ package controladores;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
 import datos.GestorComentarios;
 import datos.GestorPeliculas;
 import datos.GestorPorVer;
 import datos.GestorVistas;
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.System.out;
-import java.nio.file.CopyOption;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
-import static javax.management.Query.div;
+import java.util.logging.Level;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
@@ -221,7 +216,7 @@ public class index extends HttpServlet {
                                 if(j%4==0) out.println("<div class='row'>");
                                 out.println("<div class='col-sm-3'>");
                                 out.println("<div class='thumbnail'>");
-                                out.println("<img src='imagenes/" + peli.getRuta() + "'  class='img-responsive'>");
+                                out.println("<img src='" + peli.getRuta() + "'  class='img-responsive'>");
                                 out.println("<div class='caption'>");
                                 out.println("<h3>" + peli.getTitulo() + "</h3>");
                                 out.println("<p>" + peli.getGenero() + "</p>");
@@ -232,10 +227,9 @@ public class index extends HttpServlet {
                                 out.println("</div>");
                                 if(j%4==3) out.println("</div>");
                             }
-                            out.println("</div>");
-
-                            //System.out.println("extraepelis");
+                            out.println("</div>");   
                             break;
+                            
                         case "savepeli":
                             System.out.println("savepeli");
                             Usuario u3 = (Usuario) session.getAttribute("usuario");
@@ -248,35 +242,13 @@ public class index extends HttpServlet {
                             String pais = request.getParameter("paispf");
                             String genero = request.getParameter("generopf");
                             String sinopsis = request.getParameter("sinopsispf");
-
-                            //ruta falta-ahora cojo el nombre solo de la ruta
-                            //hay fakepath no deja coger la ruta para trasladar imagen a
-                            //web-pages imagenes
-                            Part imgPart = request.getPart("file");
-                            String fileName = Paths.get(imgPart.getSubmittedFileName()).getFileName().toString(); 
-                            System.out.println(fileName);
-                            //String[] partesRuta = ruta.split("\\\\");
-                            //String archivo = partesRuta[2];
-                            /*
-                    Path from = Paths.get(ruta);
-                    String[] partesRuta = ruta.split("\\\\");
-                    String archivo = partesRuta[2];
-                    ///Users/mariomatesanz/Dropbox/MASTER/1º/2ºCuatrimestre/AWBGI/ProyectoWeb/AWBGI---Red-Social/AWBGI/AWBGI-war/web/imagenes
-                    Path to = Paths.get("/Users/mariomatesanz/Dropbox/MASTER/1º/2ºCuatrimestre/AWBGI/ProyectoWeb/AWBGI---Red-Social/AWBGI/AWBGI-war/web/imagenes/"+archivo);
-                    //Reemplazamos el fichero si ya existe
-                    CopyOption[] options = new CopyOption[]{
-                        StandardCopyOption.REPLACE_EXISTING,
-                        StandardCopyOption.COPY_ATTRIBUTES
-                    };
-                    Files.copy(from, to, options);
-                             */
+                            String imagenUrl = request.getParameter("imagenpelipf");                            
+                            
                             GestorPeliculas gp = new GestorPeliculas();
-                            //HttpSession session = request.getSession();
-                            //session.getAttribute("id");
-
-                            Pelicula pe = new Pelicula(u3.getId(), titulo, ano, duracion, pais, director, genero, sinopsis, " ");
+                            
+                            Pelicula pe = new Pelicula(u3.getId(), titulo, ano, duracion, pais, director, genero, sinopsis, imagenUrl);
                             String mensaje = gp.guardaPeliculas(pe);
-                            System.out.println(u3.getId()+ " "+titulo + " " + ano + " " + duracion + " " + director + " " + pais + " " + genero + " " + sinopsis);
+                            System.out.println(u3.getId()+ " "+titulo + " " + ano + " " + duracion + " " + director + " " + pais + " " + genero + " " + sinopsis+" "+imagenUrl);
                             if ("yes".equals(mensaje)) {
                                 //String r = "yes";
                                 response.setContentType("text/plain");
@@ -332,5 +304,17 @@ public class index extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private String getFileName(final Part part) {
+        final String partHeader = part.getHeader("content-disposition");
+        LOGGER.log(Level.INFO, "Part Header = {0}", partHeader);
+        for (String content : part.getHeader("content-disposition").split(";")) {
+            if (content.trim().startsWith("filename")) {
+                return content.substring(
+                        content.indexOf('=') + 1).trim().replace("\"", "");
+            }
+        }
+        return null;
+    }
 
 }
