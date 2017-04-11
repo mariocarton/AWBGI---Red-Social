@@ -68,26 +68,21 @@ $(document).ready(function () {
         });
     });
     $('#bamigos').click(function () {
-        $('#titulopestana').html("Amigos");
+        $('#titulopestana').html("Amigoss");
         //$('#contenido').load('html/amigos.html');
-        $('#contenido').load('html/amigos.html', function () {
-                $.ajax({
-                    url: 'amigo',
-                    data: {
-                        accion: "extraeamigos"
-                    }
-                }).done(function (responseText) {
-                        $('#containeramigos').html(responsetext);
-                        //$('#anadir').hide();
-                        
-                        //Terminar con esto
-                   
-                });
-                //alert( "Handler for .submit() called." );
-                event.preventDefault();
-            });
-     });
-   
+        //$('#contenido').load('html/amigos.html', function () {
+        $.ajax({
+            url: 'amigo',
+            data: {
+                accion: "extraeamigos"
+
+            }, success: function (responseText) {
+                $('#contenido').html(responseText);
+                //Terminar con esto
+            }
+        });
+    });
+
     $('#bperfil').click(function () {
         $('#titulopestana').html("Perfil");
         $('#contenido').load('html/perfil.html');
