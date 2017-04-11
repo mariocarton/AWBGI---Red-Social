@@ -14,7 +14,7 @@ $(document).ready(function () {
             data: {
                 accion: "visto"
             }, success: function (responseText) {
-                $('#visto').html(responseText);   
+                $('#visto').html(responseText);
                 $(".accesopeli").click(function () {
                     var ID = $(this).attr("id");
                     $.ajax({
@@ -26,7 +26,7 @@ $(document).ready(function () {
                             $('#navperfil').hide();
                             $('#titulopestana').html("VerPelícula");
                             $('#visto').html(responseText);
-                            
+
                         }
                     });
                 });
@@ -69,8 +69,25 @@ $(document).ready(function () {
     });
     $('#bamigos').click(function () {
         $('#titulopestana').html("Amigos");
-        $('#contenido').load('html/amigos.html');
-    });
+        //$('#contenido').load('html/amigos.html');
+        $('#contenido').load('html/amigos.html', function () {
+                $.ajax({
+                    url: 'amigo',
+                    data: {
+                        accion: "extraeamigos"
+                    }
+                }).done(function (responseText) {
+                        $('#containeramigos').html(responsetext);
+                        //$('#anadir').hide();
+                        
+                        //Terminar con esto
+                   
+                });
+                //alert( "Handler for .submit() called." );
+                event.preventDefault();
+            });
+     });
+   
     $('#bperfil').click(function () {
         $('#titulopestana').html("Perfil");
         $('#contenido').load('html/perfil.html');
@@ -85,7 +102,7 @@ $(document).ready(function () {
                 accion: "porver"
             }, success: function (responseText) {
                 $('#contenido').html(responseText);
-                
+
                 $(".accesopeli").click(function () {
                     var ID = $(this).attr("id");
                     $.ajax({
@@ -127,7 +144,7 @@ $(document).ready(function () {
         $('#porver').hide();
         $('#titulopestana').html("Perfil");
 
-    });   
+    });
 
-   
+
 });

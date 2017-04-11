@@ -6,6 +6,7 @@
 package controladores;
 
 import datos.GestorAmigos;
+import datos.GestorUsuarios;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modelo.Amigo;
+import modelo.Usuario;
 
 /**
  *
@@ -80,18 +82,25 @@ public class amigo extends HttpServlet {
                 case "extraeamigos":
                     response.setContentType("text/html; charset=iso-8859-1");
                     PrintWriter out2 = response.getWriter();
-                    String idaux2 = request.getParameter("id").trim();
-                    int id2 = Integer.parseInt(idaux2);
+                    //String idaux2 = request.getParameter("id").trim();
+                    //int id2 = Integer.parseInt(idaux2);
                     GestorAmigos ga2 = new GestorAmigos();
-                    ArrayList<Amigo> arrayAmigos = ga2.extraeAmigos(id2);
-
+                    ArrayList<Amigo> arrayAmigos = ga2.extraeAmigos(1);
+                    GestorUsuarios gu = new GestorUsuarios();
                     out2.println("<h2 style='text-align: center; margin-bottom: 3%'> Películas de la Página </h2>");
                     out2.println("<div class='container-fluid'>");
                     for (int j = 0; j < arrayAmigos.size(); j++) {
                         Amigo amigo = arrayAmigos.get(j);
-                        
+                        Usuario u = gu.getUsuarioPorId(amigo.getId());
+                        out2.println("<div class='jumbotron col-xs-4' style='margin: 1%'>");
+                        out2.println("<h3 style=\"text-height: auto'>" + u.getNombre() + " " + u.getApellidos());
+                        //out2.println("<p>Vistas 17</p>");
+                        //out2.println("<p>Por Ver 17</p>");
+                        out2.println("<p><a class=\"btn btn-primary btn-lg\" href=\"#\" role='button'>Añadir</a></p>");
+                        out2.println("</div>");
+
                     }
-                    out2.println("</div>");   
+                    out2.println("</div>");
                     break;
 
                 default:

@@ -120,7 +120,9 @@
                     <div class="row" id="porver" style="display:none">
 
                     </div>
-
+                    
+                    <div class="row" id="visto" style="display:none">
+                    </div>
 
                     <div class="row" id="pexplorar" style="display:none">
 

@@ -57,4 +57,26 @@ public class GestorUsuarios {
         }
         return null;
     }
+    public Usuario getUsuarioPorId(int i){
+        try {
+            ConexionBD conexion = ConexionBD.getInstancia();
+            String consulta = "select * from usuario where id='" + i + "'";
+            ResultSet resultado = conexion.ejecutaRecuperacion(consulta);
+            if (resultado.next()) {
+                //int id = resultado.getInt("id");
+                String apodo = resultado.getString("apodo");
+                String pass = resultado.getString("contraseña");
+                String nombre = resultado.getString("nombre");              
+                String apellidos = resultado.getString("apellidos");
+                int tipo = resultado.getInt("tipo");
+                Usuario usuario = new Usuario(i, apodo, nombre, apellidos, pass, i);
+                return usuario;
+            } else {
+                return null;
+            }
+        } catch (SQLException | ClassNotFoundException ex) {
+            System.out.println("Error: en gestor de usuarios " + ex);
+        }
+        return null;
+    }
 }
