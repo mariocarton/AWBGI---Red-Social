@@ -21,6 +21,7 @@ import static java.lang.System.out;
 import java.util.ArrayList;
 import static javax.management.Query.div;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,6 +35,7 @@ import modelo.Visto;
  *
  * @author mario
  */
+@WebServlet(name = "pelicula", urlPatterns = {"/pelicula"})
 public class pelicula extends HttpServlet {
 
     /**
@@ -99,21 +101,48 @@ public class pelicula extends HttpServlet {
                     int id = Integer.parseInt(idaux);
                     GestorPeliculas gp4 = new GestorPeliculas();
                     Pelicula peli2 = gp4.getPeliculaPorId(id);
-                    out3.println("<h3>" + peli2.getTitulo() + "</h3>");
+                    out3.println("<h2>" + peli2.getTitulo() + "</h2>");
 
                     //BOTONES
-                    out3.println("<hr style='color: red' />");
+                    //out3.println("<hr style='color: red' />");
+                    out3.println("<div class='row' style='margin-top:35px; margin-right: 0px'>");
                     out3.println("<div class='btn-group' role='group' aria-label='...'>");
                     out3.println("<button type='button' class='btn btn-default'>Visto</button>");
                     out3.println("<button type='button' class='btn btn-default'>PorVer</button>");
                     out3.println("<button type='button' class='btn btn-default'>NoVisto</button>");
                     out3.println("</div>");
                     out3.println("<div class='btn-group' style='margin-left: 20px' role='group' aria-label='...'>");
-                    out3.println("<a class='btn btn-primary ' id='formcomentario' >Añadir Comentario</a>");
+                    out3.println("<a class='btn btn-primary ' id='formcomentario' data-toggle='modal' data-target='#myModal' >Añadir Comentario</a>");
+                    out3.println("</div>");
                     out3.println("</div>");
 
-                    //INFOPELI
-                    out3.println("<hr style='color: red' />");
+                    out3.println(
+                            "<div id='myModal' class='modal fade' role='dialog'>"
+                            + "  <div class='modal-dialog'>"         
+                            + "    <!-- Modal content-->"
+                            + "    <div class='modal-content'>"
+                            + "      <div class='modal-header'>"
+                            + "        <button type='button' class='close' data-dismiss='modal'>&times;</button>"
+                            + "        <h4 class='modal-title'>Añadir comentario</h4>"
+                            + "      </div>"
+                            + "      <div class='modal-body'>"
+                            + "        <p>Some text in the modal.</p>"
+                            + "      </div>"
+                            + "      <div class='modal-footer'>"
+                            + "        <button type='button' class='btn btn-default' data-dismiss='modal'>Cancelar</button>"
+                            + "      </div>"
+                            + "    </div>"
+                            + "  </div>"
+                            + "</div>"
+                    );
+
+                    //INFOPELI3
+                    //out3.println("<hr style='color: red' />");
+                    out3.println("<div class='row' style='margin-right: 0px'>");
+                    out3.println("<div id='imagen' class='col-md-5' style='margin-top:35px'>");
+                    out3.println("<img src='" + peli2.getRuta() + "'  class='img-responsive' style='float: right'>");
+                    out3.println("</div>");
+                    out3.println("<div id='descripcion' class='col-md-5' style='margin-top:35px'>");
                     out3.println("<p>Título: " + peli2.getTitulo() + "</p>");
                     out3.println("<p>Año: " + peli2.getAno() + "</p>");
                     out3.println("<p>Duración: " + peli2.getDuracion() + " Minutos</p>");
@@ -121,11 +150,14 @@ public class pelicula extends HttpServlet {
                     out3.println("<p>Director: " + peli2.getDirector() + "</p>");
                     out3.println("<p>Género " + peli2.getGenero() + "</p>");
                     out3.println("<p>Sinopsis: " + peli2.getGenero() + "</p>");
-                    out3.println("<hr style='color: red' />");
+                    out3.println("</div>");
+                    out3.println("</div>");
+                    //out3.println("<hr style='color: red' />");
 
                     //COMENTARIOS
                     GestorComentarios gc = new GestorComentarios();
                     ArrayList<Comentario> arrayComentarios = gc.extraeComentarios(id);
+                    out3.println("<div class='row' style='margin:35px'>");
                     out3.println("<div class='list-group'>");
                     //list-group-item active
                     for (int i = 0; i < arrayComentarios.size(); i++) {
@@ -136,11 +168,11 @@ public class pelicula extends HttpServlet {
                         out3.println("</a>");
                     }
                     out3.println("</div>");
-                    out3.println("<hr style='color: red' />");
-                    break;
+                    out3.println("</div>");
+                    out3.println("<script type=\"text/javascript\" src=\"js/verpeli.js\"></script>");
 
-               
-                
+                    //out3.println("<hr style='color: red' />");
+                    break;
 
                 default:
                     System.out.println("default");

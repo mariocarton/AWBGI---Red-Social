@@ -182,7 +182,7 @@
                 var ID = $(this).attr("id");     
                 //Se pasa a la vista de detalles de pelicula
                 $.ajax({
-                    url: 'index',
+                    url: 'pelicula',
                     data: {
                         id: ID,
                         accion: "verpeli"
