@@ -240,6 +240,33 @@ public class pelicula extends HttpServlet {
                     response.setContentType("text/plain");
                     response.getWriter().write(rep);
                     break;
+                
+                case "cambia-estado":
+                    GestorVistas gvce = new GestorVistas();
+                    GestorPorVer gpvce = new GestorPorVer();
+                    
+                    Usuario uce = (Usuario) session.getAttribute("usuario");
+                    int idpeliculace = Integer.parseInt(request.getParameter("idpelicula"));
+                    int estadoce = Integer.parseInt(request.getParameter("estado"));
+                    int pulsadoce = Integer.parseInt(request.getParameter("pulsado"));
+                    
+                    if (estadoce == 1){
+                        //Si esta en visto se borra
+                        gvce.eliminaVisto(uce.getId(),idpeliculace);
+                    }else if (estadoce == 2){
+                        //Si esta en por ver se borra
+                        gpvce.eliminaPorVer(uce.getId(), idpeliculace);
+                    }
+                    
+                    if(pulsadoce == 1){
+                        //Si ha marcado visto se guarda
+                        gvce.guardaVisto(new Visto(uce.getId(), idpeliculace));
+                    }else if(pulsadoce == 2){
+                        //Si ha marcado por ver se guarda
+                        gpvce.guardaPorVer(new PorVer(uce.getId(), idpeliculace));
+                    }
+                    
+                    break;
 
                 default:
                     System.out.println("default");

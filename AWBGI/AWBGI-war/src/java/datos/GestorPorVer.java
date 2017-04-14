@@ -42,12 +42,23 @@ public class GestorPorVer {
             ConexionBD conexion = ConexionBD.getInstancia();
             String consulta = "insert into porVer "
                     + "(idusuario,idpelicula) values ("
-                    + "'" + porver.getIdusuario() + "'"
-                    + "'"+porver.getIdpelicula()+"'"
+                    + "" + porver.getIdusuario() + ","
+                    + ""+porver.getIdpelicula()+""
                     +")";
             conexion.ejecutaInserta(consulta);
         } catch (SQLException | ClassNotFoundException ex) {
             System.out.println("Error en gestor de Porver: " + ex);
+        }
+    }
+    
+    public void eliminaPorVer(int idusuario, int idpelicula){
+        try {
+            ConexionBD conexion = ConexionBD.getInstancia();
+            String consulta = "DELETE FROM porver "
+                    + "WHERE idusuario = '"+idusuario+"' AND idpelicula = '"+idpelicula+"'";
+            conexion.ejecutaInserta(consulta);
+        } catch (SQLException | ClassNotFoundException ex) {
+            System.out.println("Error en gestor de PorVer: " + ex);
         }
     }
 }

@@ -15,17 +15,63 @@ $(document).ready(function () {
             switch (response){
                 case '0':
                     $('#btn-novisto').attr('class','btn btn-success');
+                    $('#btn-visto').attr('class','btn btn-default');
+                    $('#btn-porver').attr('class','btn btn-default');
                     break;
                 case '1':
                     $('#btn-visto').attr('class','btn btn-success');
+                    $('#btn-novisto').attr('class','btn btn-default');
+                    $('#btn-porver').attr('class','btn btn-default');
                     break;
                 case '2':
                     $('#btn-porver').attr('class','btn btn-success');
+                    $('#btn-visto').attr('class','btn btn-default');
+                    $('#btn-novisto').attr('class','btn btn-default');
                     break;
             }
         });
     }
     estadoPelicula();
+    
+    $('.btn').click(function (){
+        var pulsado = '0';
+        var estado = '0';
+        var idpelicula = $('#id-pelicula').val();
+        
+        //Se combrueba en que estado se selecciona la pelicula
+        switch ($(this).attr('id')){
+            case 'btn-visto':
+                pulsado = '1';
+                break;
+            case 'btn-porver':
+                pulsado = '2';
+                break;
+            case 'btn-novisto':
+                pulsado = '0';
+                break;                
+        }
+        //Se combrueba en que estado esta la pelicula
+        if($('#btn-visto').attr('class')==='btn btn-success'){
+            estado = '1';
+        }else if($('#btn-porver').attr('class')==='btn btn-success'){
+            estado = '2';
+        }else if($('#btn-novisto').attr('class')==='btn btn-success'){
+            estado= '0';
+        }
+        
+        $.ajax({
+           url: 'pelicula',
+           data:{
+               accion: 'cambia-estado',
+               idpelicula: idpelicula,
+               estado: estado,
+               pulsado: pulsado
+           }
+        }).done(function(){
+            estadoPelicula();
+        });
+        return false;
+    });
 
     $('#enviar-comentario').submit(function () {
         var id = $('#id-pelicula').val();
@@ -63,7 +109,9 @@ $(document).ready(function () {
             }
         }).done(function (response) {
             $('#comentarios').html(response);
-        })
+        });
+        var titulo = $('#comentario-titulo').val("");
+        var comentario = $('#comentario-cuerpo').val("");
         return false;
     });
 });

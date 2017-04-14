@@ -41,12 +41,23 @@ public class GestorVistas {
             ConexionBD conexion = ConexionBD.getInstancia();
             String consulta = "insert into visto "
                     + "(idusuario,idpelicula) values ("
-                    + "'" + visto.getIdusuario() + "'"
-                    + "'"+visto.getIdpelicula()+"'"
+                    + "" + visto.getIdusuario() + ","
+                    + ""+visto.getIdpelicula()+""
                     +")";
             conexion.ejecutaInserta(consulta);
         } catch (SQLException | ClassNotFoundException ex) {
-            System.out.println("Error en gestor de Vistas: " + ex);
+            System.out.println("Error en gestor de Vistas (guardaVisto): " + ex);
+        }
+    }
+    
+    public void eliminaVisto(int idusuario, int idpelicula){
+        try {
+            ConexionBD conexion = ConexionBD.getInstancia();
+            String consulta = "DELETE FROM visto "
+                    + "WHERE idusuario = '"+idusuario+"' AND idpelicula = '"+idpelicula+"'";
+            conexion.ejecutaInserta(consulta);
+        } catch (SQLException | ClassNotFoundException ex) {
+            System.out.println("Error en gestor de Vistas (eliminaVisto): " + ex);
         }
     }
 }
