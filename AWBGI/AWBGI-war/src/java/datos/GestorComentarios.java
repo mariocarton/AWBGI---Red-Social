@@ -22,9 +22,9 @@ public class GestorComentarios {
             ConexionBD conexion = ConexionBD.getInstancia();
             String consulta = "insert into comentario "
                     + "(idusuario,idpelicula,titulo,texto) values ("
-                    + "'" + comentario.getIdusuario() + "'"
-                    + "'"+comentario.getIdpelicula()+"'"
-                    +"'"+comentario.getTitulo()+"'"
+                    + " " + comentario.getIdusuario() + ", "
+                    + ""+comentario.getIdpelicula()+", "
+                    +"'"+comentario.getTitulo()+"',"
                     +"'"+comentario.getTexto()+"'"
                     +")";
             conexion.ejecutaInserta(consulta);

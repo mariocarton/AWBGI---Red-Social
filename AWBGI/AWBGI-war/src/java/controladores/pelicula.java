@@ -29,7 +29,9 @@ import javax.servlet.http.HttpSession;
 import modelo.Comentario;
 import modelo.Pelicula;
 import modelo.PorVer;
+import modelo.Usuario;
 import modelo.Visto;
+import sun.nio.cs.ext.GB18030;
 
 /**
  *
@@ -80,6 +82,7 @@ public class pelicula extends HttpServlet {
         if (sesion != null) {
             if (sesion) {
          */
+        HttpSession session = request.getSession();
         String accion = request.getParameter("accion");
         if (accion != null) {
 
@@ -101,15 +104,15 @@ public class pelicula extends HttpServlet {
                     int id = Integer.parseInt(idaux);
                     GestorPeliculas gp4 = new GestorPeliculas();
                     Pelicula peli2 = gp4.getPeliculaPorId(id);
-                    out3.println("<h2>" + peli2.getTitulo() + "</h2>");
+                    out3.println("<h2 style='margin-left:35px'>" + peli2.getTitulo() + "</h2>");
 
                     //BOTONES
                     //out3.println("<hr style='color: red' />");
-                    out3.println("<div class='row' style='margin-top:35px; margin-right: 0px'>");
+                    out3.println("<div class='row' style='margin-top:35px; margin-right: 0px; margin-left:35px'>");
                     out3.println("<div class='btn-group' role='group' aria-label='...'>");
-                    out3.println("<button type='button' class='btn btn-default'>Visto</button>");
-                    out3.println("<button type='button' class='btn btn-default'>PorVer</button>");
-                    out3.println("<button type='button' class='btn btn-default'>NoVisto</button>");
+                    out3.println("<a id='btn-visto' href='#' class='btn btn-default'>Visto</a>");
+                    out3.println("<a id='btn-porver' href='#' class='btn btn-default'>Por Ver</a>");
+                    out3.println("<a id='btn-novisto' href='#' class='btn btn-default'>No Visto</a>");
                     out3.println("</div>");
                     out3.println("<div class='btn-group' style='margin-left: 20px' role='group' aria-label='...'>");
                     out3.println("<a class='btn btn-primary ' id='formcomentario' data-toggle='modal' data-target='#myModal' >Añadir Comentario</a>");
@@ -118,19 +121,30 @@ public class pelicula extends HttpServlet {
 
                     out3.println(
                             "<div id='myModal' class='modal fade' role='dialog'>"
-                            + "  <div class='modal-dialog'>"         
+                            + "  <div class='modal-dialog'>"
                             + "    <!-- Modal content-->"
                             + "    <div class='modal-content'>"
                             + "      <div class='modal-header'>"
                             + "        <button type='button' class='close' data-dismiss='modal'>&times;</button>"
                             + "        <h4 class='modal-title'>Añadir comentario</h4>"
                             + "      </div>"
+                            + "      <form id='enviar-comentario'>"
                             + "      <div class='modal-body'>"
-                            + "        <p>Some text in the modal.</p>"
+                            + "         <div class='form-group'>"
+                            + "             <label>Título:</label>"
+                            + "             <input type='text' class='form-control' id='comentario-titulo' required>"
+                            + "             <input type='hidden' id='id-pelicula' value='"+peli2.getId()+"'>"
+                            + "         </div>"
+                            + "         <div class='form-group'>"
+                            + "             <label for='comment'>Comentario:</label>"
+                            + "                 <textarea class='form-control' rows='5' id='comentario-cuerpo' required></textarea>"
+                            + "         </div>"
                             + "      </div>"
                             + "      <div class='modal-footer'>"
+                            + "        <button type='submit' class='btn btn-primary'>Aceptar</a>"
                             + "        <button type='button' class='btn btn-default' data-dismiss='modal'>Cancelar</button>"
                             + "      </div>"
+                            + "      </form>"
                             + "    </div>"
                             + "  </div>"
                             + "</div>"
@@ -138,11 +152,11 @@ public class pelicula extends HttpServlet {
 
                     //INFOPELI3
                     //out3.println("<hr style='color: red' />");
-                    out3.println("<div class='row' style='margin-right: 0px'>");
-                    out3.println("<div id='imagen' class='col-md-5' style='margin-top:35px'>");
+                    out3.println("<div class='row' style='margin-right: 0px; margin-left:35px'>");
+                    out3.println("<div id='imagen' class='col-md-2' style='margin-top:35px'>");
                     out3.println("<img src='" + peli2.getRuta() + "'  class='img-responsive' style='float: right'>");
                     out3.println("</div>");
-                    out3.println("<div id='descripcion' class='col-md-5' style='margin-top:35px'>");
+                    out3.println("<div id='descripcion' class='col-md-10' style='margin-top:35px'>");
                     out3.println("<p>Título: " + peli2.getTitulo() + "</p>");
                     out3.println("<p>Año: " + peli2.getAno() + "</p>");
                     out3.println("<p>Duración: " + peli2.getDuracion() + " Minutos</p>");
@@ -158,10 +172,15 @@ public class pelicula extends HttpServlet {
                     GestorComentarios gc = new GestorComentarios();
                     ArrayList<Comentario> arrayComentarios = gc.extraeComentarios(id);
                     out3.println("<div class='row' style='margin:35px'>");
-                    out3.println("<div class='list-group'>");
+                    out3.println("<div id='notificacion' class='alert alert-success alert-dismissable' hidden>"
+                            + "     <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"
+                            + "     <strong>Comentario publicado.</strong> Tu comentario se ha publicado con éxito."
+                            + " </div>"
+                    );
+                    out3.println("<div id='comentarios' class='list-group'>");
                     //list-group-item active
                     for (int i = 0; i < arrayComentarios.size(); i++) {
-                        Comentario comentario = arrayComentarios.get(i);
+                        Comentario comentario = arrayComentarios.get(arrayComentarios.size()-1-i);
                         out3.println("<a class='list-group-item'>");
                         out3.println("<h4 class='list-group-item-heading'>" + comentario.getTitulo() + "</h4>");
                         out3.println("<p class='list-group-item-text'>" + comentario.getTexto() + "</p>");
@@ -172,6 +191,54 @@ public class pelicula extends HttpServlet {
                     out3.println("<script type=\"text/javascript\" src=\"js/verpeli.js\"></script>");
 
                     //out3.println("<hr style='color: red' />");
+                    break;
+                
+                case "getcomentarios":
+                    //COMENTARIOS
+                    GestorComentarios gc3 = new GestorComentarios();
+                    ArrayList<Comentario> arrayComent = gc3.extraeComentarios(Integer.parseInt(request.getParameter("id")));
+                    String respuesta = "";
+                    //list-group-item active
+                    for (int i = 0; i < arrayComent.size(); i++) {
+                        Comentario comentario = arrayComent.get(arrayComent.size()-1-i);
+                        respuesta+="<a class='list-group-item'>";
+                        respuesta+="<h4 class='list-group-item-heading'>" + comentario.getTitulo() + "</h4>";
+                        respuesta+="<p class='list-group-item-text'>" + comentario.getTexto() + "</p>";
+                        respuesta+="</a>";
+                    }
+                    respuesta+="</div>";
+                    respuesta+="</div>";
+                    response.setContentType("text/plain");
+                    response.getWriter().write(respuesta);
+                    break;
+                
+                case "guarda-comentario":
+                    Usuario ucoment = (Usuario) session.getAttribute("usuario");
+                    int idcoment = Integer.parseInt(request.getParameter("id"));
+                    String titulocoment = request.getParameter("titulo");
+                    String comentrariocoment = request.getParameter("comentario");
+                    Comentario coment = new Comentario(-1, ucoment.getId(), idcoment, titulocoment, comentrariocoment);
+                    
+                    GestorComentarios gc2 = new GestorComentarios();
+                    gc2.guardaComentario(coment);
+                    response.setContentType("text/plain");
+                    response.getWriter().write("ok");
+                    break;
+                
+                case "estado-pelicula":
+                    Usuario uep = (Usuario) session.getAttribute("usuario");
+                    GestorVistas gv = new GestorVistas();
+                    GestorPorVer gpv = new GestorPorVer();
+                    int idpeli = Integer.parseInt(request.getParameter("id"));
+                    String rep = "0";
+                    for(Visto visto: (ArrayList<Visto>)gv.extraeVistas(uep.getId())){
+                        if(visto.getIdpelicula()==idpeli){rep="1";}
+                    }
+                    for(PorVer porver: (ArrayList<PorVer>)gpv.extraePorVer(uep.getId())){
+                        if(porver.getIdpelicula()==idpeli){rep="2";}
+                    }
+                    response.setContentType("text/plain");
+                    response.getWriter().write(rep);
                     break;
 
                 default:
