@@ -33,7 +33,7 @@ $(document).ready(function () {
     }
     estadoPelicula();
     
-    $('.btn').click(function (){
+    $('.btn-estado').click(function (){
         var pulsado = '0';
         var estado = '0';
         var idpelicula = $('#id-pelicula').val();
@@ -110,8 +110,8 @@ $(document).ready(function () {
         }).done(function (response) {
             $('#comentarios').html(response);
         });
-        var titulo = $('#comentario-titulo').val("");
-        var comentario = $('#comentario-cuerpo').val("");
+        $('#comentario-titulo').val("");
+        $('#comentario-cuerpo').val("");
         return false;
     });
 });

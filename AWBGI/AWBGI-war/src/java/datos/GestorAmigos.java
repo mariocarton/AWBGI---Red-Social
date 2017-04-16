@@ -17,17 +17,17 @@ import modelo.Amigo;
  * @author mariomatesanz
  */
 public class GestorAmigos {
-    public void guardaAmistad(int id1, int id2) {
+    public void guardaAmistad(int idusuario, int idamigo) {
         try {
             ConexionBD conexion = ConexionBD.getInstancia();
             String consulta = "insert into amigo "
                     + "(idusuario,idamigo) values ("
-                    + "'" + id1 + "'"
-                    + "'"+id2+"'"
+                    + "'" + idusuario + "',"
+                    + "'"+idamigo+"'"
                     +")";
             conexion.ejecutaInserta(consulta);
         } catch (SQLException | ClassNotFoundException ex) {
-            System.out.println("Error en gestor de Comentarios: " + ex);
+            System.out.println("Error en gestor de Amigos: " + ex);
         }
     }
     
@@ -47,9 +47,19 @@ public class GestorAmigos {
             return arrayAmigos;
             
         } catch (SQLException | ClassNotFoundException ex) {
-            System.out.println("Error en gestor de Comentarios: " + ex);
+            System.out.println("Error en gestor de Amigos: " + ex);
         }
         return null;
+    }
+    
+    public void eliminaAmistad(int idusuario, int idamigo){
+        try {
+            ConexionBD conexion = ConexionBD.getInstancia();
+            String consulta = "DELETE FROM amigo WHERE idusuario = '"+idusuario+"' AND idamigo = '"+idamigo+"'";
+            conexion.ejecutaInserta(consulta);            
+        } catch (SQLException | ClassNotFoundException ex) {
+            System.out.println("Error en gestor de Amigos: " + ex);
+        }
     }
     
 }

@@ -84,8 +84,13 @@ public class pelicula extends HttpServlet {
          */
         HttpSession session = request.getSession();
         String accion = request.getParameter("accion");
-        if (accion != null) {
+        
+        GestorPeliculas gp = new GestorPeliculas();
+        GestorVistas gv = new GestorVistas();
+        GestorPorVer gpv = new GestorPorVer();
+        Usuario u = (Usuario) session.getAttribute("usuario");
 
+        if (accion != null) {
             switch (accion) {
                 /*case "savepeli":
                             System.out.println("savepeli");
@@ -102,17 +107,17 @@ public class pelicula extends HttpServlet {
                     PrintWriter out3 = response.getWriter();
                     String idaux = request.getParameter("id").trim();
                     int id = Integer.parseInt(idaux);
-                    GestorPeliculas gp4 = new GestorPeliculas();
-                    Pelicula peli2 = gp4.getPeliculaPorId(id);
+                    //GestorPeliculas gp4 = new GestorPeliculas();
+                    Pelicula peli2 = gp.getPeliculaPorId(id);
                     out3.println("<h2 style='margin-left:35px'>" + peli2.getTitulo() + "</h2>");
 
                     //BOTONES
                     //out3.println("<hr style='color: red' />");
                     out3.println("<div class='row' style='margin-top:35px; margin-right: 0px; margin-left:35px'>");
                     out3.println("<div class='btn-group' role='group' aria-label='...'>");
-                    out3.println("<a id='btn-visto' href='#' class='btn btn-default'>Visto</a>");
-                    out3.println("<a id='btn-porver' href='#' class='btn btn-default'>Por Ver</a>");
-                    out3.println("<a id='btn-novisto' href='#' class='btn btn-default'>No Visto</a>");
+                    out3.println("<a id='btn-visto' href='#' class='btn btn-default btn-estado'>Visto</a>");
+                    out3.println("<a id='btn-porver' href='#' class='btn btn-default btn-estado'>Por Ver</a>");
+                    out3.println("<a id='btn-novisto' href='#' class='btn btn-default btn-estado'>No Visto</a>");
                     out3.println("</div>");
                     out3.println("<div class='btn-group' style='margin-left: 20px' role='group' aria-label='...'>");
                     out3.println("<a class='btn btn-primary ' id='formcomentario' data-toggle='modal' data-target='#myModal' >Añadir Comentario</a>");
@@ -133,7 +138,7 @@ public class pelicula extends HttpServlet {
                             + "         <div class='form-group'>"
                             + "             <label>Título:</label>"
                             + "             <input type='text' class='form-control' id='comentario-titulo' required>"
-                            + "             <input type='hidden' id='id-pelicula' value='"+peli2.getId()+"'>"
+                            + "             <input type='hidden' id='id-pelicula' value='" + peli2.getId() + "'>"
                             + "         </div>"
                             + "         <div class='form-group'>"
                             + "             <label for='comment'>Comentario:</label>"
@@ -163,7 +168,7 @@ public class pelicula extends HttpServlet {
                     out3.println("<p>País: " + peli2.getPais() + "</p>");
                     out3.println("<p>Director: " + peli2.getDirector() + "</p>");
                     out3.println("<p>Género " + peli2.getGenero() + "</p>");
-                    out3.println("<p>Sinopsis: " + peli2.getGenero() + "</p>");
+                    out3.println("<p>Sinopsis: " + peli2.getSinopsis()+ "</p>");
                     out3.println("</div>");
                     out3.println("</div>");
                     //out3.println("<hr style='color: red' />");
@@ -180,7 +185,7 @@ public class pelicula extends HttpServlet {
                     out3.println("<div id='comentarios' class='list-group'>");
                     //list-group-item active
                     for (int i = 0; i < arrayComentarios.size(); i++) {
-                        Comentario comentario = arrayComentarios.get(arrayComentarios.size()-1-i);
+                        Comentario comentario = arrayComentarios.get(arrayComentarios.size() - 1 - i);
                         out3.println("<a class='list-group-item'>");
                         out3.println("<h4 class='list-group-item-heading'>" + comentario.getTitulo() + "</h4>");
                         out3.println("<p class='list-group-item-text'>" + comentario.getTexto() + "</p>");
@@ -192,7 +197,7 @@ public class pelicula extends HttpServlet {
 
                     //out3.println("<hr style='color: red' />");
                     break;
-                
+
                 case "getcomentarios":
                     //COMENTARIOS
                     GestorComentarios gc3 = new GestorComentarios();
@@ -200,73 +205,139 @@ public class pelicula extends HttpServlet {
                     String respuesta = "";
                     //list-group-item active
                     for (int i = 0; i < arrayComent.size(); i++) {
-                        Comentario comentario = arrayComent.get(arrayComent.size()-1-i);
-                        respuesta+="<a class='list-group-item'>";
-                        respuesta+="<h4 class='list-group-item-heading'>" + comentario.getTitulo() + "</h4>";
-                        respuesta+="<p class='list-group-item-text'>" + comentario.getTexto() + "</p>";
-                        respuesta+="</a>";
+                        Comentario comentario = arrayComent.get(arrayComent.size() - 1 - i);
+                        respuesta += "<a class='list-group-item'>";
+                        respuesta += "<h4 class='list-group-item-heading'>" + comentario.getTitulo() + "</h4>";
+                        respuesta += "<p class='list-group-item-text'>" + comentario.getTexto() + "</p>";
+                        respuesta += "</a>";
                     }
-                    respuesta+="</div>";
-                    respuesta+="</div>";
+                    respuesta += "</div>";
+                    respuesta += "</div>";
                     response.setContentType("text/plain");
                     response.getWriter().write(respuesta);
                     break;
-                
+
                 case "guarda-comentario":
-                    Usuario ucoment = (Usuario) session.getAttribute("usuario");
+                    //Usuario ucoment = (Usuario) session.getAttribute("usuario");
                     int idcoment = Integer.parseInt(request.getParameter("id"));
                     String titulocoment = request.getParameter("titulo");
                     String comentrariocoment = request.getParameter("comentario");
-                    Comentario coment = new Comentario(-1, ucoment.getId(), idcoment, titulocoment, comentrariocoment);
-                    
+                    Comentario coment = new Comentario(-1, u.getId(), idcoment, titulocoment, comentrariocoment);
+
                     GestorComentarios gc2 = new GestorComentarios();
                     gc2.guardaComentario(coment);
                     response.setContentType("text/plain");
                     response.getWriter().write("ok");
                     break;
-                
+
                 case "estado-pelicula":
-                    Usuario uep = (Usuario) session.getAttribute("usuario");
-                    GestorVistas gv = new GestorVistas();
-                    GestorPorVer gpv = new GestorPorVer();
+                    //Usuario uep = (Usuario) session.getAttribute("usuario");
+                    //GestorVistas gv = new GestorVistas();
+                    //GestorPorVer gpv = new GestorPorVer();
                     int idpeli = Integer.parseInt(request.getParameter("id"));
                     String rep = "0";
-                    for(Visto visto: (ArrayList<Visto>)gv.extraeVistas(uep.getId())){
-                        if(visto.getIdpelicula()==idpeli){rep="1";}
+                    for (Visto visto : (ArrayList<Visto>) gv.extraeVistas(u.getId())) {
+                        if (visto.getIdpelicula() == idpeli) {
+                            rep = "1";
+                        }
                     }
-                    for(PorVer porver: (ArrayList<PorVer>)gpv.extraePorVer(uep.getId())){
-                        if(porver.getIdpelicula()==idpeli){rep="2";}
+                    for (PorVer porver : (ArrayList<PorVer>) gpv.extraePorVer(u.getId())) {
+                        if (porver.getIdpelicula() == idpeli) {
+                            rep = "2";
+                        }
                     }
                     response.setContentType("text/plain");
                     response.getWriter().write(rep);
                     break;
-                
+
                 case "cambia-estado":
-                    GestorVistas gvce = new GestorVistas();
+                    //GestorVistas gvce = new GestorVistas();
                     GestorPorVer gpvce = new GestorPorVer();
-                    
-                    Usuario uce = (Usuario) session.getAttribute("usuario");
+
+                    //Usuario uce = (Usuario) session.getAttribute("usuario");
                     int idpeliculace = Integer.parseInt(request.getParameter("idpelicula"));
                     int estadoce = Integer.parseInt(request.getParameter("estado"));
                     int pulsadoce = Integer.parseInt(request.getParameter("pulsado"));
-                    
-                    if (estadoce == 1){
+
+                    if (estadoce == 1) {
                         //Si esta en visto se borra
-                        gvce.eliminaVisto(uce.getId(),idpeliculace);
-                    }else if (estadoce == 2){
+                        gv.eliminaVisto(u.getId(), idpeliculace);
+                    } else if (estadoce == 2) {
                         //Si esta en por ver se borra
-                        gpvce.eliminaPorVer(uce.getId(), idpeliculace);
+                        gpvce.eliminaPorVer(u.getId(), idpeliculace);
                     }
-                    
-                    if(pulsadoce == 1){
+
+                    if (pulsadoce == 1) {
                         //Si ha marcado visto se guarda
-                        gvce.guardaVisto(new Visto(uce.getId(), idpeliculace));
-                    }else if(pulsadoce == 2){
+                        gv.guardaVisto(new Visto(u.getId(), idpeliculace));
+                    } else if (pulsadoce == 2) {
                         //Si ha marcado por ver se guarda
-                        gpvce.guardaPorVer(new PorVer(uce.getId(), idpeliculace));
+                        gpvce.guardaPorVer(new PorVer(u.getId(), idpeliculace));
                     }
-                    
+
                     break;
+                case "getvisto":
+                    
+                    ArrayList<Visto> vistas = gv.extraeVistas(u.getId());
+                    ArrayList<Pelicula> pelisVistas = new ArrayList<Pelicula>();
+                    for (int i=0; i<vistas.size(); i++){
+                        pelisVistas.add(gp.getPeliculaPorId(vistas.get(i).getIdpelicula()));
+                    }                    
+                                       
+                    response.setContentType("text/html; charset=iso-8859-1");
+                    PrintWriter out = response.getWriter();
+                                        
+                    for (int j = 0; j < pelisVistas.size(); j++) {
+                        Pelicula peli = pelisVistas.get(j);
+                        if (j % 4 == 0) {
+                            out.println("<div class='row'>");
+                        }
+                        out.println("<div class='col-sm-3'>");
+                        out.println("<div class='thumbnail'>");
+                        out.println("<img src='" + peli.getRuta() + "'  class='img-responsive'>");
+                        out.println("<div class='caption'>");
+                        out.println("<h3>" + peli.getTitulo() + "</h3>");
+                        out.println("<p>" + peli.getGenero() + "</p>");
+                        out.println("<input type='hidden' name=idpeli value=" + peli.getId() + " class='accesopeli'>");
+                        out.println("<a  id=" + peli.getId() + " class='accesopeli btn btn-primary'>Ver Detalles</a>");
+                        out.println("</div>");
+                        out.println("</div>");
+                        out.println("</div>");
+                        if (j % 4 == 3) {
+                            out.println("</div>");
+                        }
+                    }                    
+                    break;
+                    
+                case "getporver":
+                            System.out.println("porver");
+                            //GestorPorVer gpv = new GestorPorVer();
+                            //Usuario u = (Usuario) session.getAttribute("usuario");  
+                            ArrayList<PorVer> arrayPorVer = gpv.extraePorVer(u.getId());
+                            //GestorPeliculas gp5 = new GestorPeliculas();
+                            response.setContentType("text/html; charset=iso-8859-1");
+                            PrintWriter out4 = response.getWriter();
+                            
+                          
+                            for (int i = 0; i < arrayPorVer.size(); i++) {
+                                PorVer porver = arrayPorVer.get(i);
+                                Pelicula peli = gp.getPeliculaPorId(porver.getIdpelicula());
+                                if(i%4==0) out4.println("<div class='row'>");
+                                out4.println("<div class='col-xs-3'>");
+                                out4.println("<div class='thumbnail'>");
+                                out4.println("<img src='" + peli.getRuta() + "' style='img-responsive' >");
+                                out4.println("<div class='caption'>");
+                                out4.println("<h3>" + peli.getTitulo() + "</h3>");
+                                out4.println("<p>" + peli.getGenero() + "</p>");
+                                out4.println("<input type='hidden' name=idpeli value=" + peli.getId() + ">");
+                                out4.println("<a  id=" + peli.getId() + " class='accesopeli btn btn-primary'>Ver Detalles</a>");
+                                out4.println("</div>");
+                                out4.println("</div>");
+                                out4.println("</div>");
+                                if(i%4==3) out4.println("</div>");
+                            }
+                           
+                            break;
 
                 default:
                     System.out.println("default");

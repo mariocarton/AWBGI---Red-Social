@@ -149,34 +149,7 @@ public class index extends HttpServlet {
                             //response.sendRedirect("./index.jsp");
                             
                             break;
-
-                        case "porver":
-                            System.out.println("porver");
-                            GestorPorVer gpv = new GestorPorVer();
-                            Usuario u = (Usuario) session.getAttribute("usuario");  
-                            ArrayList<PorVer> arrayPorVer = gpv.extraePorVer(u.getId());
-                            GestorPeliculas gp5 = new GestorPeliculas();
-                            response.setContentType("text/html; charset=iso-8859-1");
-                            PrintWriter out4 = response.getWriter();
-                            out4.println("<h2 style='text-align: center; margin-bottom: 3%'> Películas Por Ver </h2>");
-                            for (int i = 0; i < arrayPorVer.size(); i++) {
-                                PorVer porver = arrayPorVer.get(i);
-                                Pelicula peli = gp5.getPeliculaPorId(porver.getIdpelicula());
-                                if(i%4==0) out.println("<div class='row'>");
-                                out4.println("<div class='col-xs-3'>");
-                                out4.println("<div class='thumbnail'>");
-                                out4.println("<img src='imagenes/" + peli.getRuta() + "' style='img-responsive' >");
-                                out4.println("<div class='caption'>");
-                                out4.println("<h3>" + peli.getTitulo() + "</h3>");
-                                out4.println("<p>" + peli.getGenero() + "</p>");
-                                out4.println("<input type='hidden' name=idpeli value=" + peli.getId() + ">");
-                                out4.println("<a  id=" + peli.getId() + " class='accesopeli btn btn-primary'>Ver Detalles</a>");
-                                out4.println("</div>");
-                                out4.println("</div>");
-                                out4.println("</div>");
-                                if(i%4==3) out.println("</div>");
-                            }
-                            break;
+                        
                         case "visto":
                             System.out.println("visto");
                             GestorVistas gv = new GestorVistas();

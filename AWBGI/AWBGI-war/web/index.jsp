@@ -50,7 +50,7 @@
                     </ul>  
                     <ul class="nav navbar-nav navbar-right" style="margin-right: 10px">                        
                         <li>
-                            <a id="explorar">
+                            <a href="#" id="explorar">
                                 <span class="fa fa-wpexplorer" aria-hidden="true" style="margin-right: 5px" ></span> Explorar 
                             </a>
                         </li>
@@ -68,19 +68,19 @@
 
                     <ul class="nav nav-sidebar">
                         <li>
-                            <a id="banadir"><span class="glyphicon glyphicon-plus-sign"></span> Añadir </a> 
+                            <a href="#" id="banadir"><span class="glyphicon glyphicon-plus-sign"></span> Añadir </a> 
                         </li>
                         <li class="active">
-                            <a id="bperfil"><span class="glyphicon glyphicon-user"></span> Perfil </a>
+                            <a href="#" id="bperfil"><span class="glyphicon glyphicon-user"></span> Perfil </a>
                         </li>
                         <li>
                             <a href="#" ><span class="glyphicon glyphicon-transfer"></span> Actividad </a>
                         </li>
                         <li>
-                            <a id="bporver"><span class="glyphicon glyphicon-eye-close"></span> Por Ver </a> 
+                            <a href="#" id="bporver"><span class="glyphicon glyphicon-eye-close"></span> Por Ver </a> 
                         </li>
                         <li>
-                            <a id="bamigos"> 
+                            <a href="#" id="bamigos"> 
                                 <span class="fa fa-users" aria-hidden="true"></span> Amigos 
                             </a> 
 
@@ -114,24 +114,6 @@
 
                     <div class="row" id="contenido"></div>
 
-                    <div class="row" id="visto" style="display:none">
-                    </div>
-
-                    <div class="row" id="porver" style="display:none">
-
-                    </div>
-
-                    <div class="row" id="visto" style="display:none">
-                    </div>
-
-                    <div class="row" id="pexplorar" style="display:none">
-
-                    </div>
-
-                    <div class="row" id="infopeli" style="display:none">
-
-                    </div>
-                </div>
 
                 <div class="row " id="formcomentario" style="display:none" style="margin: 4%">
                     <div class="container-fluid" style="margin: 4%">
@@ -163,123 +145,6 @@
 
     <!-- Funciones javascript que contolan la vista de la pagina -->
     <script type="text/javascript" src="js/index.js"></script>
-
-    <script type="text/javascript">
-
-        $.ajax({
-            url: 'api/user',
-            data: {
-                accion: 'nombre'
-            }
-        }).done(function (responseText) {
-            $('#nombre').html(responseText);
-        });
-
-        function mostarDetallesPelicula() {
-            //Controladores de la vista explorar
-            $(".accesopeli").click(function () {
-                //ID de la pelicula qu ese ha seleccionado
-                var ID = $(this).attr("id");
-                //Se pasa a la vista de detalles de pelicula
-                $.ajax({
-                    url: 'pelicula',
-                    data: {
-                        id: ID,
-                        accion: "verpeli"
-                    }
-                }).done(function (responseText) {
-                    //Titulo de la pestaña
-                    $('#titulopestana').html("VerPelícula");
-                    //Controlador del boton añadir comentario
-                    $('#bformcomentario').click(function () {
-                        $('#formcomentario').slideDown('slow');
-                    });
-                    $('#contenido').html(responseText);
-                });
-
-            });
-        }
-
-        $(document).ready(function () {
-
-
-            $('#explorar').click(function () {
-                $('#pelianadida').hide();
-                $('#anadir').hide();
-                $('#visto').hide();
-                $('#amigos').hide();
-                $('#navperfil').hide();
-                $('#visto').hide();
-                $('#pexplorar').show();
-                $('#porver').hide();
-                $('#titulopestana').html("Explorar");
-                $('#contenido').html("");
-
-                $.ajax({
-                    url: 'index',
-                    data: {accion: "explorar"}
-                }).done(function (responseText) {
-                    //Redibuja la pantalla de explorar
-                    $('#contenido').html(responseText).ready(function () {
-                        //Pone a todas las imagenes el mismo tamaño
-                        var alto = $('.img-responsive').val();
-                        $('.img-responsive').each(function () {
-                            if ($(this).height() > alto)
-                                alto = $(this).height();
-                        });
-                        $('.img-responsive').each(function () {
-                            $(this).height(alto);
-                        });
-                        //Si cambia el tamaño de la pantalla las reescala
-                        $(window).resize(function () {
-                            alto = $('.img-responsive').val();
-                            $('.img-responsive').each(function () {
-                                $(this).height('auto');
-                            });
-                            $('.img-responsive').each(function () {
-                                if ($(this).height() > alto)
-                                    alto = $(this).height();
-                            });
-                            $('.img-responsive').each(function () {
-                                $(this).height(alto);
-                            });
-                        });
-                    });
-                    mostarDetallesPelicula();
-                });
-            });
-
-            $('#cuadrobusqueda').keyup(function () {
-                var contenido = $('#cuadrobusqueda').val();
-                if (contenido.length > 1) {
-                    $.ajax({
-                        url: 'busqueda',
-                        data: {accion: "busqueda",
-                            palabra: contenido}
-                    }).done(function (responseText) {
-                        $('#contenidoBusqueda').html(responseText);
-                        $('.resultadoBusqueda').css("display", "block");
-                        mostarDetallesPelicula();
-
-                    });
-                } else {
-                    $('.resultadoBusqueda').css("display", "none");
-                }
-            });
-            $(window).click(function (e) {
-                //if(e.target.id==='cuadrobusqueda'){
-                //    $('.resultadoBusqueda').css("display","block");
-                //}else{
-                $('.resultadoBusqueda').css("display", "none");
-                //}
-            });
-
-
-        });
-
-
-
-    </script>
 
 </body>
 </html>

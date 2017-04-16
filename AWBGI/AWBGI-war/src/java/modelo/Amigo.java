@@ -14,7 +14,7 @@ public class Amigo {
     int idamigo;
     int idusuario;
 
-    public Amigo(int id,int idamigo,int idusuario) {
+    public Amigo(int id,int idusuario,int idamigo) {
         this.id = id;
         this.idamigo = idamigo;
         this.idusuario = idusuario;

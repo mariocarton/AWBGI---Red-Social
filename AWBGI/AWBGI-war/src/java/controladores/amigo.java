@@ -6,14 +6,19 @@
 package controladores;
 
 import datos.GestorAmigos;
+import datos.GestorPeliculas;
+import datos.GestorPorVer;
 import datos.GestorUsuarios;
+import datos.GestorVistas;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import modelo.Amigo;
 import modelo.Usuario;
 
@@ -21,6 +26,7 @@ import modelo.Usuario;
  *
  * @author mariomatesanz
  */
+@WebServlet(name = "amigo", urlPatterns = {"/amigo"})
 public class amigo extends HttpServlet {
 
     /**
@@ -64,43 +70,126 @@ public class amigo extends HttpServlet {
         if (sesion != null) {
             if (sesion) {
          */
+        HttpSession session = request.getSession();
         String accion = request.getParameter("accion");
+        
+        GestorAmigos ga = new GestorAmigos();
+        GestorPorVer gpv = new GestorPorVer();
+        GestorVistas gv = new GestorVistas();
+        Usuario u = (Usuario) session.getAttribute("usuario");
+
+        PrintWriter out = response.getWriter();
+
         if (accion != null) {
 
             switch (accion) {
 
                 case "guardaamigo":
                     response.setContentType("text/html; charset=iso-8859-1");
-                    PrintWriter out = response.getWriter();
+                    //PrintWriter out = response.getWriter();
                     String idaux = request.getParameter("id").trim();
                     int id = Integer.parseInt(idaux);
                     //int id = Integer.parseInt(idaux);
-                    GestorAmigos ga = new GestorAmigos();
+                    //GestorAmigos ga = new GestorAmigos();
                     ga.guardaAmistad(id, id);
                     break;
 
                 case "extraeamigos":
                     response.setContentType("text/html; charset=iso-8859-1");
-                    PrintWriter out2 = response.getWriter();
-                    //String idaux2 = request.getParameter("id").trim();
-                    //int id2 = Integer.parseInt(idaux2);
-                    GestorAmigos ga2 = new GestorAmigos();
-                    ArrayList<Amigo> arrayAmigos = ga2.extraeAmigos(1);
+                    //PrintWriter out2 = response.getWriter();
+
+                    //GestorAmigos ga2 = new GestorAmigos();
+                    ArrayList<Amigo> arrayAmigos = ga.extraeAmigos(u.getId());
                     GestorUsuarios gu = new GestorUsuarios();
-                    out2.println("<h2 style='text-align: center; margin-bottom: 3%'> Películas de la Página </h2>");
-                    out2.println("<div class='container-fluid'>");
+
                     for (int j = 0; j < arrayAmigos.size(); j++) {
                         Amigo amigo = arrayAmigos.get(j);
-                        Usuario u = gu.getUsuarioPorId(amigo.getId());
-                        out2.println("<div class='jumbotron col-xs-4' style='margin: 1%'>");
-                        out2.println("<h3 style=\"text-height: auto'>" + u.getNombre() + " " + u.getApellidos());
-                        //out2.println("<p>Vistas 17</p>");
-                        //out2.println("<p>Por Ver 17</p>");
-                        out2.println("<p><a class=\"btn btn-primary btn-lg\" href=\"#\" role='button'>Añadir</a></p>");
-                        out2.println("</div>");
-
+                        Usuario uamigo = gu.getUsuarioPorId(amigo.getIdamigo());
+                        if (j % 4 == 0) {
+                            out.println("<div class='row'>");
+                        }
+                        out.println("<div class='col-sm-3'>");
+                        out.println("<div class='thumbnail'>");
+                        out.println("<img src='imagenes/user.svg'  class='img-responsive'>");
+                        out.println("<div class='caption'>");
+                        out.println("<h3>" + uamigo.getNombre() + " " + uamigo.getApellidos() + "</h3>");
+                        out.println("<p>Vistas "+gv.extraeVistas(uamigo.getId()).size()+"</p>");
+                        out.println("<p>Por Ver "+gpv.extraePorVer(uamigo.getId()).size()+"</p>");
+                        out.println("<a id=" + uamigo.getId() + " class='eliminaamigo btn btn-danger'>Eliminar amigo</a>");
+                        out.println("</div>");
+                        out.println("</div>");
+                        out.println("</div>");
+                        if (j % 4 == 3) {
+                            out.println("</div>");
+                        }
                     }
-                    out2.println("</div>");
+                    if(arrayAmigos.isEmpty()){
+                        out.println("<div class='row'>");
+                        out.println("<p><em>No tienes amigos, explora usuarios para hacer amigos</em></p>");
+                        out.println("</div>");
+                    }
+                    break;
+
+                case "extraenoamigos":
+                    response.setContentType("text/html; charset=iso-8859-1");
+                    //GestorAmigos ga2 = new GestorAmigos();
+                    ArrayList<Amigo> amigos = ga.extraeAmigos(u.getId());
+                    GestorUsuarios guena = new GestorUsuarios();
+
+                    ArrayList<Usuario> usuarios = guena.getAllUsuarios();
+                    ArrayList<Usuario> noamigos = new ArrayList<>();
+
+                    for (Usuario usuario : usuarios) {
+                        if (!amigos.isEmpty()) {
+                            boolean esta = false;
+                            for (Amigo amigo : amigos) {
+                                if (usuario.getId() == amigo.getIdamigo()) {
+                                    esta=true;
+                                }
+                            }
+                            if(!esta && usuario.getId() != u.getId()){
+                                noamigos.add(usuario);
+                            }
+                        } else if (usuario.getId()!= u.getId()) {
+                            noamigos.add(usuario);
+                        }
+                    }
+
+                    for (int j = 0; j < noamigos.size(); j++) {
+                        Usuario noamigo = noamigos.get(j);
+                        if (j % 4 == 0) {
+                            out.println("<div class='row'>");
+                        }
+                        out.println("<div class='col-sm-3'>");
+                        out.println("<div class='thumbnail'>");
+                        out.println("<img src='imagenes/user.svg'  class='img-responsive'>");
+                        out.println("<div class='caption'>");
+                        out.println("<h3>" + noamigo.getNombre() + " " + noamigo.getApellidos() + "</h3>");
+                        out.println("<p>Vistas "+gv.extraeVistas(noamigo.getId()).size()+"</p>");
+                        out.println("<p>Por Ver "+gpv.extraePorVer(noamigo.getId()).size()+"</p>");                        
+                        out.println("<a id=" + noamigo.getId() + " class='addamigo btn btn-success'>Añadir como amigo</a>");
+                        out.println("</div>");
+                        out.println("</div>");
+                        out.println("</div>");
+                        if (j % 4 == 3) {
+                            out.println("</div>");
+                        }
+                    }
+                    if(noamigos.isEmpty()){
+                        out.println("<div class='row'>");
+                        out.println("<p><em>No hay usuarios de los que ser amigo</em></p>");
+                        out.println("</div>");
+                    }
+                    break;
+                 
+                case "eliminaamigo":
+                    int idamigo = Integer.parseInt(request.getParameter("id"));
+                    ga.eliminaAmistad(u.getId(), idamigo);
+                    break;
+                
+                case "addamigo":
+                    int idamigo2 = Integer.parseInt(request.getParameter("id"));
+                    ga.guardaAmistad(u.getId(), idamigo2);
                     break;
 
                 default:
