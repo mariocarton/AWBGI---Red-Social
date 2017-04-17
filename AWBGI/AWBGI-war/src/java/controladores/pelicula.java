@@ -190,6 +190,12 @@ public class pelicula extends HttpServlet {
                         out3.println("<h4 class='list-group-item-heading'>" + comentario.getTitulo() + "</h4>");
                         out3.println("<p class='list-group-item-text'>" + comentario.getTexto() + "</p>");
                         out3.println("</a>");
+                    }                    
+                    if(arrayComentarios.isEmpty()){
+                        out3.println("<a class='list-group-item'>");
+                        out3.println("<h4 class='list-group-item-heading'><em>No hay comentarios para esta película</em></h4>");
+                        out3.println("<p class='list-group-item-text'><em>Sé el primero en dejar un comentario</em></p>");
+                        out3.println("</a>");
                     }
                     out3.println("</div>");
                     out3.println("</div>");

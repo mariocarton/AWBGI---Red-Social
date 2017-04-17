@@ -48,6 +48,7 @@
                             </div>
                         </li>
                     </ul>  
+                    <!--
                     <ul class="nav navbar-nav navbar-right" style="margin-right: 10px">                        
                         <li>
                             <a href="#" id="explorar">
@@ -55,32 +56,45 @@
                             </a>
                         </li>
                     </ul>
+                    -->
                 </div>
 
             </div>
         </nav>
 
 
-        <div class="container-fluid" style="margin-top: 55px">
+        <div class="container-fluid" style="margin-top: 51px">
 
             <div class="row">
                 <div class="col-sm-2 sidebar menu-lateral"  > <!--media query para quitarlo -->
-
+                    <ul class="nav nav-sidebar">
+                        <li class="item-menu-lateral"> 
+                            <i class="fa fa-user-circle-o fa-2x"></i>
+                            <span id="nombre" style="padding-left: 5px"></span>                        
+                        </li>
+                        
+                    </ul>
+                    <hr style="color: red"/>
                     <ul class="nav nav-sidebar">
                         <li>
-                            <a href="#" id="banadir"><span class="glyphicon glyphicon-plus-sign"></span> Añadir </a> 
-                        </li>
-                        <li class="active">
-                            <a href="#" id="bperfil"><span class="glyphicon glyphicon-user"></span> Perfil </a>
-                        </li>
-                        <li>
-                            <a href="#" ><span class="glyphicon glyphicon-transfer"></span> Actividad </a>
+                            <a class="a-menu-lateral" href="#" id="explorar">
+                                <span class="fa fa-wpexplorer" aria-hidden="true" style="margin-right: 5px" ></span> Explorar 
+                            </a>
                         </li>
                         <li>
-                            <a href="#" id="bporver"><span class="glyphicon glyphicon-eye-close"></span> Por Ver </a> 
+                            <a class="a-menu-lateral" href="#" id="banadir"><span class="glyphicon glyphicon-plus-sign"></span> Añadir </a> 
                         </li>
                         <li>
-                            <a href="#" id="bamigos"> 
+                            <a class="a-menu-lateral" href="#" id="bperfil"><span class="glyphicon glyphicon-user"></span> Perfil </a>
+                        </li>
+                        <li>
+                            <a class="a-menu-lateral" href="#" ><span class="glyphicon glyphicon-transfer"></span> Actividad </a>
+                        </li>
+                        <li>
+                            <a class="a-menu-lateral" href="#" id="bporver"><span class="glyphicon glyphicon-eye-close"></span> Por Ver </a> 
+                        </li>
+                        <li>
+                            <a class="a-menu-lateral" href="#" id="bamigos"> 
                                 <span class="fa fa-users" aria-hidden="true"></span> Amigos 
                             </a> 
 
@@ -90,22 +104,18 @@
                     <hr style="color: red"/>
 
                     <ul class="nav nav-sidebar">
-                        <li> 
-                        <h7 style="text-align: center"> 
-                            <p id="nombre"></p>
-                        </h7>
+                        
+                        <li>
+                            <a class="a-menu-lateral" href="#"><span class="glyphicon glyphicon-cog"></span> Ajustes </a> 
                         </li>
                         <li>
-                            <a href="#"><span class="glyphicon glyphicon-cog"></span> Ajustes </a> 
-                        </li>
-                        <li>
-                            <a><span class="glyphicon glyphicon-question-sign" href="#"></span> Ayuda </a> 
+                            <a class="a-menu-lateral" href="#"><span class="glyphicon glyphicon-question-sign"></span> Ayuda </a> 
                         </li>
                     </ul>
                     <hr style="color: red" />
                     <ul class="nav nav-sidebar">
                         <li>
-                            <a class="glyphicon glyphicon-log-out" href="index?accion=cierra_sesion"> Salir </a> 
+                            <a class="a-menu-lateral"  href="index?accion=cierra_sesion"><span class="glyphicon glyphicon-log-out"></span> Salir </a> 
                         </li>
                     </ul>
                 </div>
