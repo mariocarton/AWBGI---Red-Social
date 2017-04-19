@@ -20,7 +20,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modelo.Amigo;
+import modelo.PorVer;
 import modelo.Usuario;
+import modelo.Visto;
 
 /**
  *
@@ -57,25 +59,15 @@ public class amigo extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //response.setContentType("text/html;charset=UTF-8");
-        //try (PrintWriter out = response.getWriter()) {
-        //   response.sendRedirect("./index.jsp");
-        //}
-        //System.out.println("doget");
-        // Mira en la session si esta autenticado el usuario
-        /*
-        HttpSession session = request.getSession();
-        Boolean sesion = (Boolean) session.getAttribute("auth");
         
-        if (sesion != null) {
-            if (sesion) {
-         */
         HttpSession session = request.getSession();
         String accion = request.getParameter("accion");
         
         GestorAmigos ga = new GestorAmigos();
+        GestorUsuarios gu = new GestorUsuarios();
         GestorPorVer gpv = new GestorPorVer();
         GestorVistas gv = new GestorVistas();
+        GestorPeliculas gp = new GestorPeliculas();
         Usuario u = (Usuario) session.getAttribute("usuario");
 
         PrintWriter out = response.getWriter();
@@ -86,22 +78,15 @@ public class amigo extends HttpServlet {
 
                 case "guardaamigo":
                     response.setContentType("text/html; charset=iso-8859-1");
-                    //PrintWriter out = response.getWriter();
                     String idaux = request.getParameter("id").trim();
                     int id = Integer.parseInt(idaux);
-                    //int id = Integer.parseInt(idaux);
-                    //GestorAmigos ga = new GestorAmigos();
                     ga.guardaAmistad(id, id);
                     break;
 
                 case "extraeamigos":
                     response.setContentType("text/html; charset=iso-8859-1");
-                    //PrintWriter out2 = response.getWriter();
-
-                    //GestorAmigos ga2 = new GestorAmigos();
                     ArrayList<Amigo> arrayAmigos = ga.extraeAmigos(u.getId());
-                    GestorUsuarios gu = new GestorUsuarios();
-
+                    
                     for (int j = 0; j < arrayAmigos.size(); j++) {
                         Amigo amigo = arrayAmigos.get(j);
                         Usuario uamigo = gu.getUsuarioPorId(amigo.getIdamigo());
@@ -115,7 +100,10 @@ public class amigo extends HttpServlet {
                         out.println("<h3>" + uamigo.getNombre() + " " + uamigo.getApellidos() + "</h3>");
                         out.println("<p>Vistas "+gv.extraeVistas(uamigo.getId()).size()+"</p>");
                         out.println("<p>Por Ver "+gpv.extraePorVer(uamigo.getId()).size()+"</p>");
-                        out.println("<a id=" + uamigo.getId() + " class='eliminaamigo btn btn-danger'>Eliminar amigo</a>");
+                        out.println("<div style='text-align:center'>");
+                        out.println("<a id=" + uamigo.getId() + " class='verdetalles btn btn-success' style='margin: 4px; width: 100%'>Ver detalles</a>");
+                        out.println("<a id=" + uamigo.getId() + " class='eliminaamigo btn btn-danger' style='margin: 4px; width: 100%'>Eliminar amigo</a>");
+                        out.println("</div>");
                         out.println("</div>");
                         out.println("</div>");
                         out.println("</div>");
@@ -132,7 +120,6 @@ public class amigo extends HttpServlet {
 
                 case "extraenoamigos":
                     response.setContentType("text/html; charset=iso-8859-1");
-                    //GestorAmigos ga2 = new GestorAmigos();
                     ArrayList<Amigo> amigos = ga.extraeAmigos(u.getId());
                     GestorUsuarios guena = new GestorUsuarios();
 
@@ -191,24 +178,39 @@ public class amigo extends HttpServlet {
                     int idamigo2 = Integer.parseInt(request.getParameter("id"));
                     ga.guardaAmistad(u.getId(), idamigo2);
                     break;
-
+                
+                case "detallesamigo":
+                    int idamigoda = Integer.parseInt(request.getParameter("id"));
+                    Usuario amigo = gu.getUsuarioPorId(idamigoda);
+                    ArrayList<Visto> vistasamigo = gv.extraeVistas(idamigoda);
+                    ArrayList<PorVer> porveramigo = gpv.extraePorVer(idamigoda);
+                    
+                    out.println("<h2>Películas de "+amigo.getNombre()+" "+amigo.getApellidos()+"</h2>"+
+                            "<div class='row' style='padding: 20px;'>"+
+                            "<h4>Películas Vistas</h4>"+
+                            "<ul class='list-group'>");
+                    for(Visto pelicula: vistasamigo){
+                        out.println("<li class='list-group-item'>"+gp.getPeliculaPorId(pelicula.getIdpelicula()).getTitulo()+"<a href='"+pelicula.getIdpelicula()+"' class='accesopeli btn-xs btn-primary' style='float:right'>Ver detalles</a></li>");
+                    }                    
+                    out.println("</ul>"+
+                            "<h4>Películas Vistas</h4>"+
+                            "<ul class='list-group'>");
+                    
+                    for(PorVer pelicula: porveramigo){
+                        out.println("<li class='list-group-item'>"+gp.getPeliculaPorId(pelicula.getIdpelicula()).getTitulo()+"<a href='"+pelicula.getIdpelicula()+"' class='accesopeli btn-xs btn-primary' style='float:right'>Ver detalles</a></li>");
+                    }                    
+                    out.println("</ul></div>");  
+                    break;
+                    
                 default:
                     System.out.println("default");
                     response.sendRedirect("./index.jsp");
             }
 
-        } else {
-            System.out.println("aqui");
+        } else {           
             response.sendRedirect("./index.jsp");
         }
-        /*
-            } else {
-                response.sendRedirect("./login");
-            }
-        } else {
-            response.sendRedirect("./login");
-        }
-         */
+        
     }
 
     /**

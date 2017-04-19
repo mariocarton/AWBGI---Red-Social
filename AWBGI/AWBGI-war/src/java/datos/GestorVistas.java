@@ -16,7 +16,7 @@ import modelo.Visto;
  */
 public class GestorVistas {
     
-    public ArrayList extraeVistas(int idusuario) {
+    public ArrayList<Visto> extraeVistas(int idusuario) {
         try {
             ConexionBD conexion = ConexionBD.getInstancia();
             String consulta = "select * from visto where idusuario='" + idusuario + "'";

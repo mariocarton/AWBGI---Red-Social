@@ -92,16 +92,6 @@ public class pelicula extends HttpServlet {
 
         if (accion != null) {
             switch (accion) {
-                /*case "savepeli":
-                            System.out.println("savepeli");
-                            break;*/
- /*
-                        case "cierra_sesion":
-                            System.out.println("cierra sesion");
-                            session.setAttribute("auth", false);
-                            response.sendRedirect("./login");
-                            break;
-                 */
                 case "verpeli":
                     response.setContentType("text/html; charset=iso-8859-1");
                     PrintWriter out3 = response.getWriter();
@@ -282,10 +272,9 @@ public class pelicula extends HttpServlet {
                     }
 
                     break;
-                case "getvisto":
-                    
+                case "getvisto":                    
                     ArrayList<Visto> vistas = gv.extraeVistas(u.getId());
-                    ArrayList<Pelicula> pelisVistas = new ArrayList<Pelicula>();
+                    ArrayList<Pelicula> pelisVistas = new ArrayList<>();
                     for (int i=0; i<vistas.size(); i++){
                         pelisVistas.add(gp.getPeliculaPorId(vistas.get(i).getIdpelicula()));
                     }                    
@@ -351,7 +340,7 @@ public class pelicula extends HttpServlet {
             }
 
         } else {
-            System.out.println("aqui");
+            //System.out.println("aqui");
             response.sendRedirect("./index.jsp");
         }
         /*
