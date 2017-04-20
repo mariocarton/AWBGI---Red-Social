@@ -86,9 +86,9 @@ public class GestorPeliculas {
                 int ano = resultado.getInt("ano");
                 int duracion = resultado.getInt("duracion");
                 String director = resultado.getString("director");
-                String sinopsis = resultado.getString("genero");
+                String sinopsis = resultado.getString("sinopsis");
                 String pais = resultado.getString("pais");
-                String genero = resultado.getString("sinopsis");
+                String genero = resultado.getString("genero");
                 String ruta = resultado.getString("ruta");
                 Pelicula cm = new Pelicula(id,idusuario,titulo,ano,duracion,pais,director,genero,sinopsis,ruta);
                 arrayPeliculas.add(cm);

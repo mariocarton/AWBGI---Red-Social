@@ -69,7 +69,8 @@ public class amigo extends HttpServlet {
         GestorVistas gv = new GestorVistas();
         GestorPeliculas gp = new GestorPeliculas();
         Usuario u = (Usuario) session.getAttribute("usuario");
-
+        
+        response.setContentType("text/html; charset=iso-8859-1");
         PrintWriter out = response.getWriter();
 
         if (accion != null) {

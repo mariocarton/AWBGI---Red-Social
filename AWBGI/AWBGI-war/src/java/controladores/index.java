@@ -123,7 +123,7 @@ public class index extends HttpServlet {
                             out3.println("<p>País: " + peli2.getPais() + "</p>");
                             out3.println("<p>Director: " + peli2.getDirector() + "</p>");
                             out3.println("<p>Género " + peli2.getGenero() + "</p>");
-                            out3.println("<p>Sinopsis: " + peli2.getGenero() + "</p>");
+                            out3.println("<p>Sinopsis: " + peli2.getSinopsis()+ "</p>");
                             out3.println("<hr style='color: red' />");
 
                             //COMENTARIOS
@@ -192,7 +192,7 @@ public class index extends HttpServlet {
                                 out.println("<img src='" + peli.getRuta() + "'  class='img-responsive'>");
                                 out.println("<div class='caption'>");
                                 out.println("<h3>" + peli.getTitulo() + "</h3>");
-                                out.println("<p>" + peli.getGenero() + "</p>");
+                                out.println("<p>" + peli.getGenero()+ "</p>");
                                 out.println("<input type='hidden' name=idpeli value=" + peli.getId() + " class='accesopeli'>");
                                 out.println("<a  id=" + peli.getId() + " class='accesopeli btn btn-primary'>Ver Detalles</a>");
                                 out.println("</div>");
